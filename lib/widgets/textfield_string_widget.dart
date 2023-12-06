@@ -55,6 +55,9 @@ class TextFieldStringWidget extends StatelessWidget
               margin: EdgeInsets.only(right: 12),
               child: TextFormField(
                   keyboardType: TextInputType.text,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                  ],
                   controller: controller,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,

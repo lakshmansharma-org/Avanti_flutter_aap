@@ -123,7 +123,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   DateTime? _startDate3 = null;
   DateTime? _startDate4 = null;
   DateTime? _startDate5 = null;
-
+  bool isChecked = false;
   void goToNext() {
     setState(() {
       number.text = '';
@@ -487,6 +487,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     SizedBox(height: 10.0),
                     Container(
                       height: 300,
+
                       child: ListView.builder(
                           padding: EdgeInsets.only(bottom: 16.0),
                           itemCount: questionList[questionIndex]['options']
@@ -540,7 +541,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           controller: number,
                                           decoration: InputDecoration(
                                             contentPadding: EdgeInsets.zero,
-                                            labelText: 'Mob. Number',
+                                            labelText: 'Monthly Income',
                                             labelStyle: const TextStyle(
                                               fontSize: 15.0,
                                               color: AppTheme.grayColor,
@@ -1111,6 +1112,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
 
               },
 
@@ -1148,7 +1150,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1186,7 +1188,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1222,7 +1224,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1261,7 +1263,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1271,47 +1273,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
             questionIndex == 15 ?
-
-
-            TextFieldNumberWidget(
-              controller: question10Controller,
-              onNextTap: () {
-                if (question10Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Answer cannot be empty',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-
-                else {
-                  questionIndex = questionIndex + 1;
-                  setState(() {
-
-                  });
-                }
-              },
-
-              onPreviousTap: () {
-
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
-            ) :
-
-
-            questionIndex == 16 ?
-
 
             Container(
               //height: 110,
@@ -1475,6 +1436,47 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
+
+
+            questionIndex == 16 ?
+
+            TextFieldNumberWidget(
+              controller: question10Controller,
+              onNextTap: () {
+                if (question10Controller.text == "") {
+                  final snackBar = SnackBar(
+                    content: Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      // Adjust left and right margins
+                      child: Text(
+                        'Answer cannot be empty',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                else {
+                  questionIndex = questionIndex + 1;
+                  setState(() {
+
+                  });
+                }
+              },
+
+              onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+              },
+
+              questionMessage: questionList[questionIndex]['que_message'],
+              questionName: questionList[questionIndex]['question'],
+
+            ) :
+
+
             questionIndex == 17 ?
 
 
@@ -1506,7 +1508,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1709,7 +1711,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -1908,7 +1910,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
-
+                questionIndex = questionIndex - 1;
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -2481,7 +2483,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -2682,7 +2687,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -4842,7 +4850,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -5040,7 +5051,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -5241,7 +5255,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
@@ -6455,7 +6472,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               },
 
               onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
 
+                });
               },
 
               questionMessage: questionList[questionIndex]['que_message'],
