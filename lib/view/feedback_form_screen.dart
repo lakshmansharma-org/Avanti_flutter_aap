@@ -1,15 +1,23 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qsurvey_flutter/widgets/textfield_string_widget.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:toast/toast.dart';
 
+import '../network/api_dialog.dart';
+import '../network/api_helper.dart';
+import '../network/constants.dart';
 import '../utils/app_theme.dart';
 import '../widgets/date_widget.dart';
 import '../widgets/textfield_number_widget.dart';
 
-
+import 'package:image_picker/image_picker.dart';
 class FeedbackFormScreen extends StatefulWidget {
   final bool showBack;
   List<dynamic> surveyDataList = [];
@@ -23,6 +31,10 @@ class FeedbackFormScreen extends StatefulWidget {
 class FeedbackFormState extends State<FeedbackFormScreen> {
   @override
 
+  List<TextEditingController> _controllerTab1=[];
+  List<TextEditingController> _controllerTab2=[];
+  List<TextEditingController> _controllerTab3=[];
+  List<XFile> imageList=[];
   var question1Controller = TextEditingController();
   var question2Controller = TextEditingController();
   var question3Controller = TextEditingController();
@@ -120,7 +132,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   int selectIndex49 = -1;
   int selectIndex50 = -1;
   int selectIndex51 = -1;
-
+  final ImagePicker picker = ImagePicker();
   int questionIndex = 0;
   late bool isSelected;
   DateTime? _startDate = null;
@@ -254,7 +266,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
             questionIndex == 0 ?
-
             TextFieldNumberWidget(
               controller: question1Controller,
               onNextTap: () {
@@ -290,7 +301,11 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionMessage: questionList[questionIndex]['que_message'],
               questionName: questionList[questionIndex]['question'],
 
-            ) :
+            )
+                
+                
+
+            :
 
             questionIndex == 1 ?
             TextFieldStringWidget(
@@ -721,6 +736,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           //physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext context, int pos) {
+                            _controllerTab1.add(TextEditingController());
                             return Padding(
                                 padding: const EdgeInsets.only(
                                   left: 0.0, top: 8.0, bottom: 8.0,),
@@ -772,7 +788,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           inputFormatters: <TextInputFormatter>[
                                             FilteringTextInputFormatter.digitsOnly, // Allow only numbers
                                           ],
-                                          controller: question25Controller,
+                                          controller: _controllerTab1[pos],
                                           decoration: InputDecoration(
                                             contentPadding: EdgeInsets.zero,
                                             labelText: 'Monthly Income',
@@ -811,7 +827,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white)),
                               )),
-                        ),),
+                        )),
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
@@ -1087,6 +1103,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           //physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext context, int pos) {
+                            _controllerTab2.add(TextEditingController());
                             return Padding(
                                 padding: const EdgeInsets.only(
                                   left: 0.0, top: 8.0, bottom: 8.0,),
@@ -1138,7 +1155,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           inputFormatters: <TextInputFormatter>[
                                             FilteringTextInputFormatter.digitsOnly, // Allow only numbers
                                           ],
-                                          controller: question26Controller,
+                                          controller: _controllerTab2[pos],
                                           //controller: number,
                                           decoration: InputDecoration(
                                             contentPadding: EdgeInsets.zero,
@@ -10551,29 +10568,91 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 }),
                           ),
                           selectIndex50 == 0 ?
-                          Row(
+                          Column(
                             children: [
-                              Expanded(child: InkWell(
-                                onTap: () {
+                              Row(
+                                children: [
+                                  Expanded(child: InkWell(
+                                    onTap: () async {
 
-                                },
-                                child: Container(
-                                    margin:
-                                    const EdgeInsets.only(left: 0,right: 8,top: 8),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        color: AppTheme.buttonOrangeColor,
-                                        borderRadius: BorderRadius.circular(5)),
-                                    height: 45,
-                                    child: const Center(
-                                      child: Text('Browse',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white)),
-                                    )),
-                              )),
-                              const SizedBox(width: 10),
+
+
+                                      final List<XFile> images = await picker.pickMultiImage();
+                                      imageList=images;
+                                      setState(() {
+
+                                      });
+
+                                      _uploadFiles();
+
+
+
+
+
+
+
+
+
+                                    },
+                                    child: Container(
+                                        margin:
+                                        const EdgeInsets.only(left: 0,right: 8,top: 8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.buttonOrangeColor,
+                                            borderRadius: BorderRadius.circular(5)),
+                                        height: 45,
+                                        child: const Center(
+                                          child: Text('Browse',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white)),
+                                        )),
+                                  )),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+
+                              SizedBox(height: 10),
+
+                              imageList.length==0?Container(): Container(
+                                height: 60,
+                                child: ListView.builder(
+                                    itemCount: imageList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (BuildContext context,int pos)
+
+                                    {
+                                      return Row(
+                                        children: [
+
+                                          Container(
+                                            width: 55,
+                                            height: 55,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                image: DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: FileImage(
+                                                        File(imageList[pos].path)
+                                                    )
+                                                )
+
+                                            ),
+                                          ),
+
+
+                                          SizedBox(width: 10),
+
+                                        ],
+                                      );
+                                    }
+
+
+                                ),
+                              )
+
                             ],
                           ): Container(),
                           // selectIndex50 == 1 ?
@@ -10996,5 +11075,87 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       return 'Required field';
     }
     return null;
+  }
+
+
+
+  submitAnswers() async {
+
+    List<dynamic> answers=[];
+    FocusScope.of(context).unfocus();
+    APIDialog.showAlertDialog(context, 'Please wait...');
+
+
+   answers.add({'_id':questionList[questionIndex]['_id'],'answer':question1Controller.text});
+   answers.add({'_id':questionList[questionIndex]['_id'],'answer':question2Controller.text});
+   // Do for all answers according to type of widget
+
+
+
+
+
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPI('Avanti/SubmitAppSurvey', answers, context);
+     Navigator.pop(context);
+    var responseJSON = json.decode(response.body);
+    //print(responseJSON);
+
+    if (responseJSON['code'] == 200) {
+      Toast.show("success !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+
+      Navigator.pop(context);
+    } else {
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+  }
+
+
+
+
+
+  _uploadFiles() async {
+    APIDialog.showAlertDialog(context, 'Uploading Images...');
+    // String fileName = xFile.path.split('/').last;
+    FormData? formData= FormData.fromMap({
+      "Id": "5512341709435",
+      "artifactType": "LUC",
+    });
+
+    for (int i = 0; i <imageList.length; i++) {
+      var path = imageList[i].path.toString();
+      formData.files.addAll([
+        MapEntry("file", await MultipartFile.fromFile(path, filename: path))
+      ]);
+    }
+
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'multipart/form-data';
+   // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
+    print(AppConstant.appBaseURL + "Avanti/saveImage");
+    var response = await dio.post(
+        AppConstant.appBaseURL + "Avanti/saveImage",
+        data: formData);
+    print(response.data);
+    Navigator.pop(context);
+    if (response.data['status']) {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+
+    } else {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
   }
 }
