@@ -14,6 +14,7 @@ import 'constants.dart';
 class ApiBaseHelper {
   final String _baseUrl = AppConstant.appBaseURL;
   final String _getBaseUrl = AppConstant.getAppBaseURL;
+  final String _postBaseUrl = AppConstant.getAppBaseURL;
   Future<dynamic> get(String url, BuildContext context) async {
     var responseJson;
     print(_getBaseUrl+url+'  API CALLED');
@@ -34,9 +35,9 @@ class ApiBaseHelper {
   }
   Future<dynamic> getWithToken(String url, BuildContext context) async {
     var responseJson;
-    print(_baseUrl+url+'  API CALLED');
+    print(_getBaseUrl+url+'  API CALLED');
     try {
-      final response = await http.get(Uri.parse(_baseUrl + url), headers: {
+      final response = await http.get(Uri.parse(_getBaseUrl + url), headers: {
         'Content-Type': 'application/json',
         'Accept':'application/json',
         'X-Requested-With':'XMLHttpRequest',
@@ -71,7 +72,32 @@ class ApiBaseHelper {
             'Accept':'application/json',
             'X-Requested-With':'XMLHttpRequest'
           }
-          );
+      );
+      print("HTML Response");
+      log(response.toString());
+      var decodedJson=jsonDecode(response.body.toString());
+      print(decodedJson);
+
+      responseJson = _returnResponse(response, context);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
+  Future<dynamic> postAPINew(
+      String url, var apiParams, BuildContext context) async {
+    print(_postBaseUrl+url+'  API CALLED');
+    print(apiParams.toString());
+    var responseJson;
+    try {
+      final response = await http.post(Uri.parse(_postBaseUrl + url),
+          body: json.encode(apiParams),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept':'application/json',
+            'X-Requested-With':'XMLHttpRequest'
+          }
+      );
       print("HTML Response");
       log(response.toString());
       var decodedJson=jsonDecode(response.body.toString());
@@ -105,13 +131,13 @@ class ApiBaseHelper {
       print(decodedJson);
 
       if(decodedJson["message"]=="Failed to authenticate token." || decodedJson["message"]=="Your session has timed out! Please login again!")
-        {
-          _logOut(context);
-        }
+      {
+        _logOut(context);
+      }
       else
-        {
-          responseJson = _returnResponse(response, context);
-        }
+      {
+        responseJson = _returnResponse(response, context);
+      }
 
 
 
@@ -122,10 +148,10 @@ class ApiBaseHelper {
     return responseJson;
   }
   dynamic _returnResponse(http.Response response, BuildContext context) {
-   // var responseJson = jsonDecode(response.body.toString());
+    // var responseJson = jsonDecode(response.body.toString());
     print(response.statusCode.toString() +'Status Code******* ');
 
-   // log('api helper response $response');
+    // log('api helper response $response');
     switch (response.statusCode) {
       case 200:
         log(response.body.toString());
