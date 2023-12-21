@@ -24,16 +24,16 @@ class SplashState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Container(
-          width: 200,
-          height: 200,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/qdegrees.png'),
-              fit: BoxFit.contain,
+          child: Container(
+            width: 200,
+            height: 200,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/qdegrees.png'),
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-        )
+          )
       ),
     );
   }
@@ -53,7 +53,10 @@ class SplashState extends State<SplashScreen>
       Timer(
           Duration(seconds: 2),
               () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => DashboardScreen(true,empId!,surveyDataList))));
+              builder: (BuildContext context) => LoginScreen())));
+      // Duration(seconds: 2),
+      //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //     builder: (BuildContext context) => DashboardScreen(true,empId!,surveyDataList))));
 
     }
     else

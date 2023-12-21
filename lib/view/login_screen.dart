@@ -30,6 +30,7 @@ class LoginState extends State<LoginScreen> {
   var passwordController=TextEditingController();
   String id = '';
   String empId = '';
+  String name = '';
   List<dynamic> dataList = [];
   List<dynamic> surveyDataList = [];
   @override
@@ -160,9 +161,11 @@ class LoginState extends State<LoginScreen> {
       MyUtils.saveSharedPreferencesBool(
           'loginStatus', true);
       MyUtils.saveSharedPreferences(
-         'id',dataList[0]['_id']);
+          'id',dataList[0]['_id']);
       MyUtils.saveSharedPreferences(
           'empId',dataList[0]['qd_id']);
+      MyUtils.saveSharedPreferences(
+          'name',dataList[0]['name']);
       AppModel.setLoginStatus(true);
       surveyQuestionApi();
 
@@ -206,7 +209,7 @@ class LoginState extends State<LoginScreen> {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     var requestModel = {
-      "survey_id": "642a8c6792e2d50b453852fc",
+      "survey_id": "657d3a6654d33029cc9c1e66",
       "email": "",
     };
 

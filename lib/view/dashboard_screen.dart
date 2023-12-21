@@ -328,6 +328,8 @@ class DashboardState extends State<DashboardScreen> {
     await preferences.clear();
     AppModel.setLoginStatus(false);
     MyUtils.saveSharedPreferences('id', '');
+    MyUtils.saveSharedPreferences('name', '');
+    MyUtils.saveSharedPreferences('empId', '');
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
