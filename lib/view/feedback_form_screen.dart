@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qsurvey_flutter/widgets/textfield_string_widget.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 import '../network/Utils.dart';
@@ -311,7 +313,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 child: AppBar()),
             backgroundColor: Colors.white,
             extendBody: true,
-            body:
+            body:  questionList.length==0?Container():
 
 
             questionIndex == 0 ?
@@ -12690,13 +12692,62 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    questionList = widget.surveyDataList[0]['questions'];
-    Future.delayed(Duration(seconds: 0), () {
-      print(widget.surveyDataList);
+
+    checkInternet();
+
+
+
+
+  }
+
+
+
+
+
+  checkInternet()async{
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      print("Data Fetched Locally");
+      fetchLocalData();
+    }
+
+    else
+      {
+        questionList = widget.surveyDataList[0]['questions'];
+        print("Question List "+ questionList.length.toString());
+
+        Future.delayed(const Duration(seconds: 0), () {
+          print(widget.surveyDataList);
+        });
+
+        setState(() {
+
+        });
+      }
+
+  }
+
+  fetchLocalData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var data=preferences.getString("question_list");
+    List<dynamic> list2 = jsonDecode(data!);
+    questionList=list2;
+    setState(() {
+
     });
+  }
 
 
-    print(questionList.length.toString());
+
+
+
+  generateList(questionList) {
+    Map list={};
+    questionList.forEach((element) {
+      list[element.id] = element.toMap();
+    });
+    return json.encode(list);
   }
 
   String? textValidation(String? value) {
@@ -12713,7 +12764,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     List<dynamic> answers=[];
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
-
+    final connectivityResult = await (Connectivity().checkConnectivity());
     String slectIndics2 = {selectedIndices2,_controllerTab1.map((controller) => controller.text),question47Controller.text}.toString();
     String slectIndics4 = {selectedIndices4,_controllerTab2.map((controller) => controller.text),question48Controller.text}.toString();
     String slectIndics7 = {selectedIndices7,_controllerTab4.map((controller) => controller.text),question46Controller.text}.toString();
@@ -12847,30 +12898,56 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
     // print(answers);
 
-    ApiBaseHelper helper = ApiBaseHelper();
-    var response =
-    await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
-    Navigator.pop(context);
-    var responseJSON = json.decode(response.body);
-    //print(responseJSON);
+    if(connectivityResult == ConnectivityResult.none)
+      {
+        Navigator.pop(context);
+        storeAnswerDataLocally(answers);
+      }
+    else
+      {
+        ApiBaseHelper helper = ApiBaseHelper();
+        var response =
+        await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
+        Navigator.pop(context);
+        var responseJSON = json.decode(response.body);
+        //print(responseJSON);
 
-    if (responseJSON['code'] == 200) {
-      Toast.show("success !!",
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.green);
+        if (responseJSON['code'] == 200) {
+          Toast.show("success !!",
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.green);
 
-      Navigator.pop(context);
-    } else {
-      Toast.show(responseJSON['message'],
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.red);
-    }
+          Navigator.pop(context);
+        } else {
+          Toast.show(responseJSON['message'],
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.red);
+        }
+      }
+
+
+
+
+
   }
 
 
+  storeAnswerDataLocally(List<dynamic> answerList) async {
+    APIDialog.showAlertDialog(context, 'Please wait...');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String json = jsonEncode(answerList);
+    await preferences.setString('answer_list',json);
+    Navigator.pop(context);
 
+    Toast.show("success !!",
+        duration: Toast.lengthLong,
+        gravity: Toast.bottom,
+        backgroundColor: Colors.green);
+    Navigator.pop(context);
+
+  }
 
 
   _uploadFiles() async {

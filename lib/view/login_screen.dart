@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:qsurvey_flutter/utils/app_theme.dart';
 import 'package:qsurvey_flutter/view/dashboard_screen.dart';
 import 'package:qsurvey_flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../network/Utils.dart';
 import '../network/api_dialog.dart';
@@ -228,6 +229,8 @@ class LoginState extends State<LoginScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
       surveyDataList = responseJSON['data'];
+      storeDataLocally();
+
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => DashboardScreen(true,empId,surveyDataList)),
               (Route<dynamic> route) => false);
@@ -237,5 +240,12 @@ class LoginState extends State<LoginScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.red);
     }
+  }
+
+  storeDataLocally() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String json = jsonEncode(surveyDataList[0]['questions']);
+    await preferences.setString('question_list',json);
+
   }
 }

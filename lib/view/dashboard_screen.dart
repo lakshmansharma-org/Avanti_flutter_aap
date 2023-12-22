@@ -287,10 +287,62 @@ class DashboardState extends State<DashboardScreen> {
     Future.delayed(Duration(seconds: 0), () {
       getData();
       print(widget.surveyDataList);
+      checkAnswerStatus();
     });
 
 
   }
+
+  checkAnswerStatus() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    var data=prefs.getString("answer_list");
+
+    if(data!=null || data!="")
+      {
+        List<dynamic> list2 = jsonDecode(data!);
+        submitAnswers(list2);
+      }
+  }
+
+  submitAnswers(List<dynamic> answers) async {
+
+
+    String? empId=await MyUtils.getSharedPreferences("empId");
+    String? name=await MyUtils.getSharedPreferences("name");
+
+    var requestModel = {
+      "name": name,
+      "id": empId,
+      "answer" : answers
+    };
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    //print(responseJSON);
+
+    if (responseJSON['code'] == 200) {
+      Toast.show("success !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+
+
+      MyUtils.saveSharedPreferences("answer_list", "");
+    } else {
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+
+
+
+
+  }
+
+
   showLogOutDialog(BuildContext context) {
     Widget cancelButton = GestureDetector(
         onTap: (){
