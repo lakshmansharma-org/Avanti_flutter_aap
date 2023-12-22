@@ -39,6 +39,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   List<TextEditingController> _controllerTab3=[];
   List<TextEditingController> _controllerTab4=[];
   List<XFile> imageList=[];
+  List<XFile> pickedImage=[];
   List<XFile> imageList1=[];
   var question1Controller = TextEditingController();
   var question2Controller = TextEditingController();
@@ -13038,10 +13039,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
-                    if (pickedFile != null) {
+                    XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+                    if (pickedImage != null) {
                       setState(() {
-                        imageList!.add(pickedFile); // Add picked image to the list
+                        imageList.add(pickedImage); // Add picked image to the list
                       });
                     }
 
@@ -13056,8 +13057,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final List<XFile> images = await picker.pickMultiImage();
-                    imageList=images;
+                    pickedImage = await picker.pickMultiImage();
+                    imageList=imageList+pickedImage;
                     setState(() {
 
                     });
@@ -13107,7 +13108,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final List<XFile> images = await picker.pickMultiImage();
-                    imageList1=images;
+                    imageList1= imageList1+images;
                     setState(() {
 
                     });
