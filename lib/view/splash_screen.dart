@@ -1,6 +1,7 @@
 
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,7 @@ import 'package:qsurvey_flutter/view/dashboard_screen.dart';
 
 
 import 'package:qsurvey_flutter/view/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget
 {
@@ -50,13 +52,22 @@ class SplashState extends State<SplashScreen>
     String? empId = await MyUtils.getSharedPreferences("empId");
     if(loginStatusValue==true)
     {
+
+
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      var data=preferences.getString("question_list");
+      List<dynamic> list2 = jsonDecode(data!);
+      //var questionList=list2;
+      setState(() {
+
+      });
       Timer(
-          Duration(seconds: 2),
-              () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => LoginScreen())));
-      // Duration(seconds: 2),
-      //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //     builder: (BuildContext context) => DashboardScreen(true,empId!,surveyDataList))));
+          // Duration(seconds: 2),
+          //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //     builder: (BuildContext context) => LoginScreen())));
+      Duration(seconds: 2),
+          () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => DashboardScreen(true,empId!,list2))));
 
     }
     else

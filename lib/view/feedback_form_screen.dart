@@ -289,6 +289,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     double screenHeight = MediaQuery
         .of(context)
         .size
@@ -12706,10 +12707,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   checkInternet()async{
-
+    bool? loginStatusValue=await MyUtils.getSharedPreferencesBool("loginStatus");
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       print("Data Fetched Locally");
+      fetchLocalData();
+    }
+    else if(loginStatusValue == true){
       fetchLocalData();
     }
 

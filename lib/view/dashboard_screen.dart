@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,12 @@ class DashboardScreen extends StatefulWidget{
 class DashboardState extends State<DashboardScreen> {
   @override
   var usernameController = TextEditingController();
+  bool isInternetConnected = true;
   String todayCount = '';
   String totalCount = '';
   bool isLoading = false;
   Widget build(BuildContext context) {
+    ToastContext().init(context);
 
     return Container(
       color: AppTheme.blueColor,
@@ -255,7 +258,7 @@ class DashboardState extends State<DashboardScreen> {
                 SizedBox(height: 40.0),
                 GestureDetector(
                   onTap: () {
-                    getData();
+                   checkAnswerStatus();
                   },
                   child: Container(
                       margin:
@@ -285,12 +288,29 @@ class DashboardState extends State<DashboardScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 0), () {
-      getData();
-      print(widget.surveyDataList);
-      checkAnswerStatus();
+      checkInternetConnection();
+     // print(widget.surveyDataList);
+      //checkAnswerStatus();
     });
 
 
+  }
+  Future<void> checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        isInternetConnected = false;
+      });
+      Toast.show("Please connect internet !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    } else {
+      setState(() {
+        isInternetConnected = true;
+      });
+      getData();
+    }
   }
 
   checkAnswerStatus() async {
@@ -301,7 +321,9 @@ class DashboardState extends State<DashboardScreen> {
       {
         List<dynamic> list2 = jsonDecode(data!);
         submitAnswers(list2);
+
       }
+
   }
 
   submitAnswers(List<dynamic> answers) async {
@@ -329,7 +351,9 @@ class DashboardState extends State<DashboardScreen> {
           backgroundColor: Colors.green);
 
 
+
       MyUtils.saveSharedPreferences("answer_list", "");
+      getData();
     } else {
       Toast.show(responseJSON['message'],
           duration: Toast.lengthLong,
@@ -395,6 +419,7 @@ class DashboardState extends State<DashboardScreen> {
     await helper.get('avanti/getDetails'+'?id='+widget.id,context);
     var responseJSON = json.decode(response.body);
     if (responseJSON["code"] == 200){
+
       Navigator.of(context).pop();
     }
     todayCount = responseJSON["data"]["todayCount"].toString();
