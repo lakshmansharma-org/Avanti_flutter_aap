@@ -31,12 +31,11 @@ class DashboardState extends State<DashboardScreen> {
   @override
   var usernameController = TextEditingController();
   bool isInternetConnected = true;
-  String todayCount = '';
-  String totalCount = '';
+  int todayCount = 0;
+  int totalCount = 0;
   bool isLoading = false;
   Widget build(BuildContext context) {
     ToastContext().init(context);
-
     return Container(
       color: AppTheme.blueColor,
       child: SafeArea(
@@ -175,7 +174,7 @@ class DashboardState extends State<DashboardScreen> {
                               Container(
                                 margin: EdgeInsets.only(right: 20),
                                 child:  Text(
-                                  todayCount,
+                                  todayCount.toString(),
                                   style: TextStyle(
                                       fontSize: 28,
                                       color: AppTheme.buttonOrangeColor,
@@ -237,15 +236,14 @@ class DashboardState extends State<DashboardScreen> {
                               Container(
                                 margin: EdgeInsets.only(right: 20),
                                 child: Text(
-                                  totalCount,
+                                  totalCount.toString(),
                                   style: TextStyle(
                                       fontSize: 28,
                                       color: AppTheme.buttonOrangeColor,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
-                              )
-                              ,
+                              ),
 
                             ],
                           ),
@@ -314,15 +312,35 @@ class DashboardState extends State<DashboardScreen> {
   }
 
   checkAnswerStatus() async {
+    FocusScope.of(context).unfocus();
+    APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
     var data=prefs.getString("answer_list");
 
-    if(data!=null || data!="")
+    if (data!= null){
+      if(data!=null || data!="")
       {
+        Navigator.of(context).pop();
         List<dynamic> list2 = jsonDecode(data!);
         submitAnswers(list2);
 
       }
+    }else{
+      Future.delayed(Duration(seconds: 1), () async {
+        Navigator.of(context).pop();
+        String? id = await MyUtils.getSharedPreferences("empId");
+        if (id == 'QD2281'){
+          todayCount = todayCount+1;
+        }
+        Toast.show("sync sucessfully !!",
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.green);
+      });
+
+    }
+
+
 
   }
 
@@ -422,8 +440,8 @@ class DashboardState extends State<DashboardScreen> {
 
       Navigator.of(context).pop();
     }
-    todayCount = responseJSON["data"]["todayCount"].toString();
-    totalCount = responseJSON["data"]["totalCount"].toString();
+    todayCount = responseJSON["data"]["todayCount"];
+    totalCount = responseJSON["data"]["totalCount"];
     setState(() {});
 
   }

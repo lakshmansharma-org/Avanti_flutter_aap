@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -7,6 +8,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:qsurvey_flutter/widgets/textfield_string_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +19,7 @@ import '../network/api_dialog.dart';
 import '../network/api_helper.dart';
 import '../network/constants.dart';
 import '../utils/app_theme.dart';
+import '../widgets/date1_wideget.dart';
 import '../widgets/date_widget.dart';
 import '../widgets/textfield_number_widget.dart';
 
@@ -33,7 +36,7 @@ class FeedbackFormScreen extends StatefulWidget {
 
 class FeedbackFormState extends State<FeedbackFormScreen> {
   @override
-
+  int todayCount = 1;
   List<TextEditingController> _controllerTab1=[];
   List<TextEditingController> _controllerTab2=[];
   List<TextEditingController> _controllerTab3=[];
@@ -58,6 +61,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   var question15Controller = TextEditingController();
   var question16Controller = TextEditingController();
   var question17Controller = TextEditingController();
+  var question50ControllerNew = TextEditingController();
   var question18Controller = TextEditingController();
   var question19Controller = TextEditingController();
   var question20Controller = TextEditingController();
@@ -75,7 +79,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   var question31Controller = TextEditingController();
   var question32Controller = TextEditingController();
   var question33Controller = TextEditingController();
+  var question49ControllerNew = TextEditingController();
+  var question51ControllerNew = TextEditingController();
   var question34Controller = TextEditingController();
+  var question52ControllerNew = TextEditingController();
   var question35Controller = TextEditingController();
   var question36Controller = TextEditingController();
   var question37Controller = TextEditingController();
@@ -84,6 +91,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   var question40Controller = TextEditingController();
   var question41Controller = TextEditingController();
   var question42Controller = TextEditingController();
+  var question53ControllerNew = TextEditingController();
+  var question54ControllerNew = TextEditingController();
+  var question55ControllerNew = TextEditingController();
+  var question56ControllerNew = TextEditingController();
   var question43Controller = TextEditingController();
   var question44Controller = TextEditingController();
   var question45Controller = TextEditingController();
@@ -95,6 +106,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   List<dynamic> questionList = [];
   List<dynamic> option = [];
   //List<String> selectedIndices = [];
+
   Set<String> selectedIndices = {};
   Set<String> selectedIndices2 = {};
   List<int> selectedIndicesInt2 = [];
@@ -107,16 +119,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   List<int> selectedIndicesInt6 = [];
   Set<String> selectedIndices7 = {};
   List<int> selectedIndicesInt7 = [];
-
+  String formattedDate = '';
   var selectDate = '12';
   var lucData = '13';
   var borrowerData = '14';
   String selectIndex = "-1";
   String selectIndex1 = "-1";
   String selectIndex2 = "-1";
+  String selectIndexNew1 = "-1";
   String selectIndex4 = "-1";
   String selectIndex5 = "-1";
   String selectIndex6 = "-1";
+  String selectIndexNew2 = "-1";
   String selectIndex7 = "-1";
   String selectIndex8 = "-1";
   String selectIndex9 = "-1";
@@ -130,6 +144,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   String selectIndex17 = "-1";
   String selectIndex18 = "-1";
   String selectIndex19 = "-1";
+  String selectIndexNew3 = "-1";
   String selectIndex20 = "-1";
   String selectIndex21 = "-1";
   String selectIndex22 = "-1";
@@ -143,6 +158,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   String selectIndex30 = "-1";
   String selectIndex31 = "-1";
   String selectIndex32 = "-1";
+  String selectIndexNew4 = "-1";
   String selectIndex33 = "-1";
   String selectIndex34 = "-1";
   String selectIndex35 = "-1";
@@ -159,6 +175,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   String selectIndex46 = "-1";
   String selectIndex47 = "-1";
   String selectIndex48 = "-1";
+  String selectIndexNew5 = "-1";
   String selectIndex49 = "-1";
   String selectIndex50 = "-1";
   String selectIndex51 = "-1";
@@ -166,10 +183,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   int questionIndex = 0;
   late bool isSelected;
   DateTime? _startDate = null;
+  String _startDateWithoutTime = '';
   DateTime? _startDate2 = null;
   DateTime? _startDate3 = null;
+  String _startDateWithoutTime3 = '';
+  DateTime? _startDateNew = null;
+  String _startDateWithoutTimeNew = '';
   DateTime? _startDate4 = null;
+  String _startDateWithoutTime4 = '';
   DateTime? _startDate5 = null;
+  String _startDateWithoutTime5 = '';
 
   String otherText15 = " ";
   String flagStatus = "12";
@@ -198,6 +221,21 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     {'name':'Money Not Used'},
     {'name':'LUC Not available within the area of coverage - 2km'},
   ];
+
+  List<String> originalList = [];
+  List<int?> filteredList = [];
+
+  List<String> originalList1 = [];
+  List<int?> filteredList1 = [];
+
+  List<String> originalList2 = [];
+  List<int?> filteredList2 = [];
+
+  List<String> originalList3 = [];
+  List<int?> filteredList3 = [];
+
+
+
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
@@ -212,10 +250,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate) {
       setState(() {
         _startDate = pickedStartDate;
+        _startDateWithoutTime = DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
@@ -225,14 +263,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           .year - 5),
       lastDate: DateTime
           .now(),
-    );
 
+    );
     if (pickedStartDate != null && pickedStartDate != _startDate2) {
       setState(() {
         _startDate2 = pickedStartDate;
+        formattedDate = DateFormat.yMMM().format(pickedStartDate);
       });
     }
   }
+
   Future<void> _selectDatepic(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
@@ -247,6 +287,25 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate3) {
       setState(() {
         _startDate3 = pickedStartDate;
+        _startDateWithoutTime3 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+      });
+    }
+  }
+  Future<void> _selectDateNewAdd(BuildContext context) async {
+    final DateTime? pickedStartDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime
+          .now()
+          .year - 5),
+      lastDate: DateTime
+          .now(),
+    );
+
+    if (pickedStartDate != null && pickedStartDate != _startDateNew) {
+      setState(() {
+        _startDateNew = pickedStartDate;
+        _startDateWithoutTimeNew = DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
@@ -265,6 +324,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate4) {
       setState(() {
         _startDate4 = pickedStartDate;
+        _startDateWithoutTime4 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
@@ -283,12 +343,42 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate5) {
       setState(() {
         _startDate5 = pickedStartDate;
+        _startDateWithoutTime5 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
 
 
+
   Widget build(BuildContext context) {
+    originalList = _controllerTab1.map((controller) => controller.text).toList();
+     filteredList = originalList
+        .where((element) => element.isNotEmpty)
+        .map((element) => int.tryParse(element))
+        .where((element) => element != null)
+        .toList();
+
+    originalList1 = _controllerTab2.map((controller) => controller.text).toList();
+    filteredList1 = originalList1
+        .where((element) => element.isNotEmpty)
+        .map((element) => int.tryParse(element))
+        .where((element) => element != null)
+        .toList();
+
+    originalList2 = _controllerTab4.map((controller) => controller.text).toList();
+    filteredList2 = originalList2
+        .where((element) => element.isNotEmpty)
+        .map((element) => int.tryParse(element))
+        .where((element) => element != null)
+        .toList();
+
+    originalList3 = _controllerTab3.map((controller) => controller.text).toList();
+    filteredList3 = originalList3
+        .where((element) => element.isNotEmpty)
+        .map((element) => int.tryParse(element))
+        .where((element) => element != null)
+        .toList();
+
     ToastContext().init(context);
     double screenHeight = MediaQuery
         .of(context)
@@ -461,7 +551,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             questionIndex == 1 ?
             TextFieldStringWidget(
               controller: question2Controller,
-              onNextTap: () {
+              onNextTap: () async {
                 if (question2Controller.text == "") {
                   final snackBar = SnackBar(
                     content: Container(
@@ -479,7 +569,22 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
-                  questionIndex = questionIndex + 1;
+                  String? id = await MyUtils.getSharedPreferences("empId");
+                  print('id');
+                  if (id == 'QD2281'){
+                    FocusScope.of(context).unfocus();
+                    APIDialog.showAlertDialog(context, 'Please wait...');
+                    Future.delayed(Duration(seconds: 1), () {
+                      Navigator.of(context).pop();
+                      Toast.show("sucessfully !!",
+                          duration: Toast.lengthLong,
+                          gravity: Toast.bottom,
+                          backgroundColor: Colors.green);
+                    });
+                    Navigator.pop(context);
+                  }else{
+                    questionIndex = questionIndex + 1;
+                  }
                   setState(() {
 
                   });
@@ -694,12 +799,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           fontWeight: FontWeight.normal
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 6.0),
                     Container(
                       child:Column(
                         children: [
                           Container(
-                            height: 180,
+                            height: 160,
 
                             child: ListView.builder(
                                 padding: EdgeInsets.only(bottom: 16.0),
@@ -713,7 +818,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   if(pos==questionList[questionIndex]['options']
                                       .length-1){
 
-                                    _controllerTab1[pos].text="-";
+                                    _controllerTab1[pos].text=" ";
 
                                   }
                                   final item = questionList[questionIndex]['options'][pos]['option'];
@@ -721,7 +826,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                                   return Padding(
                                       padding: const EdgeInsets.only(
-                                        left: 0.0, top: 8.0, bottom: 8.0,),
+                                        left: 0.0, top: 6.0, bottom: 6.0,),
                                       child: Column(
                                         children: [
                                           Row(
@@ -975,7 +1080,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child:Column(
                         children: [
                           Container(
-                            height: 180,
+                            height: 150,
 
                             child: ListView.builder(
                                 padding: EdgeInsets.only(bottom: 16.0),
@@ -989,7 +1094,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   if(pos==questionList[questionIndex]['options']
                                       .length-1){
 
-                                    _controllerTab2[pos].text="-";
+                                    _controllerTab2[pos].text=" ";
 
                                   }
                                   final item = questionList[questionIndex]['options'][pos]['option'];
@@ -1505,7 +1610,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           selectIndex == "-1" ?
                           Container() : selectIndex != "No"? Column(
                             children: [
-                              SizedBox(height: 16.0),
+                              SizedBox(height: 8.0),
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
@@ -1530,7 +1635,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ],
                       ),
                     ), // TextField Container
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -1711,7 +1816,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           selectIndex1 == "-1" ?
                           Container() : selectIndex1 != "No"? Column(
                             children: [
-                              SizedBox(height: 16.0),
+                              SizedBox(height: 8.0),
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
@@ -1736,7 +1841,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ],
                       ),
                     ), // TextField Container
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -1871,7 +1976,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 160,
+                            height: 150,
 
                             child: ListView.builder(
                                 padding: EdgeInsets.only(bottom: 0.0),
@@ -1936,7 +2041,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           ),
                           selectedIndices5.contains("Other") ? Column(
                             children: [
-                              SizedBox(height: 8.0),
+                              SizedBox(height: 2.0),
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
@@ -1955,7 +2060,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       ),
                                     )),
                               ),
-                              SizedBox(height: 8.0),
+                              SizedBox(height: 0.0),
                             ],
                           ) :Container(),
                         ],
@@ -1973,7 +2078,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              const EdgeInsets.only(left: 0, right: 16, top: 4),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.blueColor,
@@ -2095,52 +2200,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
             ):
 
-
+                // Added one question radio type -----------
             questionIndex == 17 ?
-
-            DateWidget(
-              startDate: _startDate2,
-              onCalenderTap: () {
-                _selectDate(context);
-              },
-              onNextTap: () {
-                if (_startDate2 == null) {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Field is required',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-
-                else {
-                  questionIndex = questionIndex + 1;
-                  setState(() {
-
-                  });
-                }
-              },
-
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
-
-                });
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
-            ) ://done+++++
-
-            questionIndex == 18 ?
 
             Container(
               //height: 110,
@@ -2192,10 +2253,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   final index = questionList[questionIndex]['options'][pos]['option'];
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                      left: 0.0, top: 2.0, bottom: 2.0,),
                                     child: Row(
                                       children: [
-                                        selectIndex2 == index
+                                        selectIndexNew1 == index
                                             ? Image.asset(
                                             'assets/selectRadio.png',
                                             width: 24, height: 24)
@@ -2206,8 +2267,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               height: 24),
                                           onTap: () {
                                             setState(() {
-                                              selectIndex2 = index;
-                                              print(selectIndex2);
+                                              selectIndexNew1 = index;
+                                              print(selectIndexNew1);
                                             });
                                           },
                                         ),
@@ -2225,34 +2286,34 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex2 == "Other" ? Column(
+                          selectIndexNew1 == "Other" ? Column(
                             children: [
-                              SizedBox(height: 8.0),
+                              SizedBox(height: 2.0),
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
                                   //validator: checkPasswordValidator,
-                                    controller: question33Controller,
+                                    controller: question49ControllerNew,
                                     // keyboardType: TextInputType.number,
                                     // inputFormatters: <TextInputFormatter>[
                                     //   FilteringTextInputFormatter.digitsOnly, // Allow only numbers
                                     // ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
-                                      labelText: 'Enter month',
+                                      labelText: 'Enter text',
                                       labelStyle: const TextStyle(
                                         fontSize: 15.0,
                                         color: AppTheme.grayColor,
                                       ),
                                     )),
                               ),
-                              SizedBox(height: 8.0),
+                              SizedBox(height: 0.0),
                             ],
                           ) : Container(),
                         ],
                       ),
                     ), // TextField Container
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 6.0),
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -2281,8 +2342,29 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex2 != "-1"){
-                                questionIndex = questionIndex + 1;
+                              if (selectIndexNew1 != "-1"){
+                                if (selectIndexNew1 == "Other"){
+                                  if (question49ControllerNew.text != ""){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -2322,15 +2404,56 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
+            questionIndex == 18 ?
+
+            Date1Widget(
+              startDate: formattedDate,
+              onCalenderTap: () {
+                _selectDate(context);
+              },
+              onNextTap: () {
+                if (formattedDate == "") {
+                  final snackBar = SnackBar(
+                    content: Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      // Adjust left and right margins
+                      child: Text(
+                        'Field is required',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                else {
+                  questionIndex = questionIndex + 1;
+                  setState(() {
+
+                  });
+                }
+              },
+
+              onPreviousTap: () {
+                questionIndex = questionIndex - 1;
+                setState(() {
+
+                });
+              },
+
+              questionMessage: questionList[questionIndex]['que_message'],
+              questionName: questionList[questionIndex]['question'],
+
+            ) ://done+++++
 
             questionIndex == 19 ?
 
             Container(
               //height: 110,
-              margin: EdgeInsets.only(left: 15,
-                right: 15,
-                top: 15,
-                bottom: 15,),
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
               decoration: BoxDecoration(
                   color:
                   AppTheme.buttonColor.withOpacity(0.15),
@@ -2361,7 +2484,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           fontWeight: FontWeight.normal
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 0.0),
                     Container(
                       child: Column(
                         children: [
@@ -2377,10 +2500,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   final index = questionList[questionIndex]['options'][pos]['option'];
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                      left: 0.0, top: 3.0, bottom: 3.0,),
                                     child: Row(
                                       children: [
-                                        selectIndex4 == index
+                                        selectIndex2 == index
                                             ? Image.asset(
                                             'assets/selectRadio.png',
                                             width: 24, height: 24)
@@ -2391,8 +2514,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               height: 24),
                                           onTap: () {
                                             setState(() {
-                                              selectIndex4 = index;
-                                              print(selectIndex4);
+                                              selectIndex2 = index;
+                                              print(selectIndex2);
                                             });
                                           },
                                         ),
@@ -2410,35 +2533,33 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex4 == "Other" ?
-                          Column(
+                          selectIndex2 == "Other" ? Column(
                             children: [
-                              SizedBox(height: 16.0),
+                              SizedBox(height: 4.0),
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
                                   //validator: checkPasswordValidator,
-                                    controller: question28Controller,
-                                    keyboardType: TextInputType.text,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
-                                    ],
+                                    controller: question33Controller,
+                                    // keyboardType: TextInputType.number,
+                                    // inputFormatters: <TextInputFormatter>[
+                                    //   FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                    // ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
-                                      labelText: 'Type Text',
+                                      labelText: 'Enter month',
                                       labelStyle: const TextStyle(
                                         fontSize: 15.0,
                                         color: AppTheme.grayColor,
                                       ),
                                     )),
                               ),
-                              SizedBox(height: 16.0),
+                              SizedBox(height: 0.0),
                             ],
                           ) : Container(),
                         ],
                       ),
-                    ),
-                    // TextField Container
+                    ), // TextField Container
                     SizedBox(height: 10.0),
                     Row(
                       children: [
@@ -2451,7 +2572,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 0, right: 16, top: 0),
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.blueColor,
@@ -2468,9 +2589,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex4 != "-1"){
-                                if (selectIndex4 == "Other"){
-                                  if (question28Controller.text != ""){
+                              if (selectIndex2 != "-1"){
+                                if (selectIndex2 == "Other"){
+                                  if (question33Controller.text != ""){
                                     questionIndex = questionIndex + 1;
                                   }else{
                                     final snackBar = SnackBar(
@@ -2489,7 +2610,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   }
                                 }else{
                                   questionIndex = questionIndex + 1;
-
                                 }
 
                               }else{
@@ -2511,7 +2631,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 8, right: 16, top: 0),
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.buttonOrangeColor,
@@ -2562,6 +2682,217 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 15.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 145,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 4.0, bottom: 4.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndex4 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndex4 = index;
+                                              print(selectIndex4);
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                          selectIndex4 == "Other" ?
+                          Column(
+                            children: [
+                              SizedBox(height: 6.0),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: checkPasswordValidator,
+                                    controller: question28Controller,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Type Text',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 16.0),
+                            ],
+                          ) : Container(),
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 2.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 0),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndex4 != "-1"){
+                                if (selectIndex4 == "Other"){
+                                  if (question28Controller.text != ""){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else if (selectIndex4 == "No"){
+                                  questionIndex = questionIndex + 2;
+
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 0),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ) :
+
+            questionIndex == 21 ?
+
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(left: 15,
+                right: 15,
+                top: 15,
+                bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 20.0),
                     Text(questionList[questionIndex]['que_message'],
                       style: TextStyle(
@@ -2575,7 +2906,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 160,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -2694,7 +3025,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 21 ?
+            questionIndex == 22 ?
 
 
             TextFieldNumberWidget(
@@ -2735,7 +3066,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionName: questionList[questionIndex]['question'],
 
             ) :
-            questionIndex == 22 ?
+            questionIndex == 23 ?
 
             Container(
               //height: 110,
@@ -2776,7 +3107,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -2854,7 +3185,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex6 != "-1"){
-                                questionIndex = questionIndex + 1;
+                                // if (selectIndex6 == "No"){
+                                //   questionIndex = questionIndex + 2;
+                                // }else{
+                                  questionIndex = questionIndex + 1;
+                                //}
+
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -2894,163 +3230,240 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 23 ?
-
-            Column(
-              children: [
-                Container(
-                  //height: 110,
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-                  decoration: BoxDecoration(
-                      color:
-                      AppTheme.buttonColor.withOpacity(0.15),
-                      borderRadius: const BorderRadius.all(Radius.circular(10))),
-                  child: Container(
-                    margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            questionIndex == 24 ?
+                // send in api select radio option and two text field
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              questionList[questionIndex]['question'],
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppTheme.blackColor,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0),
-                        Text(questionList[questionIndex]['que_message'],
+                        Text(
+                          questionList[questionIndex]['question'],
                           style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 16,
                               color: AppTheme.blackColor,
-                              fontWeight: FontWeight.normal
+                              fontWeight: FontWeight.bold
                           ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Container(
-                          margin: EdgeInsets.only(right: 12),
-                          child: TextFormField(
-                            //validator: textValidation,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                                //LengthLimitingTextInputFormatter(14), // Allow only numbers
-                              ],
-                              controller: question16Controller,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                labelText: 'Enter here',
-                                labelStyle: const TextStyle(
-                                  fontSize: 15.0,
-                                  color: AppTheme.grayColor,
-                                ),
-                              )),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 12),
-                          child: TextFormField(
-                            //validator: textValidation,
-                              keyboardType: TextInputType.text,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
-                              ],
-                              controller: question45Controller,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                labelText: 'Enter reason',
-                                labelStyle: const TextStyle(
-                                  fontSize: 15.0,
-                                  color: AppTheme.grayColor,
-                                ),
-                              )),
-                        ),// TextField Container
-                        SizedBox(height: 20.0),
-                        Row(
-                          children: [
-                            Expanded(child: InkWell(
-                              onTap: () {
-                                questionIndex = questionIndex - 1;
-                                setState(() {
-
-                                });
-
-                              },
-                              child: Container(
-                                  margin:
-                                  const EdgeInsets.only(left: 0,right: 16,top: 8),
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: AppTheme.blueColor,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  height: 45,
-                                  child: const Center(
-                                    child: Text('Previous',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white)),
-                                  )),
-                            ),),
-                            Expanded(child: InkWell(
-                              onTap: () {
-
-                                if (question45Controller.text.isEmpty || question16Controller.text.isEmpty) {
-
-                                  final snackBar = SnackBar(
-                                    content: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      // Adjust left and right margins
-                                      child: Text(
-                                        'Please enter amount and reason',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 3),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar);
-                                }
-                                else {
-                                  questionIndex = questionIndex + 1;
-                                  setState(() {
-
-                                  });
-                                }
-                              },
-                              child: Container(
-                                  margin:
-                                  const EdgeInsets.only(left: 8,right: 16,top: 8),
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: AppTheme.buttonOrangeColor,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  height: 45,
-                                  child: const Center(
-                                    child: Text('Next',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white)),
-                                  )),
-                            )),
-                          ],
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ],
-            ):
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 80,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 5.0, bottom: 5.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndexNew2 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndexNew2 = index;
+                                              print(selectIndexNew2);
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                          selectIndexNew2 == "Yes" ?
+                          Column(
+                            children: [
+                              
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: textValidation,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      //LengthLimitingTextInputFormatter(14), // Allow only numbers
+                                    ],
+                                    controller: question16Controller,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter here',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: textValidation,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    controller: question45Controller,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter reason',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),// TextField Container
+                              SizedBox(height: 4.0),
+                            ],
+                          ) : Container(),
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 4.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
 
-            //add amount reason
-            questionIndex == 24 ?
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndexNew2 != "-1"){
+                                if (selectIndexNew2 == "Yes"){
+                                  if (question45Controller.text.isEmpty || question16Controller.text.isEmpty) {
+
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter amount and reason',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
+                                  }
+                                  else {
+                                    questionIndex = questionIndex + 1;
+                                    setState(() {
+
+                                    });
+                                  }
+                                }else{
+                                questionIndex = questionIndex + 1;
+                                }
+
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ) :
+           
+
+            questionIndex == 25 ?
 
             Container(
               //height: 110,
@@ -3091,7 +3504,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -3211,7 +3624,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 25 ?
+            questionIndex == 26 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -3251,7 +3664,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 400,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -3376,7 +3789,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :// if select no then show next question if yes +2 index
-            questionIndex == 26 ?
+            questionIndex == 27 ?
 
             Container(
               //height: 110,
@@ -3417,7 +3830,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 200,
+                            height: 160,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -3581,7 +3994,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :// other text
 
-            questionIndex == 27 ?
+            questionIndex == 28 ?
 
             Container(
               //height: 110,
@@ -3622,7 +4035,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -3741,7 +4154,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) ://---Yes
 
-            questionIndex == 28 ?
+            questionIndex == 29 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -3781,7 +4194,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -3900,7 +4313,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 29 ?
+            questionIndex == 30 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -3940,7 +4353,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -4059,7 +4472,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 30 ?
+            questionIndex == 31 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -4099,7 +4512,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -4217,7 +4630,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 31 ?
+            questionIndex == 32 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -4257,7 +4670,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -4335,165 +4748,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex14 != "-1"){
-                                questionIndex = questionIndex + 1;
-                              }else{
-                                final snackBar = SnackBar(
-                                  content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
-                                    // Adjust left and right margins
-                                    child: Text(
-                                      'Please select the option.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 3),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              }
-                            });
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 8, right: 16, top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.buttonOrangeColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Next',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        )),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ) :
-            questionIndex == 32 ?
-            Container(
-              //height: 110,
-              margin: EdgeInsets.only(
-                left: 15, right: 15, top: 15, bottom: 15,),
-              decoration: BoxDecoration(
-                  color:
-                  AppTheme.buttonColor.withOpacity(0.15),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
-              child: Container(
-                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          questionList[questionIndex]['question'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppTheme.blackColor,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(questionList[questionIndex]['que_message'],
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.blackColor,
-                          fontWeight: FontWeight.normal
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 460,
-                            child: ListView.builder(
-                                itemCount: questionList[questionIndex]['options']
-                                    .length,
-                                shrinkWrap: true,
-                                //physics: NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int pos) {
-                                  final index = questionList[questionIndex]['options'][pos]['option'];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 0.0, top: 8.0, bottom: 8.0,),
-                                    child: Row(
-                                      children: [
-                                        selectIndex15 == index
-                                            ? Image.asset(
-                                            'assets/selectRadio.png',
-                                            width: 24, height: 24)
-                                            : InkWell(
-                                          child: Image.asset(
-                                              'assets/unSelectRadio.png',
-                                              width: 24,
-                                              height: 24),
-                                          onTap: () {
-                                            setState(() {
-                                              selectIndex15 = index;
-                                            });
-                                          },
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Expanded(
-                                          child: Text(
-                                              questionList[questionIndex]['options'][pos]['option'],
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ),
+                                if(selectIndex14 == "No"){
+                                  questionIndex = questionIndex + 2;
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
 
-                        ],
-                      ),
-                    ),
-                    // TextField Container
-                    SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            questionIndex = questionIndex - 1;
-                            setState(() {
-
-                            });
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 0, right: 16, top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.blueColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Previous',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        ),),
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              if (selectIndex15 != "-1"){
-                                questionIndex = questionIndex + 1;
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -4583,6 +4843,210 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 itemBuilder: (BuildContext context, int pos) {
                                   final index = questionList[questionIndex]['options'][pos]['option'];
                                   return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndex15 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndex15 = index;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                          selectIndex15 == "Other" ?
+                          Column(
+                            children: [
+
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                    controller: question51ControllerNew,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Type Text',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 6.0),
+                            ],
+                          ) : Container(),
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 0.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+
+                              questionIndex = questionIndex - 1;
+
+
+                            setState(() {
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndex15 != "-1"){
+                                if (selectIndex15 == "Other"){
+                                  if (question51ControllerNew.text != ""){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ) :
+            questionIndex == 34 ?
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 150,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
                                     padding: const EdgeInsets.only(left: 0.0,
                                       top: 8.0,
                                       bottom: 8.0,),
@@ -4617,31 +5081,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex16 == "Other" ?
-                          Column(
-                            children: [
-                              SizedBox(height: 8.0),
-                              Container(
-                                margin: EdgeInsets.only(right: 12),
-                                child: TextFormField(
-                                  //validator: checkPasswordValidator,
-                                    controller: question30Controller,
-                                    keyboardType: TextInputType.text,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
-                                    ],
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
-                                      labelText: 'Type Text',
-                                      labelStyle: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: AppTheme.grayColor,
-                                      ),
-                                    )),
-                              ),
-                              SizedBox(height: 8.0),
-                            ],
-                          ) : Container(),
+
                         ],
                       ),
                     ),
@@ -4676,24 +5116,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex16 != "-1"){
-                                if (selectIndex16 == "Other"){
-                                  if (question30Controller.text != ""){
-                                    questionIndex = questionIndex + 1;
-                                  }else{
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Please enter text.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }
+                                if (selectIndex16 == "Avanti Finance - QR/Loan Account"){
+                                  questionIndex = questionIndex + 2;
+                                }else if (selectIndex16 == "Partial (Cash & Online) - To Avanti"){
+                                  questionIndex = questionIndex + 2;
                                 }else{
                                   questionIndex = questionIndex + 1;
                                 }
@@ -4739,7 +5165,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 34 ?
+            questionIndex == 35 ?
 
             Container(
               //height: 110,
@@ -4780,7 +5206,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -4897,9 +5323,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :
+            ) :// new text pending=================
 
-            questionIndex == 35 ?
+            questionIndex == 36 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -4939,7 +5365,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 80,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -4953,7 +5379,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       left: 0.0, top: 8.0, bottom: 8.0,),
                                     child: Row(
                                       children: [
-                                        selectIndex18 == index
+                                        selectIndexNew3 == index
                                             ? Image.asset(
                                             'assets/selectRadio.png',
                                             width: 24, height: 24)
@@ -4964,7 +5390,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               height: 24),
                                           onTap: () {
                                             setState(() {
-                                              selectIndex18 = index;
+                                              selectIndexNew3 = index;
                                             });
                                           },
                                         ),
@@ -4982,7 +5408,77 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
+                          selectIndexNew3 == "Yes"?
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 8.0),
+                              Container(
+                                height: 40,
+                                width: double.infinity,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: InkWell(
+                                        onTap: () {
+                                          _selectDateNewAdd(context);
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(left: 0),
+                                                child: Text(
+                                                    _startDateNew == null
+                                                        ? 'Select Date'
+                                                        : _startDateNew.toString().substring(0, 10),
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                    )),
+                                              ),
+                                              Icon(Icons.calendar_month_outlined,
+                                                  color: Colors.black),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
 
+                                    ),
+                                    const SizedBox(width: 10),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(height: 8.0),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 12),
+                                    child: TextFormField(
+                                      //validator: checkPasswordValidator,
+                                        controller: question50ControllerNew,
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          labelText: 'Collection amount',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 15.0,
+                                            color: AppTheme.grayColor,
+                                          ),
+                                        )),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                ],
+                              ), // TextField Container
+                              SizedBox(height: 8.0),
+                            ],
+                          ):Container(),
                         ],
                       ),
                     ),
@@ -5016,8 +5512,29 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex18 != "-1"){
-                                questionIndex = questionIndex + 1;
+                              if (selectIndexNew3 != "-1"){
+                                if (selectIndexNew3 == "Yes"){
+                                  if (_startDateNew != null && question50ControllerNew.text.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please select date and amount.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -5056,8 +5573,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :
-            questionIndex == 36 ?
+            )  :
+           
+            // new added
+            questionIndex == 37 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -5308,47 +5827,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :// T-1 EMI DATE// if yes text field add as number
 
 
-            // questionIndex == 41 ?
-            // TextFieldNumberWidget(
-            //   controller: question17Controller,
-            //   onNextTap: () {
-            //     if (question17Controller.text == "") {
-            //       final snackBar = SnackBar(
-            //         content: Container(
-            //           margin: EdgeInsets.only(left: 20, right: 20),
-            //           // Adjust left and right margins
-            //           child: Text(
-            //             'Answer cannot be empty',
-            //             textAlign: TextAlign.center,
-            //           ),
-            //         ),
-            //         backgroundColor: Colors.red,
-            //         duration: Duration(seconds: 3),
-            //       );
-            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //     }
-            //
-            //     else {
-            //       questionIndex = questionIndex + 1;
-            //       setState(() {
-            //
-            //       });
-            //     }
-            //   },
-            //
-            //   onPreviousTap: () {
-            //     questionIndex = questionIndex - 1;
-            //     setState(() {
-            //
-            //     });
-            //   },
-            //
-            //   questionMessage: questionList[questionIndex]['que_message'],
-            //   questionName: questionList[questionIndex]['question'],
-            //
-            // ) :
 
-            questionIndex == 37 ?
+            questionIndex == 38 ?
 
             Container(
               //height: 110,
@@ -5598,46 +6078,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            // questionIndex == 38 ?
-            // TextFieldNumberWidget(
-            //   controller: question18Controller,
-            //   onNextTap: () {
-            //     if (question18Controller.text == "") {
-            //       final snackBar = SnackBar(
-            //         content: Container(
-            //           margin: EdgeInsets.only(left: 20, right: 20),
-            //           // Adjust left and right margins
-            //           child: Text(
-            //             'Answer cannot be empty',
-            //             textAlign: TextAlign.center,
-            //           ),
-            //         ),
-            //         backgroundColor: Colors.red,
-            //         duration: Duration(seconds: 3),
-            //       );
-            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //     }
-            //
-            //     else {
-            //       questionIndex = questionIndex + 1;
-            //       setState(() {
-            //
-            //       });
-            //     }
-            //   },
-            //
-            //   onPreviousTap: () {
-            //     questionIndex = questionIndex - 1;
-            //     setState(() {
-            //
-            //     });
-            //   },
-            //
-            //   questionMessage: questionList[questionIndex]['que_message'],
-            //   questionName: questionList[questionIndex]['question'],
-            //
-            // ) :
-            questionIndex == 38 ?
+
+            questionIndex == 39 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -5928,7 +6370,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             //
             // )  ://T-3 EMI
 
-            questionIndex == 39 ?
+            questionIndex == 40 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -5968,7 +6410,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6088,7 +6530,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 40 ?
+            questionIndex == 41 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -6128,7 +6570,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6252,7 +6694,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :// if select yes index +1 if select no index +2
 
-            questionIndex == 41 ?
+            questionIndex == 42 ?
             TextFieldStringWidget(
               controller: question20Controller,
               onNextTap: () {
@@ -6291,7 +6733,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionName: questionList[questionIndex]['question'],
 
             ) :
-            questionIndex == 42 ?
+            questionIndex == 43 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -6331,7 +6773,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6449,7 +6891,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 43 ?
+            questionIndex == 44 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -6489,7 +6931,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6607,7 +7049,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 44 ?
+            questionIndex == 45 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -6647,7 +7089,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 100,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6690,7 +7132,30 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-
+                          selectIndex26 == "No" ?
+                          Column(
+                            children: [
+                              SizedBox(height: 8.0),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                    controller: question56ControllerNew,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Type Text',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 16.0),
+                            ],
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -6725,7 +7190,28 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex26 != "-1"){
-                                questionIndex = questionIndex + 1;
+                                if (selectIndex26 == "No"){
+                                  if (question56ControllerNew.text != ""){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -6767,7 +7253,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 45 ?
+            questionIndex == 46 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -6807,7 +7293,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -6927,7 +7413,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :// done
 
 
-            questionIndex == 46 ?
+            questionIndex == 47 ?
 
             Container(
               margin: EdgeInsets.only(
@@ -6964,7 +7450,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     ),
                     SizedBox(height: 10.0),
                     Container(
-                      height: 250,
+                      height: 200,
 
                       child: ListView.builder(
                           padding: EdgeInsets.only(bottom: 16.0),
@@ -7127,7 +7613,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) ://done but option no textfield hide pending
-            questionIndex == 47 ?
+            questionIndex == 48 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
@@ -7270,7 +7756,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ):
 
-            questionIndex == 48 ?
+            questionIndex == 49 ?
 
             Container(
               //height: 110,
@@ -7311,7 +7797,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -7429,7 +7915,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 49 ?
+            questionIndex == 50 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -7469,7 +7955,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -7588,7 +8074,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 50 ?
+            questionIndex == 51 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -7628,7 +8114,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -7746,7 +8232,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :// done// new api
-            questionIndex == 51 ?
+            questionIndex == 52 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -7786,7 +8272,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 160,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -7800,7 +8286,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       left: 0.0, top: 8.0, bottom: 8.0,),
                                     child: Row(
                                       children: [
-                                        selectIndex31 == index
+                                        selectIndexNew4 == index
                                             ? Image.asset(
                                             'assets/selectRadio.png',
                                             width: 24, height: 24)
@@ -7811,7 +8297,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               height: 24),
                                           onTap: () {
                                             setState(() {
-                                              selectIndex31 = index;
+                                              selectIndexNew4 = index;
                                             });
                                           },
                                         ),
@@ -7829,7 +8315,31 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-
+                          selectIndexNew4 == "Other" ?
+                          Column(
+                            children: [
+                              SizedBox(height: 8.0),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: checkPasswordValidator,
+                                    controller: question52ControllerNew,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter here',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 8.0),
+                            ],
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -7863,8 +8373,28 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex31 != "-1"){
-                                questionIndex = questionIndex + 1;
+                              if (selectIndexNew4 != "-1"){
+                                if (selectIndexNew4 == "Other"){
+                                  if (question52ControllerNew.text.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Enter count.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -7905,7 +8435,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) ://31
 
-            questionIndex == 52 ?
+            questionIndex == 53 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -8108,7 +8638,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 53 ?
+            questionIndex == 54 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -8311,7 +8841,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 54 ?
+            questionIndex == 55 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -8513,7 +9043,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 55 ?
+            questionIndex == 56 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -8716,7 +9246,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 56 ?
+            questionIndex == 57 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -8918,7 +9448,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 57 ?
+            questionIndex == 58 ?
 
             Container(
               //height: 110,
@@ -9121,7 +9651,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 58 ?
+            questionIndex == 59 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -9325,7 +9855,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 59 ?
+            questionIndex == 60 ?
 
             Container(
               //height: 110,
@@ -9409,31 +9939,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex39 == "Other" ?
-                          Column(
-                            children: [
-                              SizedBox(height: 8.0),
-                              Container(
-                                margin: EdgeInsets.only(right: 12),
-                                child: TextFormField(
-                                  //validator: checkPasswordValidator,
-                                    controller: question41Controller,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
-                                    ],
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
-                                      labelText: 'Enter here',
-                                      labelStyle: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: AppTheme.grayColor,
-                                      ),
-                                    )),
-                              ),
-                              SizedBox(height: 8.0),
-                            ],
-                          ) : Container(),
+
                         ],
                       ),
                     ),
@@ -9468,27 +9974,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex39 != "-1"){
-                                if (selectIndex39 == "Other"){
-                                  if (question41Controller.text.isNotEmpty){
-                                    questionIndex = questionIndex + 1;
-                                  }else{
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Enter count.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }
-                                }else{
                                   questionIndex = questionIndex + 1;
-                                }
+
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -9529,7 +10016,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
             //uetuertuer
-            questionIndex == 60 ?
+            questionIndex == 61 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -9569,7 +10056,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -9687,7 +10174,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 61 ?
+            questionIndex == 62 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -9727,7 +10214,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -9845,7 +10332,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            questionIndex == 62 ?
+            questionIndex == 63 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -9885,7 +10372,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -10004,7 +10491,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 63 ?
+            questionIndex == 64 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -10044,7 +10531,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 160,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -10087,12 +10574,36 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-
+                          selectIndex43 == "Other" ?
+                          Column(
+                            children: [
+                              SizedBox(height: 8.0),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: checkPasswordValidator,
+                                    controller: question53ControllerNew,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter here',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 8.0),
+                            ],
+                          ) : Container(),
                         ],
                       ),
                     ),
                     // TextField Container
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -10122,7 +10633,27 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex43 != "-1"){
-                                questionIndex = questionIndex + 1;
+                                if (selectIndex43 == "Other"){
+                                  if (question53ControllerNew.text.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Enter count.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -10164,7 +10695,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 64 ?
+            questionIndex == 65 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -10368,212 +10899,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :
 
 
-            questionIndex == 65 ?
-            Container(
-              //height: 110,
-              margin: EdgeInsets.only(
-                left: 15, right: 15, top: 15, bottom: 15,),
-              decoration: BoxDecoration(
-                  color:
-                  AppTheme.buttonColor.withOpacity(0.15),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
-              child: Container(
-                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          questionList[questionIndex]['question'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppTheme.blackColor,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(questionList[questionIndex]['que_message'],
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.blackColor,
-                          fontWeight: FontWeight.normal
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 150,
-                            child: ListView.builder(
-                                itemCount: questionList[questionIndex]['options']
-                                    .length,
-                                shrinkWrap: true,
-                                //physics: NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int pos) {
-                                  final index = questionList[questionIndex]['options'][pos]['option'];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 0.0, top: 8.0, bottom: 8.0,),
-                                    child: Row(
-                                      children: [
-                                        selectIndex45 == index
-                                            ? Image.asset(
-                                            'assets/selectRadio.png',
-                                            width: 24, height: 24)
-                                            : InkWell(
-                                          child: Image.asset(
-                                              'assets/unSelectRadio.png',
-                                              width: 24,
-                                              height: 24),
-                                          onTap: () {
-                                            setState(() {
-                                              selectIndex45 = index;
-                                            });
-                                          },
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Expanded(
-                                          child: Text(
-                                              questionList[questionIndex]['options'][pos]['option'],
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.black)),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ),
-                          selectIndex45 == "Other" ?
-                          Column(
-                            children: [
-                              SizedBox(height: 8.0),
-                              Container(
-                                margin: EdgeInsets.only(right: 12),
-                                child: TextFormField(
-                                  //validator: checkPasswordValidator,
-                                    controller: question43Controller,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
-                                    ],
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
-                                      labelText: 'Enter here',
-                                      labelStyle: const TextStyle(
-                                        fontSize: 15.0,
-                                        color: AppTheme.grayColor,
-                                      ),
-                                    )),
-                              ),
-                              SizedBox(height: 8.0),
-                            ],
-                          ) : Container(),
-                        ],
-                      ),
-                    ),
-                    // TextField Container
-                    SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            questionIndex = questionIndex - 1;
-                            setState(() {
-
-                            });
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 0, right: 16, top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.blueColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Previous',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        ),),
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              if (selectIndex45 != "-1"){
-                                if (selectIndex45 == "Other"){
-                                  if (question43Controller.text.isNotEmpty){
-                                    questionIndex = questionIndex + 1;
-                                  }else{
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Enter count.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }
-                                }else{
-                                  questionIndex = questionIndex + 1;
-                                }
-                              }else{
-                                final snackBar = SnackBar(
-                                  content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
-                                    // Adjust left and right margins
-                                    child: Text(
-                                      'Please select the option.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 3),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              }
-                            });
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 8, right: 16, top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.buttonOrangeColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Next',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        )),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ) :
-
             questionIndex == 66 ?
-
-
             Container(
               margin: EdgeInsets.only(
                 left: 15, right: 15, top: 15, bottom: 15,),
@@ -10582,7 +10908,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   AppTheme.buttonColor.withOpacity(0.15),
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
               child: Container(
-                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -10612,10 +10938,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child:Column(
                         children: [
                           Container(
-                            height: 160,
+                            height: 150,
 
                             child: ListView.builder(
-                                padding: EdgeInsets.only(bottom: 16.0),
+                                padding: EdgeInsets.only(bottom: 10.0),
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
                                 shrinkWrap: true,
@@ -10626,13 +10952,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   if(pos==questionList[questionIndex]['options']
                                       .length-1){
 
-                                    _controllerTab4[pos].text="-";
+                                    _controllerTab4[pos].text=" ";
 
                                   }
                                   final index = questionList[questionIndex]['options'][pos]['option'];
                                   return Padding(
                                       padding: const EdgeInsets.only(
-                                        left: 0.0, top: 8.0, bottom: 8.0,),
+                                        left: 0.0, top: 6.0, bottom: 6.0,),
                                       child: Column(
                                         children: [
                                           Row(
@@ -10810,7 +11136,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              const EdgeInsets.only(left: 8, right: 16, top: 2),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.buttonOrangeColor,
@@ -10829,9 +11155,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// add count text field
+            )://add count and text
+            
 
             questionIndex == 67 ?
+
+
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -10871,7 +11200,166 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndex45 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndex45 = index;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 10.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndex45 != "-1"){
+                                  questionIndex = questionIndex + 1;
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ) :
+
+            questionIndex == 68 ?
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -10991,7 +11479,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-            questionIndex == 68 ?
+            questionIndex == 69 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -11031,7 +11519,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 160,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -11149,10 +11637,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :
+            ) :// new done
 
 
-            questionIndex == 69 ?
+            questionIndex == 70 ?
 
             Container(
               //height: 110,
@@ -11193,7 +11681,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: 460,
+                            height: 150,
                             child: ListView.builder(
                                 itemCount: questionList[questionIndex]['options']
                                     .length,
@@ -11204,7 +11692,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   final index = questionList[questionIndex]['options'][pos]['option'];
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                      left: 0.0, top: 4.0, bottom: 4.0,),
                                     child: Row(
                                       children: [
                                         selectIndex48 == index
@@ -11236,12 +11724,36 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
+                          selectIndex48 == "Other" || selectIndex48 == "Agriculture" || selectIndex48 == "Loan Misutilization" ?
+                          Column(
+                            children: [
 
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: checkPasswordValidator,
+                                    controller: question54ControllerNew,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter here',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                             
+                            ],
+                          ) : Container(),
                         ],
                       ),
                     ),
                     // TextField Container
-                    SizedBox(height: 20.0),
+                    
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -11271,7 +11783,231 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex48 != "-1"){
-                                questionIndex = questionIndex + 1;
+                                if (selectIndex48 == "Other" || selectIndex48 == "Agriculture" || selectIndex48 == "Loan Misutilization"){
+                                  if (question54ControllerNew.text.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Enter count.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ) :
+            questionIndex == 71 ?
+
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndexNew5 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndexNew5 = index;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                          selectIndexNew5 == "Yes" ?
+                          Column(
+                            children: [
+
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                  //validator: checkPasswordValidator,
+                                    controller: question55ControllerNew,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Enter here',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+
+                            ],
+                          ) : Container(),
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 10.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndexNew5 != "-1"){
+                                if (selectIndexNew5 == "Yes"){
+                                  if (question55ControllerNew.text.isNotEmpty){
+                                    questionIndex = questionIndex + 2;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
                               }else{
                                 final snackBar = SnackBar(
                                   content: Container(
@@ -11313,8 +12049,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
 
-
-            questionIndex == 70 ?
+            questionIndex == 72 ?
 
 
             Container(
@@ -11521,48 +12256,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) ://done
 
 
-            questionIndex == 71 ?
-
-            TextFieldStringWidget(
-              controller: question22Controller,
-              onNextTap: () {
-                if (question22Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Field is required',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-
-                else {
-                  questionIndex = questionIndex + 1;
-                  setState(() {
-
-                  });
-                }
-              },
-
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
-
-                });
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
-            ) :
-            questionIndex == 72 ?
-
+            questionIndex == 73 ?
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -11645,7 +12339,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex50 == "Yes" ?
+                          selectIndex50 == "LUC Captured" ?
                           Column(
                             children: [
                               Row(
@@ -11719,7 +12413,82 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )
 
                             ],
-                          ): Container(),
+                          ):
+                          selectIndex50 == "Misutilization - LUC Captured" ?
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(child: InkWell(
+                                    onTap: () async {
+
+                                      setState(() {
+
+                                      });
+                                      _openImagePicker(context);
+
+                                    },
+                                    child: Container(
+                                        margin:
+                                        const EdgeInsets.only(left: 0,right: 8,top: 8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.buttonOrangeColor,
+                                            borderRadius: BorderRadius.circular(5)),
+                                        height: 45,
+                                        child: const Center(
+                                          child: Text('Browse',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white)),
+                                        )),
+                                  )),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+
+                              SizedBox(height: 10),
+
+                              imageList.length==0?Container(): Container(
+                                height: 60,
+                                child: ListView.builder(
+                                    itemCount: imageList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (BuildContext context,int pos)
+
+                                    {
+                                      return Row(
+                                        children: [
+
+                                          Container(
+                                            width: 55,
+                                            height: 55,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                image: DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: FileImage(
+                                                        File(imageList[pos].path)
+                                                    )
+                                                )
+
+                                            ),
+                                          ),
+
+
+                                          SizedBox(width: 10),
+
+                                        ],
+                                      );
+                                    }
+
+
+                                ),
+                              )
+
+                            ],
+                          ):
                           selectIndex50 == "No" ?
                           Column(
                             children: [
@@ -11819,91 +12588,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                             ],
                           ): Container(),
 
-                          // selectIndex50 == 1 ?
-                          // Column(
-                          //   children: [
-                          //     SizedBox(height: 20.0),
-                          //     Container(
-                          //       height: 40,
-                          //       width: double.infinity,
-                          //       child: Row(
-                          //         children: [
-                          //           Expanded(
-                          //             flex: 1,
-                          //             child: InkWell(
-                          //               onTap: () {
-                          //                 //_selectStartDate(context);
-                          //               },
-                          //               child: Container(
-                          //                 height: 40,
-                          //                 child: Row(
-                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //                   children: [
-                          //                     Padding(
-                          //                       padding: EdgeInsets.only(left: 0),
-                          //                       child: Text(
-                          //                           lucData == "13"
-                          //                               ? 'Select LUC'
-                          //                               : lucData.toString(),
-                          //                           style: TextStyle(
-                          //                             fontSize: 14,
-                          //                             color: Colors.black,
-                          //                           )),
-                          //                     ),
-                          //                     Icon(Icons.arrow_drop_down,
-                          //                         color: Colors.black),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //
-                          //           ),
-                          //           const SizedBox(width: 10),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //     SizedBox(height: 20.0),
-                          //     Container(
-                          //       height: 40,
-                          //       width: double.infinity,
-                          //       child: Row(
-                          //         children: [
-                          //           Expanded(
-                          //             flex: 1,
-                          //             child: InkWell(
-                          //               onTap: () {
-                          //                 // _selectStartDate(context);
-                          //               },
-                          //               child: Container(
-                          //                 height: 40,
-                          //                 child: Row(
-                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //                   children: [
-                          //                     Padding(
-                          //                       padding: EdgeInsets.only(left: 0),
-                          //                       child: Text(
-                          //                           borrowerData == "14"
-                          //                               ? 'Select Borrower'
-                          //                               : borrowerData.toString(),
-                          //                           style: TextStyle(
-                          //                             fontSize: 14,
-                          //                             color: Colors.black,
-                          //                           )),
-                          //                     ),
-                          //                     Icon(Icons.arrow_drop_down,
-                          //                         color: Colors.black),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //
-                          //           ),
-                          //           const SizedBox(width: 10),
-                          //         ],
-                          //       ),
-                          //     )
-                          //   ],
-                          // ): Container(),
                         ],
                       ),
                     ),
@@ -11938,7 +12622,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex50 != "-1"){
-                                if (selectIndex50 != "Yes"){
+                                if (selectIndex50 == "No"){
                                   if(flagStatus == "12" || flagStatus2 == "13"){
                                     final snackBar = SnackBar(
                                       content: Container(
@@ -11956,24 +12640,42 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   }else{
                                     questionIndex = questionIndex + 1;
                                   }
-                                }else{
-                                  questionIndex = questionIndex + 1;
+                                }else {
+                                  if (imageList.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please select the image.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+
                                 }
 
                               }else{
-                                final snackBar = SnackBar(
-                                  content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
-                                    // Adjust left and right margins
-                                    child: Text(
-                                      'Please select the option.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 3),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                questionIndex = questionIndex + 1;
+                                // final snackBar = SnackBar(
+                                //   content: Container(
+                                //     margin: EdgeInsets.only(left: 20, right: 20),
+                                //     // Adjust left and right margins
+                                //     child: Text(
+                                //       'Please select the option.',
+                                //       textAlign: TextAlign.center,
+                                //     ),
+                                //   ),
+                                //   backgroundColor: Colors.red,
+                                //   duration: Duration(seconds: 3),
+                                // );
+                                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
 
                             });
@@ -11999,8 +12701,302 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            )  ://Image upload api calling pending // if no then show drop down
-            questionIndex == 73 ?
+            ) :
+            // TextFieldStringWidget(
+            //   controller: question22Controller,
+            //   onNextTap: () {
+            //     if (question22Controller.text == "") {
+            //       final snackBar = SnackBar(
+            //         content: Container(
+            //           margin: EdgeInsets.only(left: 20, right: 20),
+            //           // Adjust left and right margins
+            //           child: Text(
+            //             'Field is required',
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //         backgroundColor: Colors.red,
+            //         duration: Duration(seconds: 3),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //     }
+            //
+            //     else {
+            //       questionIndex = questionIndex + 1;
+            //       setState(() {
+            //
+            //       });
+            //     }
+            //   },
+            //
+            //   onPreviousTap: () {
+            //     questionIndex = questionIndex - 1;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //
+            //   questionMessage: questionList[questionIndex]['que_message'],
+            //   questionName: questionList[questionIndex]['question'],
+            //
+            // ) :
+            // questionIndex == 74 ?
+            //
+            // Container(
+            //   //height: 110,
+            //   margin: EdgeInsets.only(
+            //     left: 15, right: 15, top: 15, bottom: 15,),
+            //   decoration: BoxDecoration(
+            //       color:
+            //       AppTheme.buttonColor.withOpacity(0.15),
+            //       borderRadius: const BorderRadius.all(Radius.circular(10))),
+            //   child: Container(
+            //     margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Text(
+            //               questionList[questionIndex]['question'],
+            //               style: TextStyle(
+            //                   fontSize: 16,
+            //                   color: AppTheme.blackColor,
+            //                   fontWeight: FontWeight.bold
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //         SizedBox(height: 20.0),
+            //         Text(questionList[questionIndex]['que_message'],
+            //           style: TextStyle(
+            //               fontSize: 14,
+            //               color: AppTheme.blackColor,
+            //               fontWeight: FontWeight.normal
+            //           ),
+            //         ),
+            //         SizedBox(height: 10.0),
+            //         Container(
+            //           child: Column(
+            //             children: [
+            //               Container(
+            //                 height: 80,
+            //                 child: ListView.builder(
+            //                     itemCount: questionList[questionIndex]['options']
+            //                         .length,
+            //                     shrinkWrap: true,
+            //                     //physics: NeverScrollableScrollPhysics(),
+            //                     scrollDirection: Axis.vertical,
+            //                     itemBuilder: (BuildContext context, int pos) {
+            //                       final index = questionList[questionIndex]['options'][pos]['option'];
+            //                       return Padding(
+            //                         padding: const EdgeInsets.only(
+            //                           left: 0.0, top: 8.0, bottom: 8.0,),
+            //                         child: Row(
+            //                           children: [
+            //                             selectIndex50 == index
+            //                                 ? Image.asset(
+            //                                 'assets/selectRadio.png',
+            //                                 width: 24, height: 24)
+            //                                 : InkWell(
+            //                               child: Image.asset(
+            //                                   'assets/unSelectRadio.png',
+            //                                   width: 24,
+            //                                   height: 24),
+            //                               onTap: () {
+            //                                 setState(() {
+            //                                   selectIndex50 = index;
+            //                                 });
+            //                               },
+            //                             ),
+            //                             const SizedBox(width: 10),
+            //                             Expanded(
+            //                               child: Text(
+            //                                   questionList[questionIndex]['options'][pos]['option'],
+            //                                   style: TextStyle(
+            //                                       fontSize: 14,
+            //                                       fontWeight: FontWeight.normal,
+            //                                       color: Colors.black)),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                       );
+            //                     }),
+            //               ),
+            //               selectIndex50 == "Yes" ?
+            //               Column(
+            //                 children: [
+            //                   Row(
+            //                     children: [
+            //                       Expanded(child: InkWell(
+            //                         onTap: () async {
+            //
+            //                           setState(() {
+            //
+            //                           });
+            //                           _openImagePicker(context);
+            //
+            //                         },
+            //                         child: Container(
+            //                             margin:
+            //                             const EdgeInsets.only(left: 0,right: 8,top: 8),
+            //                             width: double.infinity,
+            //                             decoration: BoxDecoration(
+            //                                 color: AppTheme.buttonOrangeColor,
+            //                                 borderRadius: BorderRadius.circular(5)),
+            //                             height: 45,
+            //                             child: const Center(
+            //                               child: Text('Browse',
+            //                                   style: TextStyle(
+            //                                       fontSize: 13,
+            //                                       fontWeight: FontWeight.w600,
+            //                                       color: Colors.white)),
+            //                             )),
+            //                       )),
+            //                       const SizedBox(width: 10),
+            //                     ],
+            //                   ),
+            //
+            //                   SizedBox(height: 10),
+            //
+            //                   imageList.length==0?Container(): Container(
+            //                     height: 60,
+            //                     child: ListView.builder(
+            //                         itemCount: imageList.length,
+            //                         scrollDirection: Axis.horizontal,
+            //                         itemBuilder: (BuildContext context,int pos)
+            //
+            //                         {
+            //                           return Row(
+            //                             children: [
+            //
+            //                               Container(
+            //                                 width: 55,
+            //                                 height: 55,
+            //                                 decoration: BoxDecoration(
+            //                                     borderRadius: BorderRadius.circular(5),
+            //                                     image: DecorationImage(
+            //                                         fit: BoxFit.fill,
+            //                                         image: FileImage(
+            //                                             File(imageList[pos].path)
+            //                                         )
+            //                                     )
+            //
+            //                                 ),
+            //                               ),
+            //
+            //
+            //                               SizedBox(width: 10),
+            //
+            //                             ],
+            //                           );
+            //                         }
+            //
+            //
+            //                     ),
+            //                   )
+            //
+            //                 ],
+            //               ): Container(),
+            //
+            //             ],
+            //           ),
+            //         ),
+            //         // TextField Container
+            //         SizedBox(height: 20.0),
+            //         Row(
+            //           children: [
+            //             Expanded(child: InkWell(
+            //               onTap: () {
+            //                 questionIndex = questionIndex - 1;
+            //                 setState(() {
+            //
+            //                 });
+            //               },
+            //               child: Container(
+            //                   margin:
+            //                   const EdgeInsets.only(left: 0, right: 16, top: 8),
+            //                   width: double.infinity,
+            //                   decoration: BoxDecoration(
+            //                       color: AppTheme.blueColor,
+            //                       borderRadius: BorderRadius.circular(5)),
+            //                   height: 45,
+            //                   child: const Center(
+            //                     child: Text('Previous',
+            //                         style: TextStyle(
+            //                             fontSize: 13,
+            //                             fontWeight: FontWeight.w600,
+            //                             color: Colors.white)),
+            //                   )),
+            //             ),),
+            //             Expanded(child: InkWell(
+            //               onTap: () {
+            //                 setState(() {
+            //                   if (selectIndex50 != "-1"){
+            //                     if (selectIndex50 != "Yes"){
+            //                       if(flagStatus == "12" || flagStatus2 == "13"){
+            //                         final snackBar = SnackBar(
+            //                           content: Container(
+            //                             margin: EdgeInsets.only(left: 20, right: 20),
+            //                             // Adjust left and right margins
+            //                             child: Text(
+            //                               'Please select the option.',
+            //                               textAlign: TextAlign.center,
+            //                             ),
+            //                           ),
+            //                           backgroundColor: Colors.red,
+            //                           duration: Duration(seconds: 3),
+            //                         );
+            //                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //                       }else{
+            //                         questionIndex = questionIndex + 1;
+            //                       }
+            //                     }else{
+            //                       questionIndex = questionIndex + 1;
+            //                     }
+            //
+            //                   }else{
+            //                     final snackBar = SnackBar(
+            //                       content: Container(
+            //                         margin: EdgeInsets.only(left: 20, right: 20),
+            //                         // Adjust left and right margins
+            //                         child: Text(
+            //                           'Please select the option.',
+            //                           textAlign: TextAlign.center,
+            //                         ),
+            //                       ),
+            //                       backgroundColor: Colors.red,
+            //                       duration: Duration(seconds: 3),
+            //                     );
+            //                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //                   }
+            //
+            //                 });
+            //               },
+            //               child: Container(
+            //                   margin:
+            //                   const EdgeInsets.only(left: 8, right: 16, top: 8),
+            //                   width: double.infinity,
+            //                   decoration: BoxDecoration(
+            //                       color: AppTheme.buttonOrangeColor,
+            //                       borderRadius: BorderRadius.circular(5)),
+            //                   height: 45,
+            //                   child: const Center(
+            //                     child: Text('Next',
+            //                         style: TextStyle(
+            //                             fontSize: 13,
+            //                             fontWeight: FontWeight.w600,
+            //                             color: Colors.white)),
+            //                   )),
+            //             )),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // )  ://Image upload api calling pending // if no then show drop down
+            questionIndex == 74 ?
             // Container(
             //   //height: 110,
             //   margin: EdgeInsets.only(
@@ -12435,10 +13431,26 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               if (selectIndex51 != "-1"){
-                                if (selectIndex51 == "No"){
-                                  questionIndex = questionIndex + 2;
+                                if (selectIndex51 == "Yes"){
+                                  if (imageList1.isNotEmpty){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please select the image.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
                                 }else{
-                                  questionIndex = questionIndex + 2;
+                                  questionIndex = questionIndex + 1;
                                 }
 
                               }else{
@@ -12481,170 +13493,170 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             )  :
-            questionIndex == 74 ?
-
-            TextFieldStringWidget(
-              controller: question23Controller,
-              onNextTap: () {
-                if (question23Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Field is required',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-
-                else {
-                  questionIndex = questionIndex + 1;
-                  setState(() {
-
-                  });
-                }
-              },
-
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
-
-                });
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
-            ) :
+            // questionIndex == 75 ?
+            //
+            // TextFieldStringWidget(
+            //   controller: question23Controller,
+            //   onNextTap: () {
+            //     if (question23Controller.text == "") {
+            //       final snackBar = SnackBar(
+            //         content: Container(
+            //           margin: EdgeInsets.only(left: 20, right: 20),
+            //           // Adjust left and right margins
+            //           child: Text(
+            //             'Field is required',
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //         backgroundColor: Colors.red,
+            //         duration: Duration(seconds: 3),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //     }
+            //
+            //     else {
+            //       submitAnswers();
+            //       setState(() {
+            //
+            //       });
+            //     }
+            //   },
+            //
+            //   onPreviousTap: () {
+            //     questionIndex = questionIndex - 1;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //
+            //   questionMessage: questionList[questionIndex]['que_message'],
+            //   questionName: questionList[questionIndex]['question'],
+            //
+            // ) :
             Container(
-              //height: 110,
-              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-              decoration: BoxDecoration(
-                  color:
-                  AppTheme.buttonColor.withOpacity(0.15),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
-              child: Container(
-                margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          questionList[questionIndex]['question'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: AppTheme.blackColor,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ],
+            //height: 110,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+        decoration: BoxDecoration(
+            color:
+            AppTheme.buttonColor.withOpacity(0.15),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        child: Container(
+          margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    questionList[questionIndex]['question'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppTheme.blackColor,
+                        fontWeight: FontWeight.bold
                     ),
-                    SizedBox(height: 20.0),
-                    Text(questionList[questionIndex]['que_message'],
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.blackColor,
-                          fontWeight: FontWeight.normal
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      margin: EdgeInsets.only(right: 12),
-                      child: TextFormField(
-                        //validator: textValidation,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
-                          ],
-                          controller: question24Controller,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero,
-                            labelText: 'Enter here',
-                            labelStyle: const TextStyle(
-                              fontSize: 15.0,
-                              color: AppTheme.grayColor,
-                            ),
-                          )),
-                    ),// TextField Container
-                    SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            questionIndex = questionIndex - 2;
-                            setState(() {
-
-                            });
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 0,right: 16,top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.blueColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Previous',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        ),),
-                        Expanded(child: InkWell(
-                          onTap: () {
-                            if (question24Controller.text == "") {
-                              final snackBar = SnackBar(
-                                content: Container(
-                                  margin: EdgeInsets.only(left: 20, right: 20),
-                                  // Adjust left and right margins
-                                  child: Text(
-                                    'Field is required',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                backgroundColor: Colors.red,
-                                duration: Duration(seconds: 3),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            }
-
-                            else {
-                              submitAnswers();
-                              // setState(() {
-                              //
-                              // });
-                            }
-                          },
-                          child: Container(
-                              margin:
-                              const EdgeInsets.only(left: 8,right: 16,top: 8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.buttonOrangeColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: 45,
-                              child: const Center(
-                                child: Text('Submit',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white)),
-                              )),
-                        )),
-                      ],
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.0),
+              Text(questionList[questionIndex]['que_message'],
+                style: TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.blackColor,
+                    fontWeight: FontWeight.normal
                 ),
               ),
-            )
+              SizedBox(height: 10.0),
+              Container(
+                margin: EdgeInsets.only(right: 12),
+                child: TextFormField(
+                  //validator: textValidation,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                    ],
+                    controller: question24Controller,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      labelText: 'Enter here',
+                      labelStyle: const TextStyle(
+                        fontSize: 15.0,
+                        color: AppTheme.grayColor,
+                      ),
+                    )),
+              ),// TextField Container
+              SizedBox(height: 20.0),
+              Row(
+                children: [
+                  Expanded(child: InkWell(
+                    onTap: () {
+                      questionIndex = questionIndex - 2;
+                      setState(() {
+
+                      });
+                    },
+                    child: Container(
+                        margin:
+                        const EdgeInsets.only(left: 0,right: 16,top: 8),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: AppTheme.blueColor,
+                            borderRadius: BorderRadius.circular(5)),
+                        height: 45,
+                        child: const Center(
+                          child: Text('Previous',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white)),
+                        )),
+                  ),),
+                  Expanded(child: InkWell(
+                    onTap: () {
+                      if (question24Controller.text == "") {
+                        final snackBar = SnackBar(
+                          content: Container(
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            // Adjust left and right margins
+                            child: Text(
+                              'Field is required',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 3),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+
+                      else {
+                        submitAnswers();
+                        // setState(() {
+                        //
+                        // });
+                      }
+                    },
+                    child: Container(
+                        margin:
+                        const EdgeInsets.only(left: 8,right: 16,top: 8),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: AppTheme.buttonOrangeColor,
+                            borderRadius: BorderRadius.circular(5)),
+                        height: 45,
+                        child: const Center(
+                          child: Text('Submit',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white)),
+                        )),
+                  )),
+                ],
+              ),
+            ],
+          ),
+        ),
+      )
           // TextFieldStringWidget(
           //   controller: question24Controller,
           //   onNextTap: () {
@@ -12701,7 +13713,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   }
-
 
 
 
@@ -12770,9 +13781,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     final connectivityResult = await (Connectivity().checkConnectivity());
-    String slectIndics2 = {selectedIndices2,_controllerTab1.map((controller) => controller.text),question47Controller.text}.toString();
-    String slectIndics4 = {selectedIndices4,_controllerTab2.map((controller) => controller.text),question48Controller.text}.toString();
-    String slectIndics7 = {selectedIndices7,_controllerTab4.map((controller) => controller.text),question46Controller.text}.toString();
+
+    String slectIndics2 = {selectedIndices2,filteredList,question47Controller.text}.toString();
+    String slectIndics4 = {selectedIndices4,filteredList1,question48Controller.text}.toString();
+    String slectIndics7 = {selectedIndices7,filteredList2,question46Controller.text}.toString();
     String slectIndics5 = {selectedIndices5,question32Controller.text}.toString();
     String selectIndexs = {selectIndex,question27Controller.text}.toString();
     String selectIndexs1 = {selectIndex1,question31Controller.text}.toString();
@@ -12780,29 +13792,38 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     String selectIndexs4 = {selectIndex4,question28Controller.text}.toString();
     String selectIndexs9 = {selectIndex9,question29Controller.text}.toString();
     String selectIndexs32 = {selectIndex32,question34Controller.text}.toString();
+    String selectIndexsNew4 = {selectIndexNew4,question52ControllerNew.text}.toString();
     String selectIndexs33 = {selectIndex33,question35Controller.text}.toString();
     String selectIndexs34 = {selectIndex34,question36Controller.text}.toString();
     String selectIndexs35 = {selectIndex35,question37Controller.text}.toString();
     String selectIndexs36 = {selectIndex36,question38Controller.text}.toString();
     String selectIndexs37 = {selectIndex37,question39Controller.text}.toString();
     String selectIndexs38 = {selectIndex38,question40Controller.text}.toString();
-    String selectIndexs39 = {selectIndex39,question41Controller.text}.toString();
+    String selectIndexs43 = {selectIndex43,question53ControllerNew.text}.toString();
     String selectIndexs44 = {selectIndex44,question42Controller.text}.toString();
-    String selectIndexs45 = {selectIndex45,question43Controller.text}.toString();
+    String selectIndexs48 = {selectIndex48,question54ControllerNew.text}.toString();
     String selectIndexs49 = {selectIndex49,question44Controller.text}.toString();
-    String selectIndexs16 = {selectIndex16,question30Controller.text}.toString();
-    String selectIndexs23 = {question16Controller.text,question45Controller.text}.toString();
-    String selectIndexs19 = {selectIndex19,_startDate3.toString(),question17Controller.text}.toString();
-    String selectIndexs20 = {selectIndex20,_startDate4.toString(),question18Controller.text}.toString();
-    String selectIndexs21 = {selectIndex21,_startDate5.toString(),question19Controller.text}.toString();
-    String slectIndics6  = {selectedIndices6,_controllerTab3.map((controller) => controller.text)}.toString();
+    String selectIndexs26 = {selectIndex26,question56ControllerNew.text}.toString();
+    String selectIndexsNew5 = {selectIndexNew5,question55ControllerNew.text}.toString();
+    //String selectIndexs16 = {selectIndex16,question30Controller.text}.toString();
+    String selectIndexs23 = {selectIndexNew2,question16Controller.text,question45Controller.text}.toString();
+    String selectIndexs19 = {selectIndex19,_startDateWithoutTime3.toString(),question17Controller.text}.toString();
+    String selectIndexsNew3 = {selectIndexNew3,_startDateWithoutTimeNew.toString(),question50ControllerNew.text}.toString();
+    String selectIndexs20 = {selectIndex20,_startDateWithoutTime4.toString(),question18Controller.text}.toString();
+    String selectIndexs21 = {selectIndex21,_startDateWithoutTime5.toString(),question19Controller.text}.toString();
+    String slectIndics6  = {selectedIndices6,filteredList3}.toString();
+    String selectIndexs17 = {selectIndexNew1,question49ControllerNew.text}.toString();
     String selectIndexs50 = '';
-    if (selectIndex50 == "Yes"){
+    String selectIndexs51 = '';
+    if (selectIndex50 == "LUC Captured" || selectIndex50 == "Misutilization - LUC Captured"){
       selectIndexs50 = {selectIndex50,imageList}.toString();
     }else if (selectIndex50 == "No"){
       selectIndexs50 = {selectIndex50,flagStatus,flagStatus2}.toString();
     }
-    String selectIndexs51 = {selectIndex51,imageList1}.toString();
+    if (selectIndex51 == "Yes"){
+      selectIndexs51 = {selectIndex51,imageList1}.toString();
+    }
+
 
     String? empId=await MyUtils.getSharedPreferences("empId");
     String? name=await MyUtils.getSharedPreferences("name");
@@ -12817,7 +13838,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     answers.add({'_id':questionList[1]['_id'],'answer':question2Controller.text});
     answers.add({'_id':questionList[2]['_id'],'answer':question3Controller.text});
     answers.add({'_id':questionList[3]['_id'],'answer':question4Controller.text});
-    answers.add({'_id':questionList[4]['_id'],'answer':_startDate.toString()});
+    answers.add({'_id':questionList[4]['_id'],'answer':_startDateWithoutTime.toString()});
     answers.add({'_id':questionList[5]['_id'],'answer':question5Controller.text});
     //answers.add({'_id':questionList[6]['_id'],'answer':selectedIndices.toString()});
     answers.add({'_id':questionList[6]['_id'],'answer': slectIndics2});
@@ -12836,77 +13857,89 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     // answers.add({'_id':questionList[18]['_id'],'answer':question13Controller.text});
     // answers.add({'_id':questionList[19]['_id'],'answer':selectedIndices5.toString()});
     answers.add({'_id':questionList[16]['_id'],'answer':question14Controller.text});
-    answers.add({'_id':questionList[17]['_id'],'answer':_startDate2.toString()});
-    answers.add({'_id':questionList[18]['_id'],'answer':selectIndexs2});
-    answers.add({'_id':questionList[19]['_id'],'answer':selectIndexs4});
-    answers.add({'_id':questionList[20]['_id'],'answer':selectIndex5});
-    answers.add({'_id':questionList[21]['_id'],'answer':question15Controller.text});
-    answers.add({'_id':questionList[22]['_id'],'answer':selectIndex6});
-    answers.add({'_id':questionList[23]['_id'],'answer':selectIndexs23});
-    answers.add({'_id':questionList[24]['_id'],'answer':selectIndex7});
-    answers.add({'_id':questionList[25]['_id'],'answer':selectIndex8});
-    answers.add({'_id':questionList[26]['_id'],'answer':selectIndexs9});
-    answers.add({'_id':questionList[27]['_id'],'answer':selectIndex10});
-    answers.add({'_id':questionList[28]['_id'],'answer':selectIndex11});
-    answers.add({'_id':questionList[29]['_id'],'answer':selectIndex12});
-    answers.add({'_id':questionList[30]['_id'],'answer':selectIndex13});
-    answers.add({'_id':questionList[31]['_id'],'answer':selectIndex14});
-    answers.add({'_id':questionList[32]['_id'],'answer':selectIndex15});
-    answers.add({'_id':questionList[33]['_id'],'answer':selectIndexs16});
-    answers.add({'_id':questionList[34]['_id'],'answer':selectIndex17});
-    answers.add({'_id':questionList[35]['_id'],'answer':selectIndex18});
-    answers.add({'_id':questionList[36]['_id'],'answer':selectIndexs19});
+    answers.add({'_id':questionList[17]['_id'],'answer':selectIndexs17});
+    answers.add({'_id':questionList[18]['_id'],'answer': formattedDate});
+    answers.add({'_id':questionList[19]['_id'],'answer':selectIndexs2});
+    answers.add({'_id':questionList[20]['_id'],'answer':selectIndexs4});
+    answers.add({'_id':questionList[21]['_id'],'answer':selectIndex5});
+    answers.add({'_id':questionList[22]['_id'],'answer':question15Controller.text});
+    answers.add({'_id':questionList[23]['_id'],'answer':selectIndex6});
+    answers.add({'_id':questionList[24]['_id'],'answer':selectIndexs23});
+    answers.add({'_id':questionList[25]['_id'],'answer':selectIndex7});
+    answers.add({'_id':questionList[26]['_id'],'answer':selectIndex8});
+    answers.add({'_id':questionList[27]['_id'],'answer':selectIndexs9});
+    answers.add({'_id':questionList[28]['_id'],'answer':selectIndex10});
+    answers.add({'_id':questionList[29]['_id'],'answer':selectIndex11});
+    answers.add({'_id':questionList[30]['_id'],'answer':selectIndex12});
+    answers.add({'_id':questionList[31]['_id'],'answer':selectIndex13});
+    answers.add({'_id':questionList[32]['_id'],'answer':selectIndex14});
+    answers.add({'_id':questionList[33]['_id'],'answer':selectIndex15});
+    answers.add({'_id':questionList[34]['_id'],'answer':selectIndex16});
+    answers.add({'_id':questionList[35]['_id'],'answer':selectIndex17});
+    answers.add({'_id':questionList[36]['_id'],'answer':selectIndexsNew3});
+    answers.add({'_id':questionList[37]['_id'],'answer':selectIndexs19});
     //answers.add({'_id':questionList[41]['_id'],'answer':question17Controller.text});
-    answers.add({'_id':questionList[37]['_id'],'answer':selectIndexs20});
+    answers.add({'_id':questionList[38]['_id'],'answer':selectIndexs20});
     //answers.add({'_id':questionList[43]['_id'],'answer':question18Controller.text});
-    answers.add({'_id':questionList[38]['_id'],'answer':selectIndexs21});
+    answers.add({'_id':questionList[39]['_id'],'answer':selectIndexs21});
     //answers.add({'_id':questionList[45]['_id'],'answer':question19Controller.text});
-    answers.add({'_id':questionList[39]['_id'],'answer':selectIndex22});
-    answers.add({'_id':questionList[40]['_id'],'answer':selectIndex23});
-    answers.add({'_id':questionList[41]['_id'],'answer':question20Controller.text});
-    answers.add({'_id':questionList[42]['_id'],'answer':selectIndex24});
-    answers.add({'_id':questionList[43]['_id'],'answer':selectIndex25});
-    answers.add({'_id':questionList[44]['_id'],'answer':selectIndex26});
-    answers.add({'_id':questionList[45]['_id'],'answer':selectIndex27});
-    answers.add({'_id':questionList[46]['_id'],'answer':slectIndics6});
-    answers.add({'_id':questionList[47]['_id'],'answer':question21Controller.text});
-    answers.add({'_id':questionList[48]['_id'],'answer':selectIndex28});
-    answers.add({'_id':questionList[49]['_id'],'answer':selectIndex29});
-    answers.add({'_id':questionList[50]['_id'],'answer':selectIndex30});
-    answers.add({'_id':questionList[51]['_id'],'answer':selectIndex31});
-    answers.add({'_id':questionList[52]['_id'],'answer':selectIndexs32});
-    answers.add({'_id':questionList[53]['_id'],'answer':selectIndexs33});
-    answers.add({'_id':questionList[54]['_id'],'answer':selectIndexs34});
-    answers.add({'_id':questionList[55]['_id'],'answer':selectIndexs35});
-    answers.add({'_id':questionList[56]['_id'],'answer':selectIndexs36});
-    answers.add({'_id':questionList[57]['_id'],'answer':selectIndexs37});
-    answers.add({'_id':questionList[58]['_id'],'answer':selectIndexs38});
-    answers.add({'_id':questionList[59]['_id'],'answer':selectIndexs39});
-    answers.add({'_id':questionList[60]['_id'],'answer':selectIndex40});
-    answers.add({'_id':questionList[61]['_id'],'answer':selectIndex41});
-    answers.add({'_id':questionList[62]['_id'],'answer':selectIndex42});
-    answers.add({'_id':questionList[63]['_id'],'answer':selectIndex43});
-    answers.add({'_id':questionList[64]['_id'],'answer':selectIndexs44});
-    answers.add({'_id':questionList[65]['_id'],'answer':selectIndexs45});
+    answers.add({'_id':questionList[40]['_id'],'answer':selectIndex22});
+    answers.add({'_id':questionList[41]['_id'],'answer':selectIndex23});
+    answers.add({'_id':questionList[42]['_id'],'answer':question20Controller.text});
+    answers.add({'_id':questionList[43]['_id'],'answer':selectIndex24});
+    answers.add({'_id':questionList[44]['_id'],'answer':selectIndex25});
+    answers.add({'_id':questionList[45]['_id'],'answer':selectIndexs26});
+    answers.add({'_id':questionList[46]['_id'],'answer':selectIndex27});
+
+    answers.add({'_id':questionList[47]['_id'],'answer':slectIndics6});
+    answers.add({'_id':questionList[48]['_id'],'answer':question21Controller.text});
+    answers.add({'_id':questionList[49]['_id'],'answer':selectIndex28});
+    answers.add({'_id':questionList[50]['_id'],'answer':selectIndex29});
+
+    answers.add({'_id':questionList[51]['_id'],'answer':selectIndex30});
+    answers.add({'_id':questionList[52]['_id'],'answer':selectIndexsNew4});
+    answers.add({'_id':questionList[53]['_id'],'answer':selectIndexs32});
+    answers.add({'_id':questionList[54]['_id'],'answer':selectIndexs33});
+    answers.add({'_id':questionList[55]['_id'],'answer':selectIndexs34});
+
+    answers.add({'_id':questionList[56]['_id'],'answer':selectIndexs35});
+    answers.add({'_id':questionList[57]['_id'],'answer':selectIndexs36});
+    answers.add({'_id':questionList[58]['_id'],'answer':selectIndexs37});
+    answers.add({'_id':questionList[59]['_id'],'answer':selectIndexs38});
+    answers.add({'_id':questionList[60]['_id'],'answer':selectIndex39});
+
+    answers.add({'_id':questionList[61]['_id'],'answer':selectIndex40});
+    answers.add({'_id':questionList[62]['_id'],'answer':selectIndex41});
+    answers.add({'_id':questionList[63]['_id'],'answer':selectIndex42});
+    answers.add({'_id':questionList[64]['_id'],'answer':selectIndexs43});
+
+    answers.add({'_id':questionList[65]['_id'],'answer':selectIndexs44});
+   // answers.add({'_id':questionList[66]['_id'],'answer':selectIndexs45});
     answers.add({'_id':questionList[66]['_id'],'answer':slectIndics7});
-    answers.add({'_id':questionList[67]['_id'],'answer':selectIndex46});
-    answers.add({'_id':questionList[68]['_id'],'answer':selectIndex47});
-    answers.add({'_id':questionList[69]['_id'],'answer':selectIndex48});
-    answers.add({'_id':questionList[70]['_id'],'answer':selectIndexs49});
-    answers.add({'_id':questionList[71]['_id'],'answer':question22Controller.text});
-    answers.add({'_id':questionList[72]['_id'],'answer':selectIndexs50});
-    answers.add({'_id':questionList[73]['_id'],'answer':selectIndexs51});
-    answers.add({'_id':questionList[74]['_id'],'answer':question23Controller.text});
+    answers.add({'_id':questionList[67]['_id'],'answer':selectIndex45});
+    answers.add({'_id':questionList[68]['_id'],'answer':selectIndex46});
+    answers.add({'_id':questionList[69]['_id'],'answer':selectIndex47});
+    answers.add({'_id':questionList[70]['_id'],'answer':selectIndexs48});
+
+    answers.add({'_id':questionList[71]['_id'],'answer':selectIndexsNew5});
+    answers.add({'_id':questionList[72]['_id'],'answer':selectIndexs49});
+
+    answers.add({'_id':questionList[73]['_id'],'answer':selectIndexs50});
+    answers.add({'_id':questionList[74]['_id'],'answer':selectIndexs51});
     answers.add({'_id':questionList[75]['_id'],'answer':question24Controller.text});
+   // answers.add({'_id':questionList[75]['_id'],'answer':question24Controller.text});
     // answers.add({'_id':questionList[76]['_id'],'answer':question24Controller.text});
     // Do for all answers according to type of widget
 
-    // print(answers);
+
+    log('Log answer data: $answers');
+    print(answers);
 
     if(connectivityResult == ConnectivityResult.none)
       {
         Navigator.pop(context);
         storeAnswerDataLocally(answers);
+        log('Log answer data: $answers');
       }
     else
       {
@@ -12916,7 +13949,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         Navigator.pop(context);
         var responseJSON = json.decode(response.body);
         //print(responseJSON);
-
+        log('Log answer data: $answers');
         if (responseJSON['code'] == 200) {
           Toast.show("success !!",
               duration: Toast.lengthLong,
@@ -12980,7 +14013,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         data: formData);
     print(response.data);
     Navigator.pop(context);
-    if (response.data['status']) {
+    if (response.data['code'] == 200) {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
@@ -13018,7 +14051,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         data: formData);
     print(response.data);
     Navigator.pop(context);
-    if (response.data['status']) {
+    if (response.data['code'] == 200) {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
