@@ -72,12 +72,20 @@ class DashboardState extends State<DashboardScreen> {
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                FeedbackFormScreen(true,widget.surveyDataList)));
+                          builder: (context) => FeedbackFormScreen(true,widget.surveyDataList),
+                        ));
+                    if (result != null){
+                      getData();
+                    }
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             FeedbackFormScreen(true,widget.surveyDataList)));
                   },
                   child: Row(
                     children: [

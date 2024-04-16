@@ -56,7 +56,7 @@ class TextFieldStringWidget extends StatelessWidget
               child: TextFormField(
                   keyboardType: TextInputType.text,
                   inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                   ],
                   controller: controller,
                   decoration: InputDecoration(

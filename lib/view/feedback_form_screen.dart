@@ -36,6 +36,7 @@ class FeedbackFormScreen extends StatefulWidget {
 
 class FeedbackFormState extends State<FeedbackFormScreen> {
   @override
+  final connectivityResult1 = (Connectivity().checkConnectivity());
   int todayCount = 1;
   List<TextEditingController> _controllerTab1=[];
   List<TextEditingController> _controllerTab2=[];
@@ -176,6 +177,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   String selectIndex47 = "-1";
   String selectIndex48 = "-1";
   String selectIndexNew5 = "-1";
+  String selectIndexNew6 = "-1";
   String selectIndex49 = "-1";
   String selectIndex50 = "-1";
   String selectIndex51 = "-1";
@@ -907,7 +909,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question47Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -1177,7 +1179,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question48Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -2049,7 +2051,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question32Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -2750,7 +2752,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question28Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -3344,7 +3346,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   //validator: textValidation,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     controller: question45Controller,
                                     decoration: InputDecoration(
@@ -3884,7 +3886,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question29Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -4886,7 +4888,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question51ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -6695,44 +6697,245 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
             ) :// if select yes index +1 if select no index +2
 
             questionIndex == 42 ?
-            TextFieldStringWidget(
-              controller: question20Controller,
-              onNextTap: () {
-                if (question20Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Please enter a valid name',
-                        textAlign: TextAlign.center,
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(
+                left: 15, right: 15, top: 15, bottom: 15,),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
                       ),
                     ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            child: ListView.builder(
+                                itemCount: questionList[questionIndex]['options']
+                                    .length,
+                                shrinkWrap: true,
+                                //physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  final index = questionList[questionIndex]['options'][pos]['option'];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0.0, top: 8.0, bottom: 8.0,),
+                                    child: Row(
+                                      children: [
+                                        selectIndexNew6 == index
+                                            ? Image.asset(
+                                            'assets/selectRadio.png',
+                                            width: 24, height: 24)
+                                            : InkWell(
+                                          child: Image.asset(
+                                              'assets/unSelectRadio.png',
+                                              width: 24,
+                                              height: 24),
+                                          onTap: () {
+                                            setState(() {
+                                              selectIndexNew6 = index;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                              questionList[questionIndex]['options'][pos]['option'],
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                          selectIndexNew6 == "Other" ?
+                          Column(
+                            children: [
+                              SizedBox(height: 8.0),
+                              Container(
+                                margin: EdgeInsets.only(right: 12),
+                                child: TextFormField(
+                                    controller: question20Controller,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                    ],
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: 'Type Text',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        color: AppTheme.grayColor,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: 16.0),
+                            ],
+                          ) : Container(),
+                        ],
+                      ),
+                    ),
+                    // TextField Container
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
 
-                else {
-                  questionIndex = questionIndex + 1;
-                  setState(() {
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectIndexNew6 != "-1"){
+                                if (selectIndexNew6 == "Other"){
+                                  if (question20Controller.text != ""){
+                                    questionIndex = questionIndex + 1;
+                                  }else{
+                                    final snackBar = SnackBar(
+                                      content: Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        // Adjust left and right margins
+                                        child: Text(
+                                          'Please enter text.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }else{
+                                  questionIndex = questionIndex + 1;
+                                }
 
-                  });
-                }
-              },
-
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
-
-                });
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
+                              }else{
+                                final snackBar = SnackBar(
+                                  content: Container(
+                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    // Adjust left and right margins
+                                    child: Text(
+                                      'Please select the option.',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ) :
+            // TextFieldStringWidget(
+            //   controller: question20Controller,
+            //   onNextTap: () {
+            //     if (question20Controller.text == "") {
+            //       final snackBar = SnackBar(
+            //         content: Container(
+            //           margin: EdgeInsets.only(left: 20, right: 20),
+            //           // Adjust left and right margins
+            //           child: Text(
+            //             'Please enter a valid name',
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //         backgroundColor: Colors.red,
+            //         duration: Duration(seconds: 3),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //     }
+            //
+            //     else {
+            //       questionIndex = questionIndex + 1;
+            //       setState(() {
+            //
+            //       });
+            //     }
+            //   },
+            //
+            //   onPreviousTap: () {
+            //     questionIndex = questionIndex - 1;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //
+            //   questionMessage: questionList[questionIndex]['que_message'],
+            //   questionName: questionList[questionIndex]['question'],
+            //
+            // ) :
             questionIndex == 43 ?
             Container(
               //height: 110,
@@ -7142,7 +7345,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question56ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -11035,7 +11238,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question46Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -11735,7 +11938,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question54ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -11939,7 +12142,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question55ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -12145,7 +12348,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question44Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -12702,459 +12905,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-            // TextFieldStringWidget(
-            //   controller: question22Controller,
-            //   onNextTap: () {
-            //     if (question22Controller.text == "") {
-            //       final snackBar = SnackBar(
-            //         content: Container(
-            //           margin: EdgeInsets.only(left: 20, right: 20),
-            //           // Adjust left and right margins
-            //           child: Text(
-            //             'Field is required',
-            //             textAlign: TextAlign.center,
-            //           ),
-            //         ),
-            //         backgroundColor: Colors.red,
-            //         duration: Duration(seconds: 3),
-            //       );
-            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //     }
-            //
-            //     else {
-            //       questionIndex = questionIndex + 1;
-            //       setState(() {
-            //
-            //       });
-            //     }
-            //   },
-            //
-            //   onPreviousTap: () {
-            //     questionIndex = questionIndex - 1;
-            //     setState(() {
-            //
-            //     });
-            //   },
-            //
-            //   questionMessage: questionList[questionIndex]['que_message'],
-            //   questionName: questionList[questionIndex]['question'],
-            //
-            // ) :
-            // questionIndex == 74 ?
-            //
-            // Container(
-            //   //height: 110,
-            //   margin: EdgeInsets.only(
-            //     left: 15, right: 15, top: 15, bottom: 15,),
-            //   decoration: BoxDecoration(
-            //       color:
-            //       AppTheme.buttonColor.withOpacity(0.15),
-            //       borderRadius: const BorderRadius.all(Radius.circular(10))),
-            //   child: Container(
-            //     margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Text(
-            //               questionList[questionIndex]['question'],
-            //               style: TextStyle(
-            //                   fontSize: 16,
-            //                   color: AppTheme.blackColor,
-            //                   fontWeight: FontWeight.bold
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //         SizedBox(height: 20.0),
-            //         Text(questionList[questionIndex]['que_message'],
-            //           style: TextStyle(
-            //               fontSize: 14,
-            //               color: AppTheme.blackColor,
-            //               fontWeight: FontWeight.normal
-            //           ),
-            //         ),
-            //         SizedBox(height: 10.0),
-            //         Container(
-            //           child: Column(
-            //             children: [
-            //               Container(
-            //                 height: 80,
-            //                 child: ListView.builder(
-            //                     itemCount: questionList[questionIndex]['options']
-            //                         .length,
-            //                     shrinkWrap: true,
-            //                     //physics: NeverScrollableScrollPhysics(),
-            //                     scrollDirection: Axis.vertical,
-            //                     itemBuilder: (BuildContext context, int pos) {
-            //                       final index = questionList[questionIndex]['options'][pos]['option'];
-            //                       return Padding(
-            //                         padding: const EdgeInsets.only(
-            //                           left: 0.0, top: 8.0, bottom: 8.0,),
-            //                         child: Row(
-            //                           children: [
-            //                             selectIndex50 == index
-            //                                 ? Image.asset(
-            //                                 'assets/selectRadio.png',
-            //                                 width: 24, height: 24)
-            //                                 : InkWell(
-            //                               child: Image.asset(
-            //                                   'assets/unSelectRadio.png',
-            //                                   width: 24,
-            //                                   height: 24),
-            //                               onTap: () {
-            //                                 setState(() {
-            //                                   selectIndex50 = index;
-            //                                 });
-            //                               },
-            //                             ),
-            //                             const SizedBox(width: 10),
-            //                             Expanded(
-            //                               child: Text(
-            //                                   questionList[questionIndex]['options'][pos]['option'],
-            //                                   style: TextStyle(
-            //                                       fontSize: 14,
-            //                                       fontWeight: FontWeight.normal,
-            //                                       color: Colors.black)),
-            //                             ),
-            //                           ],
-            //                         ),
-            //                       );
-            //                     }),
-            //               ),
-            //               selectIndex50 == "Yes" ?
-            //               Column(
-            //                 children: [
-            //                   Row(
-            //                     children: [
-            //                       Expanded(child: InkWell(
-            //                         onTap: () async {
-            //
-            //                           setState(() {
-            //
-            //                           });
-            //                           _openImagePicker(context);
-            //
-            //                         },
-            //                         child: Container(
-            //                             margin:
-            //                             const EdgeInsets.only(left: 0,right: 8,top: 8),
-            //                             width: double.infinity,
-            //                             decoration: BoxDecoration(
-            //                                 color: AppTheme.buttonOrangeColor,
-            //                                 borderRadius: BorderRadius.circular(5)),
-            //                             height: 45,
-            //                             child: const Center(
-            //                               child: Text('Browse',
-            //                                   style: TextStyle(
-            //                                       fontSize: 13,
-            //                                       fontWeight: FontWeight.w600,
-            //                                       color: Colors.white)),
-            //                             )),
-            //                       )),
-            //                       const SizedBox(width: 10),
-            //                     ],
-            //                   ),
-            //
-            //                   SizedBox(height: 10),
-            //
-            //                   imageList.length==0?Container(): Container(
-            //                     height: 60,
-            //                     child: ListView.builder(
-            //                         itemCount: imageList.length,
-            //                         scrollDirection: Axis.horizontal,
-            //                         itemBuilder: (BuildContext context,int pos)
-            //
-            //                         {
-            //                           return Row(
-            //                             children: [
-            //
-            //                               Container(
-            //                                 width: 55,
-            //                                 height: 55,
-            //                                 decoration: BoxDecoration(
-            //                                     borderRadius: BorderRadius.circular(5),
-            //                                     image: DecorationImage(
-            //                                         fit: BoxFit.fill,
-            //                                         image: FileImage(
-            //                                             File(imageList[pos].path)
-            //                                         )
-            //                                     )
-            //
-            //                                 ),
-            //                               ),
-            //
-            //
-            //                               SizedBox(width: 10),
-            //
-            //                             ],
-            //                           );
-            //                         }
-            //
-            //
-            //                     ),
-            //                   )
-            //
-            //                 ],
-            //               ): Container(),
-            //
-            //             ],
-            //           ),
-            //         ),
-            //         // TextField Container
-            //         SizedBox(height: 20.0),
-            //         Row(
-            //           children: [
-            //             Expanded(child: InkWell(
-            //               onTap: () {
-            //                 questionIndex = questionIndex - 1;
-            //                 setState(() {
-            //
-            //                 });
-            //               },
-            //               child: Container(
-            //                   margin:
-            //                   const EdgeInsets.only(left: 0, right: 16, top: 8),
-            //                   width: double.infinity,
-            //                   decoration: BoxDecoration(
-            //                       color: AppTheme.blueColor,
-            //                       borderRadius: BorderRadius.circular(5)),
-            //                   height: 45,
-            //                   child: const Center(
-            //                     child: Text('Previous',
-            //                         style: TextStyle(
-            //                             fontSize: 13,
-            //                             fontWeight: FontWeight.w600,
-            //                             color: Colors.white)),
-            //                   )),
-            //             ),),
-            //             Expanded(child: InkWell(
-            //               onTap: () {
-            //                 setState(() {
-            //                   if (selectIndex50 != "-1"){
-            //                     if (selectIndex50 != "Yes"){
-            //                       if(flagStatus == "12" || flagStatus2 == "13"){
-            //                         final snackBar = SnackBar(
-            //                           content: Container(
-            //                             margin: EdgeInsets.only(left: 20, right: 20),
-            //                             // Adjust left and right margins
-            //                             child: Text(
-            //                               'Please select the option.',
-            //                               textAlign: TextAlign.center,
-            //                             ),
-            //                           ),
-            //                           backgroundColor: Colors.red,
-            //                           duration: Duration(seconds: 3),
-            //                         );
-            //                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //                       }else{
-            //                         questionIndex = questionIndex + 1;
-            //                       }
-            //                     }else{
-            //                       questionIndex = questionIndex + 1;
-            //                     }
-            //
-            //                   }else{
-            //                     final snackBar = SnackBar(
-            //                       content: Container(
-            //                         margin: EdgeInsets.only(left: 20, right: 20),
-            //                         // Adjust left and right margins
-            //                         child: Text(
-            //                           'Please select the option.',
-            //                           textAlign: TextAlign.center,
-            //                         ),
-            //                       ),
-            //                       backgroundColor: Colors.red,
-            //                       duration: Duration(seconds: 3),
-            //                     );
-            //                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //                   }
-            //
-            //                 });
-            //               },
-            //               child: Container(
-            //                   margin:
-            //                   const EdgeInsets.only(left: 8, right: 16, top: 8),
-            //                   width: double.infinity,
-            //                   decoration: BoxDecoration(
-            //                       color: AppTheme.buttonOrangeColor,
-            //                       borderRadius: BorderRadius.circular(5)),
-            //                   height: 45,
-            //                   child: const Center(
-            //                     child: Text('Next',
-            //                         style: TextStyle(
-            //                             fontSize: 13,
-            //                             fontWeight: FontWeight.w600,
-            //                             color: Colors.white)),
-            //                   )),
-            //             )),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // )  ://Image upload api calling pending // if no then show drop down
+
             questionIndex == 74 ?
-            // Container(
-            //   //height: 110,
-            //   margin: EdgeInsets.only(
-            //     left: 15, right: 15, top: 15, bottom: 15,),
-            //   decoration: BoxDecoration(
-            //       color:
-            //       AppTheme.buttonColor.withOpacity(0.15),
-            //       borderRadius: const BorderRadius.all(Radius.circular(10))),
-            //   child: Container(
-            //     margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Text(
-            //               questionList[questionIndex]['question'],
-            //               style: TextStyle(
-            //                   fontSize: 16,
-            //                   color: AppTheme.blackColor,
-            //                   fontWeight: FontWeight.bold
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //         SizedBox(height: 20.0),
-            //         Text(questionList[questionIndex]['que_message'],
-            //           style: TextStyle(
-            //               fontSize: 14,
-            //               color: AppTheme.blackColor,
-            //               fontWeight: FontWeight.normal
-            //           ),
-            //         ),
-            //         SizedBox(height: 10.0),
-            //         Container(
-            //           child: Column(
-            //             children: [
-            //               Container(
-            //                 height: 460,
-            //                 child: ListView.builder(
-            //                     itemCount: questionList[questionIndex]['options']
-            //                         .length,
-            //                     shrinkWrap: true,
-            //                     //physics: NeverScrollableScrollPhysics(),
-            //                     scrollDirection: Axis.vertical,
-            //                     itemBuilder: (BuildContext context, int pos) {
-            //                       final index = questionList[questionIndex]['options'][pos]['option'];
-            //                       return Padding(
-            //                         padding: const EdgeInsets.only(
-            //                           left: 0.0, top: 8.0, bottom: 8.0,),
-            //                         child: Row(
-            //                           children: [
-            //                             selectIndex51 == index
-            //                                 ? Image.asset(
-            //                                 'assets/selectRadio.png',
-            //                                 width: 24, height: 24)
-            //                                 : InkWell(
-            //                               child: Image.asset(
-            //                                   'assets/unSelectRadio.png',
-            //                                   width: 24,
-            //                                   height: 24),
-            //                               onTap: () {
-            //                                 setState(() {
-            //                                   selectIndex51 = index;
-            //                                 });
-            //                               },
-            //                             ),
-            //                             const SizedBox(width: 10),
-            //                             Expanded(
-            //                               child: Text(
-            //                                   questionList[questionIndex]['options'][pos]['option'],
-            //                                   style: TextStyle(
-            //                                       fontSize: 14,
-            //                                       fontWeight: FontWeight.normal,
-            //                                       color: Colors.black)),
-            //                             ),
-            //                           ],
-            //                         ),
-            //                       );
-            //                     }),
-            //               ),
-            //
-            //             ],
-            //           ),
-            //         ),
-            //         // TextField Container
-            //         SizedBox(height: 20.0),
-            //         Row(
-            //           children: [
-            //             Expanded(child: InkWell(
-            //               onTap: () {
-            //                 questionIndex = questionIndex - 1;
-            //                 setState(() {
-            //
-            //                 });
-            //               },
-            //               child: Container(
-            //                   margin:
-            //                   const EdgeInsets.only(left: 0, right: 16, top: 8),
-            //                   width: double.infinity,
-            //                   decoration: BoxDecoration(
-            //                       color: AppTheme.blueColor,
-            //                       borderRadius: BorderRadius.circular(5)),
-            //                   height: 45,
-            //                   child: const Center(
-            //                     child: Text('Previous',
-            //                         style: TextStyle(
-            //                             fontSize: 13,
-            //                             fontWeight: FontWeight.w600,
-            //                             color: Colors.white)),
-            //                   )),
-            //             ),),
-            //             Expanded(child: InkWell(
-            //               onTap: () {
-            //                 setState(() {
-            //                   if (selectIndex51 != "-1"){
-            //                     questionIndex = questionIndex + 1;
-            //                   }else{
-            //                     final snackBar = SnackBar(
-            //                       content: Container(
-            //                         margin: EdgeInsets.only(left: 20, right: 20),
-            //                         // Adjust left and right margins
-            //                         child: Text(
-            //                           'Please select the option.',
-            //                           textAlign: TextAlign.center,
-            //                         ),
-            //                       ),
-            //                       backgroundColor: Colors.red,
-            //                       duration: Duration(seconds: 3),
-            //                     );
-            //                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //                   }
-            //
-            //                 });
-            //               },
-            //               child: Container(
-            //                   margin:
-            //                   const EdgeInsets.only(left: 8, right: 16, top: 8),
-            //                   width: double.infinity,
-            //                   decoration: BoxDecoration(
-            //                       color: AppTheme.buttonOrangeColor,
-            //                       borderRadius: BorderRadius.circular(5)),
-            //                   height: 45,
-            //                   child: const Center(
-            //                     child: Text('Next',
-            //                         style: TextStyle(
-            //                             fontSize: 13,
-            //                             fontWeight: FontWeight.w600,
-            //                             color: Colors.white)),
-            //                   )),
-            //             )),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ) ://Image upload api calling pending // if yes +2 index
+
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -13312,91 +13065,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                             ],
                           ): Container(),
-                          // selectIndex50 == 1 ?
-                          // Column(
-                          //   children: [
-                          //     SizedBox(height: 20.0),
-                          //     Container(
-                          //       height: 40,
-                          //       width: double.infinity,
-                          //       child: Row(
-                          //         children: [
-                          //           Expanded(
-                          //             flex: 1,
-                          //             child: InkWell(
-                          //               onTap: () {
-                          //                 //_selectStartDate(context);
-                          //               },
-                          //               child: Container(
-                          //                 height: 40,
-                          //                 child: Row(
-                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //                   children: [
-                          //                     Padding(
-                          //                       padding: EdgeInsets.only(left: 0),
-                          //                       child: Text(
-                          //                           lucData == "13"
-                          //                               ? 'Select LUC'
-                          //                               : lucData.toString(),
-                          //                           style: TextStyle(
-                          //                             fontSize: 14,
-                          //                             color: Colors.black,
-                          //                           )),
-                          //                     ),
-                          //                     Icon(Icons.arrow_drop_down,
-                          //                         color: Colors.black),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //
-                          //           ),
-                          //           const SizedBox(width: 10),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //     SizedBox(height: 20.0),
-                          //     Container(
-                          //       height: 40,
-                          //       width: double.infinity,
-                          //       child: Row(
-                          //         children: [
-                          //           Expanded(
-                          //             flex: 1,
-                          //             child: InkWell(
-                          //               onTap: () {
-                          //                 // _selectStartDate(context);
-                          //               },
-                          //               child: Container(
-                          //                 height: 40,
-                          //                 child: Row(
-                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //                   children: [
-                          //                     Padding(
-                          //                       padding: EdgeInsets.only(left: 0),
-                          //                       child: Text(
-                          //                           borrowerData == "14"
-                          //                               ? 'Select Borrower'
-                          //                               : borrowerData.toString(),
-                          //                           style: TextStyle(
-                          //                             fontSize: 14,
-                          //                             color: Colors.black,
-                          //                           )),
-                          //                     ),
-                          //                     Icon(Icons.arrow_drop_down,
-                          //                         color: Colors.black),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //
-                          //           ),
-                          //           const SizedBox(width: 10),
-                          //         ],
-                          //       ),
-                          //     )
-                          //   ],
-                          // ): Container(),
+
                         ],
                       ),
                     ),
@@ -13493,46 +13162,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             )  :
-            // questionIndex == 75 ?
-            //
-            // TextFieldStringWidget(
-            //   controller: question23Controller,
-            //   onNextTap: () {
-            //     if (question23Controller.text == "") {
-            //       final snackBar = SnackBar(
-            //         content: Container(
-            //           margin: EdgeInsets.only(left: 20, right: 20),
-            //           // Adjust left and right margins
-            //           child: Text(
-            //             'Field is required',
-            //             textAlign: TextAlign.center,
-            //           ),
-            //         ),
-            //         backgroundColor: Colors.red,
-            //         duration: Duration(seconds: 3),
-            //       );
-            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //     }
-            //
-            //     else {
-            //       submitAnswers();
-            //       setState(() {
-            //
-            //       });
-            //     }
-            //   },
-            //
-            //   onPreviousTap: () {
-            //     questionIndex = questionIndex - 1;
-            //     setState(() {
-            //
-            //     });
-            //   },
-            //
-            //   questionMessage: questionList[questionIndex]['que_message'],
-            //   questionName: questionList[questionIndex]['question'],
-            //
-            // ) :
+
             Container(
             //height: 110,
             margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
@@ -13572,7 +13202,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 child: TextFormField(
                   //validator: textValidation,
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')), // Allow only alphabetic characters
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                     ],
                     controller: question24Controller,
                     decoration: InputDecoration(
@@ -13657,44 +13287,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           ),
         ),
       )
-          // TextFieldStringWidget(
-          //   controller: question24Controller,
-          //   onNextTap: () {
-          //     if (question24Controller.text == "") {
-          //       final snackBar = SnackBar(
-          //         content: Container(
-          //           margin: EdgeInsets.only(left: 20, right: 20),
-          //           // Adjust left and right margins
-          //           child: Text(
-          //             'Field is required',
-          //             textAlign: TextAlign.center,
-          //           ),
-          //         ),
-          //         backgroundColor: Colors.red,
-          //         duration: Duration(seconds: 3),
-          //       );
-          //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          //     }
-          //
-          //     else {
-          //       submitAnswers();
-          //       // setState(() {
-          //       //
-          //       // });
-          //     }
-          //   },
-          //
-          //   onPreviousTap: () {
-          //     questionIndex = questionIndex - 1;
-          //     setState(() {
-          //
-          //     });
-          //   },
-          //
-          //   questionMessage: questionList[questionIndex]['que_message'],
-          //   questionName: questionList[questionIndex]['question'],
-          //
-          // )
+
 
 
 
@@ -13800,6 +13393,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     String selectIndexs37 = {selectIndex37,question39Controller.text}.toString();
     String selectIndexs38 = {selectIndex38,question40Controller.text}.toString();
     String selectIndexs43 = {selectIndex43,question53ControllerNew.text}.toString();
+    String selectIndexsNew6 = {selectIndexNew6,question20Controller.text}.toString();
     String selectIndexs44 = {selectIndex44,question42Controller.text}.toString();
     String selectIndexs48 = {selectIndex48,question54ControllerNew.text}.toString();
     String selectIndexs49 = {selectIndex49,question44Controller.text}.toString();
@@ -13816,12 +13410,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     String selectIndexs50 = '';
     String selectIndexs51 = '';
     if (selectIndex50 == "LUC Captured" || selectIndex50 == "Misutilization - LUC Captured"){
-      selectIndexs50 = {selectIndex50,imageList}.toString();
+     // selectIndexs50 = {selectIndex50,imageList}.toString();
+      selectIndexs50 = selectIndex50;
     }else if (selectIndex50 == "No"){
       selectIndexs50 = {selectIndex50,flagStatus,flagStatus2}.toString();
     }
     if (selectIndex51 == "Yes"){
-      selectIndexs51 = {selectIndex51,imageList1}.toString();
+      //selectIndexs51 = {selectIndex51,imageList1}.toString();
+      selectIndexs51 = selectIndex51;
+    } else if (selectIndex51 == "No"){
+      selectIndexs51 = {selectIndex51}.toString();
     }
 
 
@@ -13885,7 +13483,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     //answers.add({'_id':questionList[45]['_id'],'answer':question19Controller.text});
     answers.add({'_id':questionList[40]['_id'],'answer':selectIndex22});
     answers.add({'_id':questionList[41]['_id'],'answer':selectIndex23});
-    answers.add({'_id':questionList[42]['_id'],'answer':question20Controller.text});
+    answers.add({'_id':questionList[42]['_id'],'answer':selectIndexsNew6});
     answers.add({'_id':questionList[43]['_id'],'answer':selectIndex24});
     answers.add({'_id':questionList[44]['_id'],'answer':selectIndex25});
     answers.add({'_id':questionList[45]['_id'],'answer':selectIndexs26});
@@ -13956,7 +13554,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               gravity: Toast.bottom,
               backgroundColor: Colors.green);
 
-          Navigator.pop(context);
+          Navigator.pop(context,'Hello');
         } else {
           Toast.show(responseJSON['message'],
               duration: Toast.lengthLong,
@@ -13964,10 +13562,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               backgroundColor: Colors.red);
         }
       }
-
-
-
-
 
   }
 
@@ -13993,7 +13587,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
     FormData? formData= FormData.fromMap({
-      "Id": "5512341709435",
+      "Id": question1Controller.text,
       "artifactType": "LUC",
     });
 
@@ -14031,12 +13625,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
     FormData? formData= FormData.fromMap({
-      "Id": "5512341709435",
-      "artifactType": "LUC",
+      "Id": question1Controller.text,
+      "artifactType": "Other",
     });
 
     for (int i = 0; i <imageList1.length; i++) {
       var path = imageList1[i].path.toString();
+     // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       formData.files.addAll([
         MapEntry("file", await MultipartFile.fromFile(path, filename: path))
       ]);
@@ -14082,8 +13677,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         imageList.add(pickedImage); // Add picked image to the list
                       });
                     }
+                    final connectivityResult2 = await (Connectivity().checkConnectivity());
+                    if(connectivityResult2 != ConnectivityResult.none)
+                    {
+                      _uploadFiles();
+                    }
 
-                    _uploadFiles();
                     // Close the dialog
                   },
                   child: Padding(
@@ -14099,7 +13698,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     setState(() {
 
                     });
-                    _uploadFiles();
+                    final connectivityResult3 = await (Connectivity().checkConnectivity());
+                    if(connectivityResult3 != ConnectivityResult.none)
+                    {
+                      _uploadFiles();
+                    }
+
                     // Close the dialog
                   },
                   child: Padding(
@@ -14132,8 +13736,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         imageList1!.add(pickedFile); // Add picked image to the list
                       });
                     }
+                    final connectivityResult4 = await (Connectivity().checkConnectivity());
+                    if(connectivityResult4 != ConnectivityResult.none)
+                    {
+                      _uploadFiles1();
+                    }
 
-                    _uploadFiles1();
+
                     // Close the dialog
                   },
                   child: Padding(
@@ -14149,7 +13758,11 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     setState(() {
 
                     });
-                    _uploadFiles();
+                    final connectivityResult5 = await (Connectivity().checkConnectivity());
+                    if(connectivityResult5 != ConnectivityResult.none)
+                    {
+                      _uploadFiles1();
+                    }
                     // Close the dialog
                   },
                   child: Padding(
