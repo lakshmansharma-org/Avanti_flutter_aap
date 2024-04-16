@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -324,13 +325,15 @@ class DashboardState extends State<DashboardScreen> {
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
     var data=prefs.getString("answer_list");
+    var lucList=prefs.getStringList("LUC");
+    var otherList=prefs.getStringList("Others");
 
     if (data!= null){
       if(data!=null || data!="")
       {
         Navigator.of(context).pop();
         List<dynamic> list2 = jsonDecode(data!);
-        submitAnswers(list2);
+        submitAnswers(list2,lucList,otherList);
 
       }
     }else{
@@ -352,7 +355,7 @@ class DashboardState extends State<DashboardScreen> {
 
   }
 
-  submitAnswers(List<dynamic> answers) async {
+  submitAnswers(List<dynamic> answers,List<String>? lucList,List<String>? otherList) async {
 
 
     String? empId=await MyUtils.getSharedPreferences("empId");
@@ -376,7 +379,16 @@ class DashboardState extends State<DashboardScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
+      if(lucList!=null && lucList.length!=0)
+        {
+          getImageData(0,lucList,otherList);
+        }
 
+
+      if(otherList!=null && otherList.length!=0)
+      {
+        getImageData(1,lucList,otherList);
+      }
 
       MyUtils.saveSharedPreferences("answer_list", "");
       getData();
@@ -391,8 +403,132 @@ class DashboardState extends State<DashboardScreen> {
 
 
   }
+  _uploadFiles(List<dynamic> loanData,List<String>? lucList) async {
+    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+    FocusScope.of(context).unfocus();
+    APIDialog.showAlertDialog(context, 'Uploading Images...');
+    // String fileName = xFile.path.split('/').last;
+    FormData? formData= FormData.fromMap({
+      "Id": loanNumber,
+      "artifactType": "LUC",
+    });
+
+    for (int i = 0; i <lucList!.length; i++) {
+      //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
+      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+
+      print("File Name is "+fileName);
+      var path = lucList[i].toString();
+      formData.files.addAll([
+        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
+      ]);
+    }
+
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'multipart/form-data';
+    // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
+    print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
+    var response = await dio.post(
+        "https://api.doyoursurvey.com:3009/Avanti/saveImage",
+        data: formData);
+    print(response.data);
+    Navigator.pop(context);
+    if (response.data['code'] == 200) {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+
+    } else {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+  }
+  _uploadFiles1(List<dynamic> loanData,List<String>? otherList) async {
+    FocusScope.of(context).unfocus();
+    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+    APIDialog.showAlertDialog(context, 'Uploading Images...');
+    // String fileName = xFile.path.split('/').last;
+    FormData? formData= FormData.fromMap({
+      "Id":loanNumber,
+      "artifactType": "Other",
+    });
+
+    for (int i = 0; i <otherList!.length; i++) {
+      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+
+      var path = otherList[i].toString();
+      // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
+      formData.files.addAll([
+        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
+      ]);
+    }
+
+    Dio dio = Dio();
+    dio.options.headers['Content-Type'] = 'multipart/form-data';
+    // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
+    print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
+    var response = await dio.post(
+        "https://api.doyoursurvey.com:3009/Avanti/saveImage",
+        data: formData);
+    print(response.data);
+    Navigator.pop(context);
+    if (response.data['code'] == 200) {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
 
 
+    } else {
+      Toast.show(response.data['message'].toString(),
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+  }
+  getImageData(int type,List<String>? lucList,List<String>? otherList) async {
+
+    APIDialog.showAlertDialog(context, "Please wait...");
+
+    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+
+    var requestModel = {
+      "loan_number": loanNumber
+    };
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('Avanti/loanDetails', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    Navigator.pop(context);
+    print(responseJSON);
+    if(responseJSON["data"].length!=0)
+    {
+      if(type==0)
+      {
+        _uploadFiles(responseJSON["data"],lucList);
+      }
+      else
+      {
+        _uploadFiles1(responseJSON["data"],otherList);
+      }
+
+    }
+    else
+    {
+      Toast.show("Invalid loan number",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+
+
+
+
+  }
   showLogOutDialog(BuildContext context) {
     Widget cancelButton = GestureDetector(
         onTap: (){

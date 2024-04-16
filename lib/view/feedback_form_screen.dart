@@ -522,6 +522,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                             }
 
                             else {
+                              MyUtils.saveSharedPreferences("loan_number",question1Controller.text.toString());
                               questionIndex = questionIndex + 1;
                               setState(() {
 
@@ -12549,6 +12550,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 children: [
                                   Expanded(child: InkWell(
                                     onTap: () async {
+                                      print("Click triggered");
 
                                       setState(() {
 
@@ -12589,19 +12591,50 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       return Row(
                                         children: [
 
-                                          Container(
-                                            width: 55,
-                                            height: 55,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(5),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: FileImage(
-                                                        File(imageList[pos].path)
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: FileImage(
+                                                            File(imageList[pos].path)
+                                                        )
                                                     )
-                                                )
 
-                                            ),
+                                                ),
+                                              ),
+
+
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: GestureDetector(
+                                                    onTap:(){
+
+                                                      imageList.removeAt(pos);
+                                                      setState(() {
+
+                                                      });
+                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.only(bottom: 10),
+
+                                              )
+
+
+
+                                            ],
                                           ),
 
 
@@ -12664,19 +12697,48 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       return Row(
                                         children: [
 
-                                          Container(
-                                            width: 55,
-                                            height: 55,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(5),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: FileImage(
-                                                        File(imageList[pos].path)
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: FileImage(
+                                                            File(imageList[pos].path)
+                                                        )
                                                     )
-                                                )
 
-                                            ),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: GestureDetector(
+                                                    onTap:(){
+
+                                                      imageList.removeAt(pos);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.only(bottom: 10),
+
+                                              )
+
+
+                                            ],
                                           ),
 
 
@@ -12823,7 +12885,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ),),
                         Expanded(child: InkWell(
                           onTap: () {
-                            setState(() {
+                            setState(() async {
                               if (selectIndex50 != "-1"){
                                 if (selectIndex50 == "No"){
                                   if(flagStatus == "12" || flagStatus2 == "13"){
@@ -12845,7 +12907,37 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   }
                                 }else {
                                   if (imageList.isNotEmpty){
-                                    questionIndex = questionIndex + 1;
+
+                                    final connectivityResult3 = await (Connectivity().checkConnectivity());
+                                    if(connectivityResult3 == ConnectivityResult.none)
+                                    {
+                                      print("No intermnet");
+                                      List<String> imagePaths=[];
+                                      for(int i=0;i<imageList1.length;i++)
+                                      {
+                                        imagePaths.add(imageList1[i].path.toString());
+                                      }
+
+
+
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      prefs.setStringList('LUC',imagePaths);
+
+                                      questionIndex = questionIndex + 1;
+                                      setState(() {
+                                      });
+                                    }
+                                    else
+                                    {
+                                      print("No intermnet12222");
+                                      getImageData(0);
+                                    }
+
+
+
+
+
+                                   // questionIndex = questionIndex + 1;
                                   }else{
                                     final snackBar = SnackBar(
                                       content: Container(
@@ -13037,19 +13129,50 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       return Row(
                                         children: [
 
-                                          Container(
-                                            width: 55,
-                                            height: 55,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(5),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: FileImage(
-                                                        File(imageList1[pos].path)
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: FileImage(
+                                                            File(imageList1[pos].path)
+                                                        )
                                                     )
-                                                )
 
-                                            ),
+                                                ),
+                                              ),
+
+
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: GestureDetector(
+                                                    onTap:(){
+
+                                                      imageList1.removeAt(pos);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.only(bottom: 10),
+
+                                              )
+
+
+
+                                            ],
                                           ),
 
 
@@ -13097,46 +13220,70 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )),
                         ),),
                         Expanded(child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              if (selectIndex51 != "-1"){
-                                if (selectIndex51 == "Yes"){
-                                  if (imageList1.isNotEmpty){
+                          onTap: () async {
+
+                            if (selectIndex51 != "-1"){
+                              if (selectIndex51 == "Yes"){
+                                if (imageList1.isNotEmpty){
+
+                                  final connectivityResult3 = await (Connectivity().checkConnectivity());
+                                  if(connectivityResult3 == ConnectivityResult.none)
+                                  {
+                                    List<String> imagePaths=[];
+                                    for(int i=0;i<imageList1.length;i++)
+                                    {
+                                      imagePaths.add(imageList1[i].path.toString());
+                                    }
+
+
+
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                                    prefs.setStringList('Others',imagePaths);
+
                                     questionIndex = questionIndex + 1;
-                                  }else{
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Please select the image.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    setState(() {
+                                    });
+                                  }
+                                  else
+                                  {
+                                    getImageData(1);
                                   }
                                 }else{
-                                  questionIndex = questionIndex + 1;
-                                }
-
-                              }else{
-                                final snackBar = SnackBar(
-                                  content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
-                                    // Adjust left and right margins
-                                    child: Text(
-                                      'Please select the option.',
-                                      textAlign: TextAlign.center,
+                                  final snackBar = SnackBar(
+                                    content: Container(
+                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      // Adjust left and right margins
+                                      child: Text(
+                                        'Please select the image.',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  duration: Duration(seconds: 3),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 3),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                }
+                              }else{
+                                questionIndex = questionIndex + 1;
                               }
+
+                            }else{
+                              final snackBar = SnackBar(
+                                content: Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  // Adjust left and right margins
+                                  child: Text(
+                                    'Please select the option.',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                            setState(() {
+
 
                             });
                           },
@@ -13582,7 +13729,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   }
 
 
-  _uploadFiles() async {
+  _uploadFiles(List<dynamic> loanData) async {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
@@ -13592,9 +13739,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     });
 
     for (int i = 0; i <imageList.length; i++) {
-      var path = imageList[i].path.toString();
+     //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
+       String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+
+       print("File Name is "+fileName);
+       var path = imageList[i].path.toString();
       formData.files.addAll([
-        MapEntry("file", await MultipartFile.fromFile(path, filename: path))
+        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
       ]);
     }
 
@@ -13612,6 +13763,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
+      questionIndex = questionIndex + 1;
 
     } else {
       Toast.show(response.data['message'].toString(),
@@ -13620,7 +13772,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           backgroundColor: Colors.red);
     }
   }
-  _uploadFiles1() async {
+  _uploadFiles1(List<dynamic> loanData) async {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
@@ -13630,10 +13782,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     });
 
     for (int i = 0; i <imageList1.length; i++) {
+      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+
       var path = imageList1[i].path.toString();
      // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       formData.files.addAll([
-        MapEntry("file", await MultipartFile.fromFile(path, filename: path))
+        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
       ]);
     }
 
@@ -13651,6 +13805,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
+
+      questionIndex = questionIndex + 1;
 
     } else {
       Toast.show(response.data['message'].toString(),
@@ -13680,7 +13836,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     final connectivityResult2 = await (Connectivity().checkConnectivity());
                     if(connectivityResult2 != ConnectivityResult.none)
                     {
-                      _uploadFiles();
+                    //  _uploadFiles();
                     }
 
                     // Close the dialog
@@ -13698,11 +13854,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     setState(() {
 
                     });
-                    final connectivityResult3 = await (Connectivity().checkConnectivity());
-                    if(connectivityResult3 != ConnectivityResult.none)
-                    {
-                      _uploadFiles();
-                    }
 
                     // Close the dialog
                   },
@@ -13718,6 +13869,53 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       },
     );
   }
+
+
+  getImageData(int type) async {
+
+    APIDialog.showAlertDialog(context, "Please wait...");
+
+    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+
+    var requestModel = {
+      "loan_number": question1Controller.text.toString()
+    };
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('Avanti/loanDetails', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    Navigator.pop(context);
+    print(responseJSON);
+    if(responseJSON["data"].length!=0)
+      {
+        if(type==0)
+          {
+            _uploadFiles(responseJSON["data"]);
+          }
+        else
+          {
+            _uploadFiles1(responseJSON["data"]);
+          }
+
+      }
+    else
+      {
+        Toast.show("Invalid loan number",
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.red);
+      }
+
+
+
+
+  }
+
+
+
+
+
   void _openImagePicker1(BuildContext context) {
     showDialog(
       context: context,
@@ -13739,7 +13937,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     final connectivityResult4 = await (Connectivity().checkConnectivity());
                     if(connectivityResult4 != ConnectivityResult.none)
                     {
-                      _uploadFiles1();
+                    //  _uploadFiles1();
                     }
 
 
@@ -13761,7 +13959,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     final connectivityResult5 = await (Connectivity().checkConnectivity());
                     if(connectivityResult5 != ConnectivityResult.none)
                     {
-                      _uploadFiles1();
+                    //  _uploadFiles1();
                     }
                     // Close the dialog
                   },
