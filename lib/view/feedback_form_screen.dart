@@ -280,8 +280,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(DateTime
-          .now()
-          .year - 5),
+          .now().year,DateTime.now().month - 1),
       lastDate: DateTime
           .now(),
     );
@@ -315,12 +314,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   Future<void> _selectDate4pic(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime(DateTime.now().year, DateTime.now().month, 0),
       firstDate: DateTime(DateTime
-          .now()
-          .year - 5),
-      lastDate: DateTime
-          .now(),
+          .now().year,DateTime.now().month - 2, 1),
+      lastDate: DateTime(DateTime.now().year, DateTime.now().month, 0),
     );
 
     if (pickedStartDate != null && pickedStartDate != _startDate4) {
@@ -334,12 +331,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   Future<void> _selectDate5pic(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime(DateTime.now().year, DateTime.now().month - 1, 0),
       firstDate: DateTime(DateTime
-          .now()
-          .year - 5),
-      lastDate: DateTime
-          .now(),
+          .now().year,DateTime.now().month - 3, 1),
+      lastDate: DateTime(DateTime.now().year, DateTime.now().month - 1, 0),
     );
 
     if (pickedStartDate != null && pickedStartDate != _startDate5) {
@@ -586,7 +581,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     });
                     Navigator.pop(context);
                   }else{
+                    MyUtils.saveSharedPreferences("partner_name",question2Controller.text.toString());
                     questionIndex = questionIndex + 1;
+
                   }
                   setState(() {
 
@@ -626,6 +623,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
+                  MyUtils.saveSharedPreferences("branch_name",question3Controller.text.toString());
                   questionIndex = questionIndex + 1;
                   setState(() {
 
@@ -12785,8 +12783,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               Padding(
                                                 padding: EdgeInsets.only(left: 8),
                                                 child: Text(
-                                                    flagStatus == '12'
-                                                        ? 'Select option'
+                                                    flagStatus == "12"
+                                                        ? "Select option"
                                                         : flagStatus,
                                                     style: TextStyle(
                                                       fontSize: 11,
@@ -12831,8 +12829,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               Padding(
                                                 padding: EdgeInsets.only(left: 8),
                                                 child: Text(
-                                                    flagStatus2 == '13'
-                                                        ? 'Select option'
+                                                    flagStatus2 == "13"
+                                                        ? "Select option"
                                                         : flagStatus2,
                                                     style: TextStyle(
                                                       fontSize: 11,
@@ -12884,96 +12882,98 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )),
                         ),),
                         Expanded(child: InkWell(
-                          onTap: () {
-                            setState(() async {
-                              if (selectIndex50 != "-1"){
-                                if (selectIndex50 == "No"){
-                                  if(flagStatus == "12" || flagStatus2 == "13"){
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Please select the option.',
-                                          textAlign: TextAlign.center,
-                                        ),
+                          onTap: () async{
+                            if (selectIndex50 != "-1"){
+                              if (selectIndex50 == "No"){
+
+                                if(flagStatus != "12" || flagStatus2 != "13"){
+                                  questionIndex = questionIndex + 1;
+                                  setState(() {
+                                  });
+                                }else{
+                                  final snackBar = SnackBar(
+                                    content: Container(
+                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      // Adjust left and right margins
+                                      child: Text(
+                                        'Please select the option.',
+                                        textAlign: TextAlign.center,
                                       ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }else{
-                                    questionIndex = questionIndex + 1;
-                                  }
-                                }else {
-                                  if (imageList.isNotEmpty){
-
-                                    final connectivityResult3 = await (Connectivity().checkConnectivity());
-                                    if(connectivityResult3 == ConnectivityResult.none)
-                                    {
-                                      print("No intermnet");
-                                      List<String> imagePaths=[];
-                                      for(int i=0;i<imageList1.length;i++)
-                                      {
-                                        imagePaths.add(imageList1[i].path.toString());
-                                      }
-
-
-
-                                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                                      prefs.setStringList('LUC',imagePaths);
-
-                                      questionIndex = questionIndex + 1;
-                                      setState(() {
-                                      });
-                                    }
-                                    else
-                                    {
-                                      print("No intermnet12222");
-                                      getImageData(0);
-                                    }
-
-
-
-
-
-                                   // questionIndex = questionIndex + 1;
-                                  }else{
-                                    final snackBar = SnackBar(
-                                      content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
-                                        // Adjust left and right margins
-                                        child: Text(
-                                          'Please select the image.',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(seconds: 3),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }
-
+                                    ),
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 3),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 }
 
-                              }else{
-                                questionIndex = questionIndex + 1;
-                                // final snackBar = SnackBar(
-                                //   content: Container(
-                                //     margin: EdgeInsets.only(left: 20, right: 20),
-                                //     // Adjust left and right margins
-                                //     child: Text(
-                                //       'Please select the option.',
-                                //       textAlign: TextAlign.center,
-                                //     ),
-                                //   ),
-                                //   backgroundColor: Colors.red,
-                                //   duration: Duration(seconds: 3),
-                                // );
-                                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }else {
+                                if (imageList.isNotEmpty){
+
+                                  final connectivityResult3 = await (Connectivity().checkConnectivity());
+                                  if(connectivityResult3 == ConnectivityResult.none)
+                                  {
+                                    print("No intermnet");
+                                    List<String> imagePaths=[];
+                                    for(int i=0;i<imageList1.length;i++)
+                                    {
+                                      imagePaths.add(imageList1[i].path.toString());
+                                    }
+
+
+
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                                    prefs.setStringList('LUC',imagePaths);
+
+                                    questionIndex = questionIndex + 1;
+                                    setState(() {
+                                    });
+                                  }
+                                  else
+                                  {
+                                    print("No intermnet12222");
+                                    getImageData(0);
+                                  }
+
+
+
+
+
+                                  // questionIndex = questionIndex + 1;
+                                }else{
+                                  final snackBar = SnackBar(
+                                    content: Container(
+                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      // Adjust left and right margins
+                                      child: Text(
+                                        'Please select the image.',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 3),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                }
+
                               }
 
-                            });
+                            }else{
+                             // questionIndex = questionIndex + 1;
+                              final snackBar = SnackBar(
+                                content: Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  // Adjust left and right margins
+                                  child: Text(
+                                    'Please select the option.',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+
                           },
                           child: Container(
                               margin:
@@ -13739,8 +13739,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     });
 
     for (int i = 0; i <imageList.length; i++) {
+      String fileName = '';
+      String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+      String? branchName=await MyUtils.getSharedPreferences("branch_name");
+      String? partnerName=await MyUtils.getSharedPreferences("partner_name");
+      if (loanData.length!=0){
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+      }else{
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+
+      }
      //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
-       String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+      // String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
 
        print("File Name is "+fileName);
        var path = imageList[i].path.toString();
@@ -13782,8 +13792,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     });
 
     for (int i = 0; i <imageList1.length; i++) {
-      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+      String fileName = '';
+      String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+      String? branchName=await MyUtils.getSharedPreferences("branch_name");
+      String? partnerName=await MyUtils.getSharedPreferences("partner_name");
+      if (loanData.length!=0){
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+      }else{
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
 
+      }
+      print("File Name is 1 "+fileName);
       var path = imageList1[i].path.toString();
      // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       formData.files.addAll([
@@ -13901,13 +13920,19 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       }
     else
       {
-        Toast.show("Invalid loan number",
-            duration: Toast.lengthLong,
-            gravity: Toast.bottom,
-            backgroundColor: Colors.red);
+        if(type==0)
+        {
+          _uploadFiles(responseJSON["data"]);
+        }
+        else
+        {
+          _uploadFiles1(responseJSON["data"]);
+        }
+        // Toast.show("Invalid loan number",
+        //     duration: Toast.lengthLong,
+        //     gravity: Toast.bottom,
+        //     backgroundColor: Colors.red);
       }
-
-
 
 
   }

@@ -405,6 +405,8 @@ class DashboardState extends State<DashboardScreen> {
   }
   _uploadFiles(List<dynamic> loanData,List<String>? lucList) async {
     String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+    String? branchName=await MyUtils.getSharedPreferences("branch_name");
+    String? partnerName=await MyUtils.getSharedPreferences("partner_name");
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
@@ -415,7 +417,15 @@ class DashboardState extends State<DashboardScreen> {
 
     for (int i = 0; i <lucList!.length; i++) {
       //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
-      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+      String fileName = '';
+
+      if (loanData.length!=0){
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+      }else{
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+
+      }
+      //String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
 
       print("File Name is "+fileName);
       var path = lucList[i].toString();
@@ -449,6 +459,8 @@ class DashboardState extends State<DashboardScreen> {
   _uploadFiles1(List<dynamic> loanData,List<String>? otherList) async {
     FocusScope.of(context).unfocus();
     String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+    String? branchName=await MyUtils.getSharedPreferences("branch_name");
+    String? partnerName=await MyUtils.getSharedPreferences("partner_name");
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
     FormData? formData= FormData.fromMap({
@@ -457,7 +469,16 @@ class DashboardState extends State<DashboardScreen> {
     });
 
     for (int i = 0; i <otherList!.length; i++) {
-      String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+      String fileName = '';
+
+      if (loanData.length!=0){
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+      }else{
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+
+      }
+      print("File Name is 1 "+fileName);
+     // String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
 
       var path = otherList[i].toString();
       // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
@@ -519,10 +540,18 @@ class DashboardState extends State<DashboardScreen> {
     }
     else
     {
-      Toast.show("Invalid loan number",
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.red);
+      if(type==0)
+      {
+        _uploadFiles(responseJSON["data"],lucList);
+      }
+      else
+      {
+        _uploadFiles1(responseJSON["data"],otherList);
+      }
+      // Toast.show("Invalid loan number",
+      //     duration: Toast.lengthLong,
+      //     gravity: Toast.bottom,
+      //     backgroundColor: Colors.red);
     }
 
 
