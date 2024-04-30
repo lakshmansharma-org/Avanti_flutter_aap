@@ -420,9 +420,9 @@ class DashboardState extends State<DashboardScreen> {
       String fileName = '';
 
       if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
       }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
 
       }
       //String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
@@ -472,9 +472,9 @@ class DashboardState extends State<DashboardScreen> {
       String fileName = '';
 
       if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
       }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
 
       }
       print("File Name is 1 "+fileName);

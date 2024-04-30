@@ -1,4 +1,4 @@
-package com.qsurvey_flutter
+package com.qdsurvey
 
 import io.flutter.embedding.android.FlutterActivity
 

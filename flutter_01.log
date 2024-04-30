@@ -1,0 +1,128 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter build apk
+
+## exception
+
+ProcessException: ProcessException: Process exited abnormally with exit code 1:
+
+Welcome to Gradle 7.5!
+
+Here are the highlights of this release:
+ - Support for Java 18
+ - Support for building with Groovy 4
+ - Much more responsive continuous builds
+ - Improved diagnostics for dependency resolution
+
+For more details see https://docs.gradle.org/7.5/release-notes.html
+
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Project 'app' not found in root project 'android'.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 1s
+  Command: /Users/lakshmansharma/iOS Project/Avanti_flutter_aap/android/gradlew app:tasks --all --console=auto
+
+```
+#0      RunResult.throwException (package:flutter_tools/src/base/process.dart:125:5)
+#1      _DefaultProcessUtils.run (package:flutter_tools/src/base/process.dart:321:19)
+<asynchronous suspension>
+#2      flavorUndefinedHandler.<anonymous closure> (package:flutter_tools/src/android/gradle_errors.dart:269:38)
+<asynchronous suspension>
+#3      AndroidGradleBuilder.buildGradleApp (package:flutter_tools/src/android/gradle.dart:503:40)
+<asynchronous suspension>
+#4      AndroidGradleBuilder.buildApk (package:flutter_tools/src/android/gradle.dart:223:5)
+<asynchronous suspension>
+#5      BuildApkCommand.runCommand (package:flutter_tools/src/commands/build_apk.dart:140:5)
+<asynchronous suspension>
+#6      FlutterCommand.run.<anonymous closure> (package:flutter_tools/src/runner/flutter_command.dart:1394:27)
+<asynchronous suspension>
+#7      AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:153:19)
+<asynchronous suspension>
+#8      CommandRunner.runCommand (package:args/command_runner.dart:212:13)
+<asynchronous suspension>
+#9      FlutterCommandRunner.runCommand.<anonymous closure> (package:flutter_tools/src/runner/flutter_command_runner.dart:372:9)
+<asynchronous suspension>
+#10     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:153:19)
+<asynchronous suspension>
+#11     FlutterCommandRunner.runCommand (package:flutter_tools/src/runner/flutter_command_runner.dart:308:5)
+<asynchronous suspension>
+#12     run.<anonymous closure>.<anonymous closure> (package:flutter_tools/runner.dart:130:9)
+<asynchronous suspension>
+#13     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:153:19)
+<asynchronous suspension>
+#14     main (package:flutter_tools/executable.dart:93:3)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel master, 3.22.0-16.0.pre.40, on macOS 14.1.1 23B81 darwin-arm64 (Rosetta), locale en-IN)
+    [32m•[39m Flutter version 3.22.0-16.0.pre.40 on channel master at /Users/lakshmansharma/flutter
+    [32m•[39m Upstream repository https://github.com/flutter/flutter.git
+    [32m•[39m Framework revision 65e657799f (13 hours ago), 2024-04-24 00:26:40 -0400
+    [32m•[39m Engine revision 3d91141e7e
+    [32m•[39m Dart version 3.5.0 (build 3.5.0-93.0.dev)
+    [32m•[39m DevTools version 2.35.0-dev.8
+
+[32m[✓][39m Android toolchain - develop for Android devices (Android SDK version 33.0.2)
+    [32m•[39m Android SDK at /Users/lakshmansharma/Library/Android/sdk
+    [32m•[39m Platform android-34, build-tools 33.0.2
+    [32m•[39m Java binary at: /Applications/Android Studio.app/Contents/jbr/Contents/Home/bin/java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 11.0.15+0-b2043.56-8887301)
+    [32m•[39m All Android licenses accepted.
+
+[32m[✓][39m Xcode - develop for iOS and macOS (Xcode 15.0.1)
+    [32m•[39m Xcode at /Applications/Xcode.app/Contents/Developer
+    [32m•[39m Build 15A507
+    [32m•[39m CocoaPods version 1.14.3
+
+[32m[✓][39m Chrome - develop for the web
+    [32m•[39m Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[32m[✓][39m Android Studio (version 2022.1)
+    [32m•[39m Android Studio at /Applications/Android Studio.app/Contents
+    [32m•[39m Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    [32m•[39m Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    [32m•[39m Java version OpenJDK Runtime Environment (build 11.0.15+0-b2043.56-8887301)
+
+[32m[✓][39m IntelliJ IDEA Community Edition (version 2022.1.4)
+    [32m•[39m IntelliJ at /Applications/IntelliJ IDEA CE.app
+    [32m•[39m Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    [32m•[39m Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+
+[32m[✓][39m VS Code (version 1.75.1)
+    [32m•[39m VS Code at /Applications/Visual Studio Code.app/Contents
+    [32m•[39m Flutter extension can be installed from:
+      🔨 https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter
+
+[32m[✓][39m Connected device (5 available)
+    [32m•[39m Lakshman Sharma’s iPhone (mobile) • 00008101-0001099602E1001E            • ios            • iOS 17.4.1 21E236
+    [32m•[39m iPhone 12 Pro Max (mobile)        • DA10C256-2579-4A7A-8B15-08B4E9F62DE8 • ios            • com.apple.CoreSimulator.SimRuntime.iOS-17-0 (simulator)
+    [32m•[39m macOS (desktop)                   • macos                                • darwin-arm64   • macOS 14.1.1 23B81 darwin-arm64 (Rosetta)
+    [32m•[39m Mac Designed for iPad (desktop)   • mac-designed-for-ipad                • darwin         • macOS 14.1.1 23B81 darwin-arm64 (Rosetta)
+    [32m•[39m Chrome (web)                      • chrome                               • web-javascript • Google Chrome 124.0.6367.78
+
+[32m[✓][39m Network resources
+    [32m•[39m All expected network resources are available.
+
+[32m•[39m No issues found!
+```
