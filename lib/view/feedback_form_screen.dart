@@ -12914,9 +12914,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   {
                                     print("No intermnet");
                                     List<String> imagePaths=[];
-                                    for(int i=0;i<imageList1.length;i++)
+                                    for(int i=0;i<imageList.length;i++)
                                     {
-                                      imagePaths.add(imageList1[i].path.toString());
+                                      imagePaths.add(imageList[i].path.toString());
                                     }
 
 
@@ -13744,9 +13744,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       String? branchName=await MyUtils.getSharedPreferences("branch_name");
       String? partnerName=await MyUtils.getSharedPreferences("partner_name");
       if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+imageList[i].path.split('.').last;
       }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+"LUC"+"-"+i.toString()+"."+imageList[i].path.split('.').last;
 
       }
      //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
@@ -13797,9 +13797,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       String? branchName=await MyUtils.getSharedPreferences("branch_name");
       String? partnerName=await MyUtils.getSharedPreferences("partner_name");
       if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+imageList1[i].path.split('.').last;
       }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
+        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+imageList1[i].path.split('.').last;
 
       }
       print("File Name is 1 "+fileName);

@@ -11,6 +11,7 @@ import 'package:qsurvey_flutter/view/feedback_form_screen.dart';
 import 'package:qsurvey_flutter/view/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../network/Utils.dart';
 import '../network/api_dialog.dart';
@@ -34,6 +35,7 @@ class DashboardState extends State<DashboardScreen> {
   bool isInternetConnected = true;
   int todayCount = 0;
   int totalCount = 0;
+  String policyUrl = '';
   bool isLoading = false;
   Widget build(BuildContext context) {
     ToastContext().init(context);
@@ -262,6 +264,47 @@ class DashboardState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    openUrl();
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 100,
+                          margin: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 0,),
+                          decoration: BoxDecoration(
+                              color:
+                              AppTheme.buttonColor.withOpacity(0.15),
+                              borderRadius: const BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            children: [
+                              //SizedBox(height: 30.0),
+                              Container(
+                                margin: EdgeInsets.only(left: 15,top: 30, bottom: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Privacy Policy of QDSurvey',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: AppTheme.blackColor,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
                 SizedBox(height: 40.0),
                 GestureDetector(
                   onTap: () {
@@ -291,6 +334,14 @@ class DashboardState extends State<DashboardScreen> {
       ),
     );
   }
+  void openUrl() async {
+    String url = policyUrl;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -299,7 +350,6 @@ class DashboardState extends State<DashboardScreen> {
      // print(widget.surveyDataList);
       //checkAnswerStatus();
     });
-
 
   }
   Future<void> checkInternetConnection() async {
@@ -371,8 +421,9 @@ class DashboardState extends State<DashboardScreen> {
     var response =
     await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
     var responseJSON = json.decode(response.body);
-    //print(responseJSON);
 
+    print('Opening URL: $lucList');
+    print('Opening other URL: $otherList');
     if (responseJSON['code'] == 200) {
       Toast.show("success !!",
           duration: Toast.lengthLong,
@@ -417,20 +468,20 @@ class DashboardState extends State<DashboardScreen> {
 
     for (int i = 0; i <lucList!.length; i++) {
       //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
-      String fileName = '';
+      String fileNameNew = '';
 
       if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+        fileNameNew = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
       }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+        fileNameNew = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
 
       }
       //String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
 
-      print("File Name is "+fileName);
+      print("File Name is "+fileNameNew);
       var path = lucList[i].toString();
       formData.files.addAll([
-        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
+        MapEntry("file", await MultipartFile.fromFile(path, filename: fileNameNew))
       ]);
     }
 
@@ -526,6 +577,7 @@ class DashboardState extends State<DashboardScreen> {
     var responseJSON = json.decode(response.body);
     Navigator.pop(context);
     print(responseJSON);
+    print(type);
     if(responseJSON["data"].length!=0)
     {
       if(type==0)
@@ -535,7 +587,7 @@ class DashboardState extends State<DashboardScreen> {
       else
       {
         _uploadFiles1(responseJSON["data"],otherList);
-      }
+     }
 
     }
     else
@@ -547,7 +599,7 @@ class DashboardState extends State<DashboardScreen> {
       else
       {
         _uploadFiles1(responseJSON["data"],otherList);
-      }
+     }
       // Toast.show("Invalid loan number",
       //     duration: Toast.lengthLong,
       //     gravity: Toast.bottom,
@@ -615,6 +667,7 @@ class DashboardState extends State<DashboardScreen> {
     }
     todayCount = responseJSON["data"]["todayCount"];
     totalCount = responseJSON["data"]["totalCount"];
+    policyUrl = responseJSON["policy"];
     setState(() {});
 
   }
