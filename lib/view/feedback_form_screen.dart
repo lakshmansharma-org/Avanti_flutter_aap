@@ -12914,15 +12914,19 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   {
                                     print("No intermnet");
                                     List<String> imagePaths=[];
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                                    List<String>? lucList=await prefs.getStringList("LUC")??[];
                                     for(int i=0;i<imageList.length;i++)
                                     {
                                       imagePaths.add(imageList[i].path.toString());
+                                      lucList.add(imageList[i].path.toString());
                                     }
 
 
 
-                                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                                    prefs.setStringList('LUC',imagePaths);
+
+
+                                    prefs.setStringList('LUC',lucList);
 
                                     questionIndex = questionIndex + 1;
                                     setState(() {
@@ -13229,16 +13233,19 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   final connectivityResult3 = await (Connectivity().checkConnectivity());
                                   if(connectivityResult3 == ConnectivityResult.none)
                                   {
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
                                     List<String> imagePaths=[];
+                                    List<String> otherList=await prefs.getStringList("Others")??[];
                                     for(int i=0;i<imageList1.length;i++)
                                     {
                                       imagePaths.add(imageList1[i].path.toString());
+                                      otherList.add(imageList1[i].path.toString());
                                     }
 
 
 
-                                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                                    prefs.setStringList('Others',imagePaths);
+
+                                    prefs.setStringList('Others',otherList);
 
                                     questionIndex = questionIndex + 1;
                                     setState(() {
@@ -13716,10 +13723,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   storeAnswerDataLocally(List<dynamic> answerList) async {
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String>? allList=preferences.getStringList("feedback_list")??[];
     String json = jsonEncode(answerList);
-    await preferences.setString('answer_list',json);
-    Navigator.pop(context);
+    allList.add(json);
 
+    //await preferences.setString('answer_list',json);
+    await preferences.setStringList('feedback_list', allList);
+    Navigator.pop(context);
     Toast.show("success !!",
         duration: Toast.lengthLong,
         gravity: Toast.bottom,

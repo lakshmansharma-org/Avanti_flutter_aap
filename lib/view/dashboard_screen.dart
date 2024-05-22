@@ -374,18 +374,32 @@ class DashboardState extends State<DashboardScreen> {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
-    var data=prefs.getString("answer_list");
-    var lucList=prefs.getStringList("LUC");
-    var otherList=prefs.getStringList("Others");
+   // var data=prefs.getString("answer_list");
+    List<String>? data= await prefs.getStringList("feedback_list")??[];
+    List<String>? lucList=prefs.getStringList("LUC")??[];
+    List<String>? otherList=prefs.getStringList("Others")??[];
 
-    if (data!= null){
-      if(data!=null || data!="")
+    if (data.length!=0){
+      if(data.isNotEmpty && data.length!=0)
       {
         Navigator.of(context).pop();
-        List<dynamic> list2 = jsonDecode(data!);
-        submitAnswers(list2,lucList,otherList);
+
+        for(int i=0;i<data.length;i++)
+          {
+            submitAnswers(data[i], lucList, otherList,i,data.length);
+          }
 
       }
+
+
+      else
+        {
+          Navigator.of(context).pop();
+          Toast.show("Nothing to sync!!",
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.blue);
+        }
     }else{
       Future.delayed(Duration(seconds: 1), () async {
         Navigator.of(context).pop();
@@ -405,16 +419,16 @@ class DashboardState extends State<DashboardScreen> {
 
   }
 
-  submitAnswers(List<dynamic> answers,List<String>? lucList,List<String>? otherList) async {
-
-
+  submitAnswers(String answers,List<String>? lucList,List<String>? otherList,int pos,int totalLength) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<dynamic> data = jsonDecode(answers);
     String? empId=await MyUtils.getSharedPreferences("empId");
     String? name=await MyUtils.getSharedPreferences("name");
 
     var requestModel = {
       "name": name,
       "id": empId,
-      "answer" : answers
+      "answer" : data
     };
 
     ApiBaseHelper helper = ApiBaseHelper();
@@ -430,18 +444,28 @@ class DashboardState extends State<DashboardScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
-      if(lucList!=null && lucList.length!=0)
+
+      if(pos==totalLength-1)
         {
-          getImageData(0,lucList,otherList);
+
+          print("Image Uploading triggered");
+
+          if(lucList!=null && lucList.length!=0)
+          {
+            getImageData(0,lucList,otherList);
+          }
+
+
+          if(otherList!=null && otherList.length!=0)
+          {
+            getImageData(1,lucList,otherList);
+          }
         }
 
 
-      if(otherList!=null && otherList.length!=0)
-      {
-        getImageData(1,lucList,otherList);
-      }
 
-      MyUtils.saveSharedPreferences("answer_list", "");
+     // MyUtils.saveSharedPreferences("answer_list", "");
+      preferences.setStringList("feedback_list",[]);
       getData();
     } else {
       Toast.show(responseJSON['message'],
