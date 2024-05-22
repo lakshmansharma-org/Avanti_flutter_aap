@@ -747,7 +747,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
-                  questionIndex = questionIndex + 1;
+                  questionIndex = questionIndex + 65;
                   setState(() {
 
                   });

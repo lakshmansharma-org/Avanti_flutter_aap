@@ -668,6 +668,7 @@ class DashboardState extends State<DashboardScreen> {
     todayCount = responseJSON["data"]["todayCount"];
     totalCount = responseJSON["data"]["totalCount"];
     policyUrl = responseJSON["policy"];
+    print(policyUrl);
     setState(() {});
 
   }
