@@ -375,7 +375,9 @@ class DashboardState extends State<DashboardScreen> {
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
    // var data=prefs.getString("answer_list");
+   // prefs.setStringList("feedback_list",[]);
     List<String>? data= await prefs.getStringList("feedback_list")??[];
+
     List<String>? lucList=prefs.getStringList("LUC")??[];
     List<String>? otherList=prefs.getStringList("Others")??[];
 
@@ -439,14 +441,32 @@ class DashboardState extends State<DashboardScreen> {
     print('Opening URL: $lucList');
     print('Opening other URL: $otherList');
     if (responseJSON['code'] == 200) {
+
+      print("INEDDEX "+pos.toString());
+
+
       Toast.show("success !!",
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
 
+      if(pos!=totalLength-1)
+        {
+          List<String>? data= await preferences.getStringList("feedback_list")??[];
+
+          print("LENGTH "+data.length.toString());
+
+          data.removeAt(pos);
+          preferences.setStringList("feedback_list",data);
+        }
+
+
       if(pos==totalLength-1)
         {
+
+          preferences.setStringList("feedback_list",[]);
+          //getData();
 
           print("Image Uploading triggered");
 
@@ -465,8 +485,7 @@ class DashboardState extends State<DashboardScreen> {
 
 
      // MyUtils.saveSharedPreferences("answer_list", "");
-      preferences.setStringList("feedback_list",[]);
-      getData();
+
     } else {
       Toast.show(responseJSON['message'],
           duration: Toast.lengthLong,
