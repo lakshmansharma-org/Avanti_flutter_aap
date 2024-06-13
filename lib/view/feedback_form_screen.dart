@@ -706,7 +706,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
-                  questionIndex = questionIndex + 1;
+                  questionIndex = questionIndex + 63;
                   setState(() {
 
                   });
@@ -13424,8 +13424,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   submitAnswers() async {
-
+    //var answers = <List<Map<String, dynamic>>>[];
     List<dynamic> answers=[];
+    List<dynamic> arrayofAnsArray=[];
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     final connectivityResult = await (Connectivity().checkConnectivity());
@@ -13484,9 +13485,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     var requestModel = {
       "name": name,
       "id": empId,
-      "answer" : answers
+      "answer" : arrayofAnsArray
     };
-
+    arrayofAnsArray.add(answers);
     answers.add({'_id':questionList[0]['_id'],'answer':question1Controller.text});
     answers.add({'_id':questionList[1]['_id'],'answer':question2Controller.text});
     answers.add({'_id':questionList[2]['_id'],'answer':question3Controller.text});
@@ -13585,14 +13586,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     // Do for all answers according to type of widget
 
 
-    log('Log answer data: $answers');
-    print(answers);
+    log('Log answer data: $arrayofAnsArray');
+    print(arrayofAnsArray);
 
     if(connectivityResult == ConnectivityResult.none)
       {
         Navigator.pop(context);
-        storeAnswerDataLocally(answers);
-        log('Log answer data: $answers');
+        storeAnswerDataLocally(arrayofAnsArray);
+        log('Log answer data: $arrayofAnsArray');
       }
     else
       {

@@ -386,10 +386,7 @@ class DashboardState extends State<DashboardScreen> {
       {
         Navigator.of(context).pop();
 
-        for(int i=0;i<data.length;i++)
-          {
-            submitAnswers(data[i], lucList, otherList,i,data.length);
-          }
+
 
       }
 
@@ -421,16 +418,25 @@ class DashboardState extends State<DashboardScreen> {
 
   }
 
-  submitAnswers(String answers,List<String>? lucList,List<String>? otherList,int pos,int totalLength) async {
+  submitAnswers(List<dynamic> allAnswersList,List<String>? lucList,List<String>? otherList,int pos,int totalLength) async {
+    List<dynamic> allAnswers=[];
+
+    for(int i=0;i<allAnswersList.length;i++)
+      {
+        List<dynamic> data = jsonDecode(allAnswersList[i]);
+        allAnswers.add(data);
+      }
+
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    List<dynamic> data = jsonDecode(answers);
     String? empId=await MyUtils.getSharedPreferences("empId");
     String? name=await MyUtils.getSharedPreferences("name");
+
+
 
     var requestModel = {
       "name": name,
       "id": empId,
-      "answer" : data
+      "answer" : allAnswers
     };
 
     ApiBaseHelper helper = ApiBaseHelper();
@@ -451,36 +457,25 @@ class DashboardState extends State<DashboardScreen> {
           backgroundColor: Colors.green);
 
 
-      if(pos!=totalLength-1)
-        {
-          List<String>? data= await preferences.getStringList("feedback_list")??[];
 
-          print("LENGTH "+data.length.toString());
+      preferences.setStringList("feedback_list",[]);
+      //getData();
 
-          data.removeAt(pos);
-          preferences.setStringList("feedback_list",data);
-        }
+      print("Image Uploading triggered");
 
-
-      if(pos==totalLength-1)
-        {
-
-          preferences.setStringList("feedback_list",[]);
-          //getData();
-
-          print("Image Uploading triggered");
-
-          if(lucList!=null && lucList.length!=0)
-          {
-            getImageData(0,lucList,otherList);
-          }
+      if(lucList!=null && lucList.length!=0)
+      {
+        _uploadFiles(lucList);
+       // getImageData(0,lucList,otherList);
+      }
 
 
-          if(otherList!=null && otherList.length!=0)
-          {
-            getImageData(1,lucList,otherList);
-          }
-        }
+      if(otherList!=null && otherList.length!=0)
+      {
+        _uploadFiles1(otherList);
+       // getImageData(1,lucList,otherList);
+      }
+
 
 
 
@@ -497,7 +492,7 @@ class DashboardState extends State<DashboardScreen> {
 
 
   }
-  _uploadFiles(List<dynamic> loanData,List<String>? lucList) async {
+  _uploadFiles(List<String>? lucList) async {
     String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
     String? branchName=await MyUtils.getSharedPreferences("branch_name");
     String? partnerName=await MyUtils.getSharedPreferences("partner_name");
@@ -513,12 +508,12 @@ class DashboardState extends State<DashboardScreen> {
       //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       String fileNameNew = '';
 
-      if (loanData.length!=0){
-        fileNameNew = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
-      }else{
+      // if (loanData.length!=0){
+      //   fileNameNew = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
+      // }else{
         fileNameNew = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
 
-      }
+     // }
       //String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
 
       print("File Name is "+fileNameNew);
@@ -550,7 +545,7 @@ class DashboardState extends State<DashboardScreen> {
           backgroundColor: Colors.red);
     }
   }
-  _uploadFiles1(List<dynamic> loanData,List<String>? otherList) async {
+  _uploadFiles1(List<String>? otherList) async {
     FocusScope.of(context).unfocus();
     String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
     String? branchName=await MyUtils.getSharedPreferences("branch_name");
@@ -565,12 +560,12 @@ class DashboardState extends State<DashboardScreen> {
     for (int i = 0; i <otherList!.length; i++) {
       String fileName = '';
 
-      if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
-      }else{
+      // if (loanData.length!=0){
+      //   fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+      // }else{
         fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
 
-      }
+     // }
       print("File Name is 1 "+fileName);
      // String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
 
@@ -604,55 +599,55 @@ class DashboardState extends State<DashboardScreen> {
           backgroundColor: Colors.red);
     }
   }
-  getImageData(int type,List<String>? lucList,List<String>? otherList) async {
-
-    APIDialog.showAlertDialog(context, "Please wait...");
-
-    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
-
-    var requestModel = {
-      "loan_number": loanNumber
-    };
-
-    ApiBaseHelper helper = ApiBaseHelper();
-    var response =
-    await helper.postAPINew('Avanti/loanDetails', requestModel, context);
-    var responseJSON = json.decode(response.body);
-    Navigator.pop(context);
-    print(responseJSON);
-    print(type);
-    if(responseJSON["data"].length!=0)
-    {
-      if(type==0)
-      {
-        _uploadFiles(responseJSON["data"],lucList);
-      }
-      else
-      {
-        _uploadFiles1(responseJSON["data"],otherList);
-     }
-
-    }
-    else
-    {
-      if(type==0)
-      {
-        _uploadFiles(responseJSON["data"],lucList);
-      }
-      else
-      {
-        _uploadFiles1(responseJSON["data"],otherList);
-     }
-      // Toast.show("Invalid loan number",
-      //     duration: Toast.lengthLong,
-      //     gravity: Toast.bottom,
-      //     backgroundColor: Colors.red);
-    }
-
-
-
-
-  }
+  // getImageData(int type,List<String>? lucList,List<String>? otherList) async {
+  //
+  //   APIDialog.showAlertDialog(context, "Please wait...");
+  //
+  //   String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+  //
+  //   var requestModel = {
+  //     "loan_number": loanNumber
+  //   };
+  //
+  //   ApiBaseHelper helper = ApiBaseHelper();
+  //   var response =
+  //   await helper.postAPINew('Avanti/loanDetails', requestModel, context);
+  //   var responseJSON = json.decode(response.body);
+  //   Navigator.pop(context);
+  //   print(responseJSON);
+  //   print(type);
+  //   if(responseJSON["data"].length!=0)
+  //   {
+  //     if(type==0)
+  //     {
+  //       _uploadFiles(responseJSON["data"],lucList);
+  //     }
+  //     else
+  //     {
+  //       _uploadFiles1(responseJSON["data"],otherList);
+  //    }
+  //
+  //   }
+  //   else
+  //   {
+  //     if(type==0)
+  //     {
+  //       _uploadFiles(responseJSON["data"],lucList);
+  //     }
+  //     else
+  //     {
+  //       _uploadFiles1(responseJSON["data"],otherList);
+  //    }
+  //     // Toast.show("Invalid loan number",
+  //     //     duration: Toast.lengthLong,
+  //     //     gravity: Toast.bottom,
+  //     //     backgroundColor: Colors.red);
+  //   }
+  //
+  //
+  //
+  //
+  // }
   showLogOutDialog(BuildContext context) {
     Widget cancelButton = GestureDetector(
         onTap: (){
