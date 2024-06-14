@@ -648,7 +648,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 else {
                   MyUtils.saveSharedPreferences(
                       "branch_name", question3Controller.text.toString());
-                  questionIndex = questionIndex + 1;
+                  questionIndex = questionIndex + 65;
                   setState(() {
 
                   });
@@ -13951,7 +13951,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Navigator.pop(context);
-      storeAnswerDataLocally(arrayofAnsArray);
+      storeAnswerDataLocally(answers);
       log('Log answer data: $arrayofAnsArray');
     }
     else {

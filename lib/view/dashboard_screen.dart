@@ -377,7 +377,7 @@ class DashboardState extends State<DashboardScreen> {
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
 
-   /* prefs.setStringList("feedback_list", []);
+ /*   prefs.setStringList("feedback_list", []);
     prefs.setString("LUC", "");
     prefs.setString("Others","");*/
 
@@ -429,32 +429,35 @@ class DashboardState extends State<DashboardScreen> {
 
   }
 
-    submitAnswers(List<dynamic> allAnswersList,String? lucList,String? otherList) async {
+    submitAnswers(List<String>? allAnswersList,String? lucList,String? otherList) async {
     APIDialog.showAlertDialog(context, "Uploading feedbacks...");
     List<dynamic> allAnswers=[];
 
-    for(int i=0;i<allAnswersList.length;i++)
+    for(int i=0;i<allAnswersList!.length;i++)
       {
-        List<dynamic> data = jsonDecode(allAnswersList[i]);
-        allAnswers.add(data);
+
+        allAnswers.add(jsonDecode(allAnswersList[i]));
       }
 
-    List<dynamic> lucImageData=jsonDecode(lucList.toString());
-    List<dynamic> otherImageData=jsonDecode(otherList.toString());
+    List<dynamic> lucImageData=[];
+    List<dynamic> otherImageData=[];
 
-    print("ALl Ansqwers");
-    log(allAnswersList.toString());
-    log(lucList.toString());
-    log(otherList.toString());
-    print(lucList!.length.toString());
-    print(otherList!.length.toString());
+    if(lucList!="")
+      {
+        lucImageData=jsonDecode(lucList.toString());
+      }
 
+    if(otherList!="")
+    {
+      otherImageData=jsonDecode(otherList.toString());
+    }
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? empId=await MyUtils.getSharedPreferences("empId");
     String? name=await MyUtils.getSharedPreferences("name");
 
-
+    print("Answer Data");
+    log(allAnswers.toString());
 
     var requestModel = {
       "name": name,
