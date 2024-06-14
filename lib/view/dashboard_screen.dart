@@ -425,8 +425,6 @@ class DashboardState extends State<DashboardScreen> {
 
     }
 
-
-
   }
 
     submitAnswers(List<String>? allAnswersList,String? lucList,String? otherList) async {
@@ -481,11 +479,8 @@ class DashboardState extends State<DashboardScreen> {
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
-
-
-
       preferences.setStringList("feedback_list",[]);
-      //getData();
+      getData();
 
       print("Image Uploading triggered");
 
