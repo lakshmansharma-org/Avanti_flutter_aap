@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -372,19 +373,29 @@ class DashboardState extends State<DashboardScreen> {
 
   checkAnswerStatus() async {
     FocusScope.of(context).unfocus();
+
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences prefs=await SharedPreferences.getInstance();
-   // var data=prefs.getString("answer_list");
+
+   /* prefs.setStringList("feedback_list", []);
+    prefs.setString("LUC", "");
+    prefs.setString("Others","");*/
+
+
+    // var data=prefs.getString("answer_list");
    // prefs.setStringList("feedback_list",[]);
     List<String>? data= await prefs.getStringList("feedback_list")??[];
 
-    List<String>? lucList=prefs.getStringList("LUC")??[];
-    List<String>? otherList=prefs.getStringList("Others")??[];
+    String? lucList=prefs.getString("LUC")??"";
+    String? otherList=prefs.getString("Others")??"";
 
     if (data.length!=0){
       if(data.isNotEmpty && data.length!=0)
       {
         Navigator.of(context).pop();
+
+
+        submitAnswers(data,lucList,otherList);
 
 
 
@@ -418,7 +429,8 @@ class DashboardState extends State<DashboardScreen> {
 
   }
 
-  submitAnswers(List<dynamic> allAnswersList,List<String>? lucList,List<String>? otherList,int pos,int totalLength) async {
+    submitAnswers(List<dynamic> allAnswersList,String? lucList,String? otherList) async {
+    APIDialog.showAlertDialog(context, "Uploading feedbacks...");
     List<dynamic> allAnswers=[];
 
     for(int i=0;i<allAnswersList.length;i++)
@@ -426,6 +438,17 @@ class DashboardState extends State<DashboardScreen> {
         List<dynamic> data = jsonDecode(allAnswersList[i]);
         allAnswers.add(data);
       }
+
+    List<dynamic> lucImageData=jsonDecode(lucList.toString());
+    List<dynamic> otherImageData=jsonDecode(otherList.toString());
+
+    print("ALl Ansqwers");
+    log(allAnswersList.toString());
+    log(lucList.toString());
+    log(otherList.toString());
+    print(lucList!.length.toString());
+    print(otherList!.length.toString());
+
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? empId=await MyUtils.getSharedPreferences("empId");
@@ -444,14 +467,14 @@ class DashboardState extends State<DashboardScreen> {
     await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
     var responseJSON = json.decode(response.body);
 
+
+    Navigator.pop(context);
+
     print('Opening URL: $lucList');
     print('Opening other URL: $otherList');
     if (responseJSON['code'] == 200) {
 
-      print("INEDDEX "+pos.toString());
-
-
-      Toast.show("success !!",
+      Toast.show(responseJSON["message"],
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
@@ -463,16 +486,16 @@ class DashboardState extends State<DashboardScreen> {
 
       print("Image Uploading triggered");
 
-      if(lucList!=null && lucList.length!=0)
+      if(lucImageData!=null && lucImageData.length!=0)
       {
-        _uploadFiles(lucList);
+        _uploadFiles(lucImageData);
        // getImageData(0,lucList,otherList);
       }
 
 
-      if(otherList!=null && otherList.length!=0)
+      if(otherImageData!=null && otherImageData.length!=0)
       {
-        _uploadFiles1(otherList);
+        _uploadFiles1(otherImageData);
        // getImageData(1,lucList,otherList);
       }
 
@@ -492,113 +515,124 @@ class DashboardState extends State<DashboardScreen> {
 
 
   }
-  _uploadFiles(List<String>? lucList) async {
-    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+  _uploadFiles(List<dynamic> lucList) async {
+   /* String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
     String? branchName=await MyUtils.getSharedPreferences("branch_name");
-    String? partnerName=await MyUtils.getSharedPreferences("partner_name");
+    String? partnerName=await MyUtils.getSharedPreferences("partner_name");*/
     FocusScope.of(context).unfocus();
-    APIDialog.showAlertDialog(context, 'Uploading Images...');
-    // String fileName = xFile.path.split('/').last;
-    FormData? formData= FormData.fromMap({
-      "Id": loanNumber,
-      "artifactType": "LUC",
-    });
 
-    for (int i = 0; i <lucList!.length; i++) {
-      //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
-      String fileNameNew = '';
+    for(int i=0;i<lucList.length;i++)
+      {
+        APIDialog.showAlertDialog(context, 'Uploading Images...');
+        // String fileName = xFile.path.split('/').last;
+        FormData? formData= FormData.fromMap({
+          "Id": lucList[i]["loan_number"],
+          "artifactType": "LUC",
+        });
 
-      // if (loanData.length!=0){
-      //   fileNameNew = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
-      // }else{
-        fileNameNew = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i].split('.').last;
+        for (int j = 0; j <lucList[i]["files"].length; j++) {
+          String fileNameNew = '';
+          fileNameNew = lucList[i]["loan_number"].toString()+"-"+lucList[i]["branch_name"].toString()+"-"+lucList[i]["partner_name"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i]["files"][j].split('.').last;
+          print("File Name is "+fileNameNew);
+          var path = lucList[i]["files"][j].toString();
+          formData.files.addAll([
+            MapEntry("file", await MultipartFile.fromFile(path, filename: fileNameNew))
+          ]);
+        }
 
-     // }
-      //String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+lucList[i].split('.').last;
+        Dio dio = Dio();
+        dio.options.headers['Content-Type'] = 'multipart/form-data';
+        // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
+        print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
+        var response = await dio.post(
+            "https://api.doyoursurvey.com:3009/Avanti/saveImage",
+            data: formData);
+        print(response.data);
+        Navigator.pop(context);
+        if (response.data['code'] == 200) {
+          Toast.show(response.data['message'].toString(),
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.green);
 
-      print("File Name is "+fileNameNew);
-      var path = lucList[i].toString();
-      formData.files.addAll([
-        MapEntry("file", await MultipartFile.fromFile(path, filename: fileNameNew))
-      ]);
-    }
+          SharedPreferences prefs=await SharedPreferences.getInstance();
+          prefs.setString("LUC","");
 
-    Dio dio = Dio();
-    dio.options.headers['Content-Type'] = 'multipart/form-data';
-    // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
-    print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
-    var response = await dio.post(
-        "https://api.doyoursurvey.com:3009/Avanti/saveImage",
-        data: formData);
-    print(response.data);
-    Navigator.pop(context);
-    if (response.data['code'] == 200) {
-      Toast.show(response.data['message'].toString(),
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.green);
+        } else {
+          Toast.show(response.data['message'].toString(),
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.red);
+        }
+      }
 
-    } else {
-      Toast.show(response.data['message'].toString(),
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.red);
-    }
+
+
+
   }
-  _uploadFiles1(List<String>? otherList) async {
-    FocusScope.of(context).unfocus();
-    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+
+
+  _uploadFiles1(List<dynamic> otherList) async {
+    /* String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
     String? branchName=await MyUtils.getSharedPreferences("branch_name");
-    String? partnerName=await MyUtils.getSharedPreferences("partner_name");
-    APIDialog.showAlertDialog(context, 'Uploading Images...');
-    // String fileName = xFile.path.split('/').last;
-    FormData? formData= FormData.fromMap({
-      "Id":loanNumber,
-      "artifactType": "Other",
-    });
+    String? partnerName=await MyUtils.getSharedPreferences("partner_name");*/
+    FocusScope.of(context).unfocus();
 
-    for (int i = 0; i <otherList!.length; i++) {
-      String fileName = '';
+    for(int i=0;i<otherList.length;i++)
+    {
+      APIDialog.showAlertDialog(context, 'Uploading Images...');
+      // String fileName = xFile.path.split('/').last;
+      FormData? formData= FormData.fromMap({
+        "Id": otherList[i]["loan_number"],
+        "artifactType": "Other",
+      });
 
-      // if (loanData.length!=0){
-      //   fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
-      // }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+      print("Other Image Params");
+      print(formData.fields.toString());
 
-     // }
-      print("File Name is 1 "+fileName);
-     // String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+otherList[i].split('.').last;
+      for (int j = 0; j <otherList[i]["files"].length; j++) {
+        String fileNameNew = '';
+        fileNameNew = otherList[i]["loan_number"].toString()+"-"+otherList[i]["branch_name"].toString()+"-"+otherList[i]["partner_name"].toString()+"-"+"Other"+"-"+i.toString()+"."+otherList[i]["files"][j].split('.').last;
+        print("File Name is "+fileNameNew);
+        var path = otherList[i]["files"][j].toString();
+        formData.files.addAll([
+          MapEntry("file", await MultipartFile.fromFile(path, filename: fileNameNew))
+        ]);
+      }
 
-      var path = otherList[i].toString();
-      // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
-      formData.files.addAll([
-        MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
-      ]);
+      Dio dio = Dio();
+      dio.options.headers['Content-Type'] = 'multipart/form-data';
+      // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
+      print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
+      var response = await dio.post(
+          "https://api.doyoursurvey.com:3009/Avanti/saveImage",
+          data: formData);
+      print(response.data);
+      Navigator.pop(context);
+      if (response.data['code'] == 200) {
+        Toast.show(response.data['message'].toString(),
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.green);
+
+        SharedPreferences prefs=await SharedPreferences.getInstance();
+        prefs.setString("Others","");
+
+      } else {
+        Toast.show(response.data['message'].toString(),
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.red);
+      }
     }
 
-    Dio dio = Dio();
-    dio.options.headers['Content-Type'] = 'multipart/form-data';
-    // dio.options.headers['Authorization'] = "Bearer " + AppModel.token;
-    print("https://api.doyoursurvey.com:3009/Avanti/saveImage");
-    var response = await dio.post(
-        "https://api.doyoursurvey.com:3009/Avanti/saveImage",
-        data: formData);
-    print(response.data);
-    Navigator.pop(context);
-    if (response.data['code'] == 200) {
-      Toast.show(response.data['message'].toString(),
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.green);
 
 
-    } else {
-      Toast.show(response.data['message'].toString(),
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.red);
-    }
+
   }
+
+
+
   // getImageData(int type,List<String>? lucList,List<String>? otherList) async {
   //
   //   APIDialog.showAlertDialog(context, "Please wait...");

@@ -24,6 +24,7 @@ import '../widgets/date_widget.dart';
 import '../widgets/textfield_number_widget.dart';
 
 import 'package:image_picker/image_picker.dart';
+
 class FeedbackFormScreen extends StatefulWidget {
   final bool showBack;
   List<dynamic> surveyDataList = [];
@@ -38,13 +39,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   @override
   final connectivityResult1 = (Connectivity().checkConnectivity());
   int todayCount = 1;
-  List<TextEditingController> _controllerTab1=[];
-  List<TextEditingController> _controllerTab2=[];
-  List<TextEditingController> _controllerTab3=[];
-  List<TextEditingController> _controllerTab4=[];
-  List<XFile> imageList=[];
-  List<XFile> pickedImage=[];
-  List<XFile> imageList1=[];
+  List<TextEditingController> _controllerTab1 = [];
+  List<TextEditingController> _controllerTab2 = [];
+  List<TextEditingController> _controllerTab3 = [];
+  List<TextEditingController> _controllerTab4 = [];
+  List<XFile> imageList = [];
+  List<XFile> pickedImage = [];
+  List<XFile> imageList1 = [];
   var question1Controller = TextEditingController();
   var question2Controller = TextEditingController();
   var question3Controller = TextEditingController();
@@ -106,6 +107,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   var text = TextEditingController();
   List<dynamic> questionList = [];
   List<dynamic> option = [];
+
   //List<String> selectedIndices = [];
 
   Set<String> selectedIndices = {};
@@ -204,24 +206,24 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   Color _currentColor = Colors.white;
   String lastItem = '';
   List<Map<String, dynamic>> notCapturedList = [
-    {'id':1, 'name':'Misutilization - LUC Not Captured'},
-    {'id':2, 'name':'LUC Not Captured'},
+    {'id': 1, 'name': 'Misutilization - LUC Not Captured'},
+    {'id': 2, 'name': 'LUC Not Captured'},
   ];
-  List<Map<String, dynamic>>  notCaptured2List = [
-    {'name':'Borrower - Denied to show'},
-    {'name':'LUC Not available within the area of coverage'},
-    {'name':'LUC Product already sold'},
-    {'name':'Business closed'},
-    {'name':'Moveable Business - Transport, Hawkers, etc.'},
-    {'name':'Shuttering Business'},
-    {'name':'Weather Condition'},
-    {'name':'Live Stock - Grazing'},
+  List<Map<String, dynamic>> notCaptured2List = [
+    {'name': 'Borrower - Denied to show'},
+    {'name': 'LUC Not available within the area of coverage'},
+    {'name': 'LUC Product already sold'},
+    {'name': 'Business closed'},
+    {'name': 'Moveable Business - Transport, Hawkers, etc.'},
+    {'name': 'Shuttering Business'},
+    {'name': 'Weather Condition'},
+    {'name': 'Live Stock - Grazing'},
   ];
-  List<Map<String, dynamic>>  notCaptured3List = [
-    {'name':'Borrower - Denied to show'},
-    {'name':'LUC Proof Not available i.e. Marriage, Education'},
-    {'name':'Money Not Used'},
-    {'name':'LUC Not available within the area of coverage - 2km'},
+  List<Map<String, dynamic>> notCaptured3List = [
+    {'name': 'Borrower - Denied to show'},
+    {'name': 'LUC Proof Not available i.e. Marriage, Education'},
+    {'name': 'Money Not Used'},
+    {'name': 'LUC Not available within the area of coverage - 2km'},
   ];
 
   List<String> originalList = [];
@@ -235,7 +237,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
   List<String> originalList3 = [];
   List<int?> filteredList3 = [];
-
 
 
   Future<void> _selectStartDate(BuildContext context) async {
@@ -252,10 +253,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate) {
       setState(() {
         _startDate = pickedStartDate;
-        _startDateWithoutTime = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+        _startDateWithoutTime =
+            DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
@@ -280,7 +283,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(DateTime
-          .now().year,DateTime.now().month - 3),
+          .now()
+          .year, DateTime
+          .now()
+          .month - 3),
       lastDate: DateTime
           .now(),
     );
@@ -288,10 +294,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDate3) {
       setState(() {
         _startDate3 = pickedStartDate;
-        _startDateWithoutTime3 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+        _startDateWithoutTime3 =
+            DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
+
   Future<void> _selectDateNewAdd(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
@@ -306,7 +314,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (pickedStartDate != null && pickedStartDate != _startDateNew) {
       setState(() {
         _startDateNew = pickedStartDate;
-        _startDateWithoutTimeNew = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+        _startDateWithoutTimeNew =
+            DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
@@ -316,14 +325,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(DateTime
-          .now().year,DateTime.now().month - 3),
+          .now()
+          .year, DateTime
+          .now()
+          .month - 3),
       lastDate: DateTime.now(),
     );
 
     if (pickedStartDate != null && pickedStartDate != _startDate4) {
       setState(() {
         _startDate4 = pickedStartDate;
-        _startDateWithoutTime4 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+        _startDateWithoutTime4 =
+            DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
@@ -333,43 +346,50 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(DateTime
-          .now().year,DateTime.now().month - 3),
+          .now()
+          .year, DateTime
+          .now()
+          .month - 3),
       lastDate: DateTime.now(),
     );
 
     if (pickedStartDate != null && pickedStartDate != _startDate5) {
       setState(() {
         _startDate5 = pickedStartDate;
-        _startDateWithoutTime5 = DateFormat('yyyy-MM-dd').format(pickedStartDate);
+        _startDateWithoutTime5 =
+            DateFormat('yyyy-MM-dd').format(pickedStartDate);
       });
     }
   }
 
 
-
   Widget build(BuildContext context) {
-    originalList = _controllerTab1.map((controller) => controller.text).toList();
-     filteredList = originalList
+    originalList =
+        _controllerTab1.map((controller) => controller.text).toList();
+    filteredList = originalList
         .where((element) => element.isNotEmpty)
         .map((element) => int.tryParse(element))
         .where((element) => element != null)
         .toList();
 
-    originalList1 = _controllerTab2.map((controller) => controller.text).toList();
+    originalList1 =
+        _controllerTab2.map((controller) => controller.text).toList();
     filteredList1 = originalList1
         .where((element) => element.isNotEmpty)
         .map((element) => int.tryParse(element))
         .where((element) => element != null)
         .toList();
 
-    originalList2 = _controllerTab4.map((controller) => controller.text).toList();
+    originalList2 =
+        _controllerTab4.map((controller) => controller.text).toList();
     filteredList2 = originalList2
         .where((element) => element.isNotEmpty)
         .map((element) => int.tryParse(element))
         .where((element) => element != null)
         .toList();
 
-    originalList3 = _controllerTab3.map((controller) => controller.text).toList();
+    originalList3 =
+        _controllerTab3.map((controller) => controller.text).toList();
     filteredList3 = originalList3
         .where((element) => element.isNotEmpty)
         .map((element) => int.tryParse(element))
@@ -402,7 +422,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 child: AppBar()),
             backgroundColor: Colors.white,
             extendBody: true,
-            body:  questionList.length==0?Container():
+            body: questionList.length == 0 ? Container() :
 
 
             questionIndex == 0 ?
@@ -415,7 +435,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   AppTheme.buttonColor.withOpacity(0.15),
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
               child: Container(
-                margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -459,7 +479,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               color: AppTheme.grayColor,
                             ),
                           )),
-                    ),// TextField Container
+                    ), // TextField Container
                     SizedBox(height: 20.0),
                     Row(
                       children: [
@@ -469,7 +489,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 0,right: 16,top: 8),
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.blueColor,
@@ -486,7 +506,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             if (question1Controller.text == "") {
-
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -499,8 +518,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            }else if(question1Controller.text.length < 12 || question1Controller.text.length > 14){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
+                            } else if (question1Controller.text.length < 12 ||
+                                question1Controller.text.length > 14) {
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -513,11 +534,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
                             }
 
                             else {
-                              MyUtils.saveSharedPreferences("loan_number",question1Controller.text.toString());
+                              MyUtils.saveSharedPreferences("loan_number",
+                                  question1Controller.text.toString());
                               questionIndex = questionIndex + 1;
                               setState(() {
 
@@ -526,7 +549,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 8,right: 16,top: 8),
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.buttonOrangeColor,
@@ -569,7 +592,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 else {
                   String? id = await MyUtils.getSharedPreferences("empId");
                   print('id');
-                  if (id == 'QD2281'){
+                  if (id == 'QD2281') {
                     FocusScope.of(context).unfocus();
                     APIDialog.showAlertDialog(context, 'Please wait...');
                     Future.delayed(Duration(seconds: 1), () {
@@ -580,10 +603,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           backgroundColor: Colors.green);
                     });
                     Navigator.pop(context);
-                  }else{
-                    MyUtils.saveSharedPreferences("partner_name",question2Controller.text.toString());
+                  } else {
+                    MyUtils.saveSharedPreferences(
+                        "partner_name", question2Controller.text.toString());
                     questionIndex = questionIndex + 1;
-
                   }
                   setState(() {
 
@@ -623,7 +646,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
-                  MyUtils.saveSharedPreferences("branch_name",question3Controller.text.toString());
+                  MyUtils.saveSharedPreferences(
+                      "branch_name", question3Controller.text.toString());
                   questionIndex = questionIndex + 1;
                   setState(() {
 
@@ -803,7 +827,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     SizedBox(height: 6.0),
                     Container(
                       margin: EdgeInsets.only(bottom: 30),
-                      child:Column(
+                      child: Column(
                         children: [
                           ListView.builder(
                               padding: EdgeInsets.only(bottom: 16.0),
@@ -814,11 +838,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (BuildContext context, int pos) {
                                 _controllerTab1.add(TextEditingController());
-                                if(pos==questionList[questionIndex]['options']
-                                    .length-1){
-
-                                  _controllerTab1[pos].text=" ";
-
+                                if (pos ==
+                                    questionList[questionIndex]['options']
+                                        .length - 1) {
+                                  _controllerTab1[pos].text = " ";
                                 }
                                 final item = questionList[questionIndex]['options'][pos]['option'];
 
@@ -832,17 +855,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           children: [
                                             selectedIndices2.contains(item)
                                                 ? InkWell(
-                                                onTap: (){
+                                                onTap: () {
                                                   if (selectedIndices2.contains(
                                                       item)) {
-                                                    selectedIndices2.remove(item);
-                                                    selectedIndicesInt2.remove(pos);
+                                                    selectedIndices2.remove(
+                                                        item);
+                                                    selectedIndicesInt2.remove(
+                                                        pos);
                                                   }
                                                   setState(() {
 
                                                   });
                                                 },
-                                                child:Image.asset('assets/check.png',
+                                                child: Image.asset(
+                                                    'assets/check.png',
                                                     width: 24, height: 24))
                                                 : InkWell(
                                               child: Image.asset(
@@ -851,12 +877,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                   height: 24),
                                               onTap: () {
                                                 setState(() {
-
                                                   selectedIndices2.add(item);
 
                                                   selectedIndicesInt2.add(pos);
-
-
                                                 });
                                               },
                                             ),
@@ -866,20 +889,27 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                   questionList[questionIndex]['options'][pos]['option'],
                                                   style: TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.normal,
+                                                      fontWeight: FontWeight
+                                                          .normal,
                                                       color: Colors.black)),
                                             ),
                                           ],
                                         ),
 
-                                        selectedIndices2.contains(item) && questionList[questionIndex]['options'][pos]['option'] != "No"?
+                                        selectedIndices2.contains(item) &&
+                                            questionList[questionIndex]['options'][pos]['option'] !=
+                                                "No" ?
                                         Container(
                                           margin: EdgeInsets.only(right: 12),
                                           child: TextFormField(
                                             //validator: checkPasswordValidator,
-                                              keyboardType: TextInputType.number,
-                                              inputFormatters: <TextInputFormatter>[
-                                                FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                              keyboardType: TextInputType
+                                                  .number,
+                                              inputFormatters: <
+                                                  TextInputFormatter>[
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                                // Allow only numbers
                                               ],
                                               controller: _controllerTab1[pos],
                                               decoration: InputDecoration(
@@ -895,7 +925,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     )
                                 );
                               }),
-                          selectedIndices2.contains("Any other Income") ? Column(
+                          selectedIndices2.contains("Any other Income")
+                              ? Column(
                             children: [
                               SizedBox(height: 0.0),
                               Container(
@@ -905,7 +936,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question47Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -918,7 +951,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ),
                               SizedBox(height: 0.0),
                             ],
-                          ) :Container(),// T
+                          )
+                              : Container(), // T
                         ],
                       ),
                     ),
@@ -950,26 +984,28 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         )),
                         Expanded(child: InkWell(
                           onTap: () {
-
                             setState(() {
                               bool isValid = true;
-                              for (int i = 0; i < selectedIndicesInt2.length; i++) {
+                              for (int i = 0; i <
+                                  selectedIndicesInt2.length; i++) {
                                 int index = selectedIndicesInt2[i];
                                 print(_controllerTab1[index].text);
                                 if (_controllerTab1[index].text.isEmpty) {
                                   isValid = false;
                                   break;
-
-                                }else{
+                                } else {
 
                                 }
                               }
-                              if (isValid == true && selectedIndicesInt2.isNotEmpty) {
-                                if (selectedIndices2.contains("Any other Income")){
-                                  if (question47Controller.text == ""){
+                              if (isValid == true &&
+                                  selectedIndicesInt2.isNotEmpty) {
+                                if (selectedIndices2.contains(
+                                    "Any other Income")) {
+                                  if (question47Controller.text == "") {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -979,22 +1015,21 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
+                                  } else {
                                     questionIndex = questionIndex + 1;
                                     isValid = false;
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                   isValid = false;
                                 }
-
-
                               } else {
-
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option and enter amount.',
@@ -1004,12 +1039,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-
-
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -1033,8 +1065,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// multiple selection with text field issue pending
-
+            ) : // multiple selection with text field issue pending
 
 
             questionIndex == 7 ?
@@ -1075,7 +1106,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     ),
                     SizedBox(height: 10.0),
                     Container(
-                      child:Column(
+                      child: Column(
                         children: [
                           ListView.builder(
                               padding: EdgeInsets.only(bottom: 16.0),
@@ -1086,11 +1117,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (BuildContext context, int pos) {
                                 _controllerTab2.add(TextEditingController());
-                                if(pos==questionList[questionIndex]['options']
-                                    .length-1){
-
-                                  _controllerTab2[pos].text=" ";
-
+                                if (pos ==
+                                    questionList[questionIndex]['options']
+                                        .length - 1) {
+                                  _controllerTab2[pos].text = " ";
                                 }
                                 final item = questionList[questionIndex]['options'][pos]['option'];
                                 return Padding(
@@ -1102,17 +1132,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           children: [
                                             selectedIndices4.contains(item)
                                                 ? InkWell(
-                                                onTap: (){
+                                                onTap: () {
                                                   if (selectedIndices4.contains(
                                                       item)) {
-                                                    selectedIndices4.remove(item);
-                                                    selectedIndicesInt4.remove(pos);
+                                                    selectedIndices4.remove(
+                                                        item);
+                                                    selectedIndicesInt4.remove(
+                                                        pos);
                                                   }
                                                   setState(() {
 
                                                   });
                                                 },
-                                                child:Image.asset('assets/check.png',
+                                                child: Image.asset(
+                                                    'assets/check.png',
                                                     width: 24, height: 24))
                                                 : InkWell(
                                               child: Image.asset(
@@ -1132,19 +1165,26 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                   questionList[questionIndex]['options'][pos]['option'],
                                                   style: TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.normal,
+                                                      fontWeight: FontWeight
+                                                          .normal,
                                                       color: Colors.black)),
                                             ),
                                           ],
                                         ),
-                                        selectedIndices4.contains(item) && questionList[questionIndex]['options'][pos]['option'] != "No"?
+                                        selectedIndices4.contains(item) &&
+                                            questionList[questionIndex]['options'][pos]['option'] !=
+                                                "No" ?
                                         Container(
                                           margin: EdgeInsets.only(right: 12),
                                           child: TextFormField(
                                             //validator: checkPasswordValidator,
-                                              keyboardType: TextInputType.number,
-                                              inputFormatters: <TextInputFormatter>[
-                                                FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                              keyboardType: TextInputType
+                                                  .number,
+                                              inputFormatters: <
+                                                  TextInputFormatter>[
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                                // Allow only numbers
                                               ],
                                               controller: _controllerTab2[pos],
                                               //controller: number,
@@ -1161,7 +1201,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     )
                                 );
                               }),
-                          selectedIndices4.contains("Any Other Income") ? Column(
+                          selectedIndices4.contains("Any Other Income")
+                              ? Column(
                             children: [
                               SizedBox(height: 0.0),
                               Container(
@@ -1171,7 +1212,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question48Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -1184,7 +1227,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ),
                               SizedBox(height: 0.0),
                             ],
-                          ) :Container(),// T
+                          )
+                              : Container(), // T
                         ],
                       ),
                     ),
@@ -1237,20 +1281,23 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                             // });
                             setState(() {
                               bool isValid = true;
-                              for (int i = 0; i < selectedIndicesInt4.length; i++) {
+                              for (int i = 0; i <
+                                  selectedIndicesInt4.length; i++) {
                                 int index = selectedIndicesInt4[i];
                                 if (_controllerTab2[index].text.isEmpty) {
                                   isValid = false;
                                   break;
-
                                 }
                               }
-                              if (isValid == true && selectedIndicesInt4.isNotEmpty) {
-                                if (selectedIndices4.contains("Any Other Income")){
-                                  if (question48Controller.text == ""){
+                              if (isValid == true &&
+                                  selectedIndicesInt4.isNotEmpty) {
+                                if (selectedIndices4.contains(
+                                    "Any Other Income")) {
+                                  if (question48Controller.text == "") {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -1260,21 +1307,21 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
+                                  } else {
                                     questionIndex = questionIndex + 1;
                                     isValid = false;
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                   isValid = false;
                                 }
-
-
                               } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option and enter amount.',
@@ -1284,9 +1331,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -1310,7 +1357,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) ://multiple selection with text field issue pending
+            ) : //multiple selection with text field issue pending
             questionIndex == 8 ?
             TextFieldNumberWidget(
               controller: question6Controller,
@@ -1513,7 +1560,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionMessage: questionList[questionIndex]['que_message'],
               questionName: questionList[questionIndex]['question'],
 
-            ) ://done---
+            ) : //done---
 
 
             questionIndex == 13 ?
@@ -1602,7 +1649,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 }),
                           ),
                           selectIndex == "-1" ?
-                          Container() : selectIndex != "No"? Column(
+                          Container() : selectIndex != "No" ? Column(
                             children: [
                               SizedBox(height: 8.0),
                               Container(
@@ -1612,7 +1659,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question27Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -1658,14 +1706,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex != "-1"){
-                                if (selectIndex != "No"){
-                                  if (question27Controller.text != ""){
+                              if (selectIndex != "-1") {
+                                if (selectIndex != "No") {
+                                  if (question27Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -1675,16 +1724,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -1694,7 +1744,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -1719,8 +1770,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// 13 index  land
-
+            ) : // 13 index  land
 
 
             questionIndex == 14 ?
@@ -1808,7 +1858,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 }),
                           ),
                           selectIndex1 == "-1" ?
-                          Container() : selectIndex1 != "No"? Column(
+                          Container() : selectIndex1 != "No" ? Column(
                             children: [
                               SizedBox(height: 8.0),
                               Container(
@@ -1818,7 +1868,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question31Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -1864,14 +1915,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex1 != "-1"){
-                                if (selectIndex1 != "No"){
-                                  if (question31Controller.text != ""){
+                              if (selectIndex1 != "-1") {
+                                if (selectIndex1 != "No") {
+                                  if (question31Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -1881,16 +1933,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -1900,7 +1953,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -1941,7 +1995,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               child: Container(
                 margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
                 child: ListView(
-                 // crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1989,17 +2043,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           children: [
                                             selectedIndices5.contains(index)
                                                 ? InkWell(
-                                                onTap: (){
+                                                onTap: () {
                                                   if (selectedIndices5.contains(
                                                       index)) {
-                                                    selectedIndices5.remove(index);
-
+                                                    selectedIndices5.remove(
+                                                        index);
                                                   }
                                                   setState(() {
 
                                                   });
                                                 },
-                                                child:Image.asset('assets/check.png',
+                                                child: Image.asset(
+                                                    'assets/check.png',
                                                     width: 24, height: 24))
                                                 : InkWell(
                                               child: Image.asset(
@@ -2009,7 +2064,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                               onTap: () {
                                                 setState(() {
                                                   selectedIndices5.add(index);
-
                                                 });
                                               },
                                             ),
@@ -2019,7 +2073,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                   questionList[questionIndex]['options'][pos]['option'],
                                                   style: TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.normal,
+                                                      fontWeight: FontWeight
+                                                          .normal,
                                                       color: Colors.black)),
                                             ),
                                           ],
@@ -2039,7 +2094,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question32Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -2052,7 +2109,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ),
                               SizedBox(height: 0.0),
                             ],
-                          ) :Container(),
+                          ) : Container(),
                         ],
                       ),
 
@@ -2085,12 +2142,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectedIndices5.isNotEmpty){
-                                if (selectedIndices5.contains("Other")){
-                                  if (question32Controller.text == ""){
+                              if (selectedIndices5.isNotEmpty) {
+                                if (selectedIndices5.contains("Other")) {
+                                  if (question32Controller.text == "") {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -2100,18 +2158,19 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
+                                  } else {
                                     questionIndex = questionIndex + 1;
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option',
@@ -2121,7 +2180,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -2146,7 +2206,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// new done
+            ) : // new done
 
             questionIndex == 16 ?
 
@@ -2188,9 +2248,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionMessage: questionList[questionIndex]['que_message'],
               questionName: questionList[questionIndex]['question'],
 
-            ):
+            ) :
 
-                // Added one question radio type -----------
+            // Added one question radio type -----------
             questionIndex == 17 ?
 
             Container(
@@ -2332,14 +2392,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew1 != "-1"){
-                                if (selectIndexNew1 == "Other"){
-                                  if (question49ControllerNew.text != ""){
+                              if (selectIndexNew1 != "-1") {
+                                if (selectIndexNew1 == "Other") {
+                                  if (question49ControllerNew.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -2349,16 +2410,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -2368,7 +2430,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -2436,7 +2499,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               questionMessage: questionList[questionIndex]['que_message'],
               questionName: questionList[questionIndex]['question'],
 
-            ) ://done+++++
+            ) : //done+++++
 
             questionIndex == 19 ?
 
@@ -2576,14 +2639,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex2 != "-1"){
-                                if (selectIndex2 == "Other"){
-                                  if (question33Controller.text != ""){
+                              if (selectIndex2 != "-1") {
+                                if (selectIndex2 == "Other") {
+                                  if (question33Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(left: 20,
+                                            right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -2593,16 +2657,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -2612,7 +2677,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -2737,7 +2803,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question28Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -2784,14 +2852,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex4 != "-1"){
-                                if (selectIndex4 == "Other"){
-                                  if (question28Controller.text != ""){
+                              if (selectIndex4 != "-1") {
+                                if (selectIndex4 == "Other") {
+                                  if (question28Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -2801,19 +2870,19 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else if (selectIndex4 == "No"){
+                                } else if (selectIndex4 == "No") {
                                   questionIndex = questionIndex + 2;
-
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -2823,7 +2892,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -2970,12 +3040,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex5 != "-1"){
+                              if (selectIndex5 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -2985,7 +3056,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3171,17 +3243,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex6 != "-1"){
+                              if (selectIndex6 != "-1") {
                                 // if (selectIndex6 == "No"){
                                 //   questionIndex = questionIndex + 2;
                                 // }else{
-                                  questionIndex = questionIndex + 1;
+                                questionIndex = questionIndex + 1;
                                 //}
 
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -3191,7 +3264,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3218,7 +3292,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
             questionIndex == 24 ?
-                // send in api select radio option and two text field
+            // send in api select radio option and two text field
             Container(
               //height: 110,
               margin: EdgeInsets.only(
@@ -3305,7 +3379,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           selectIndexNew2 == "Yes" ?
                           Column(
                             children: [
-                              
+
                               Container(
                                 margin: EdgeInsets.only(right: 12),
                                 child: TextFormField(
@@ -3331,7 +3405,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   //validator: textValidation,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     controller: question45Controller,
                                     decoration: InputDecoration(
@@ -3342,7 +3418,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         color: AppTheme.grayColor,
                                       ),
                                     )),
-                              ),// TextField Container
+                              ), // TextField Container
                               SizedBox(height: 4.0),
                             ],
                           ) : Container(),
@@ -3379,10 +3455,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew2 != "-1"){
-                                if (selectIndexNew2 == "Yes"){
-                                  if (question45Controller.text.isEmpty || question16Controller.text.isEmpty) {
-
+                              if (selectIndexNew2 != "-1") {
+                                if (selectIndexNew2 == "Yes") {
+                                  if (question45Controller.text.isEmpty ||
+                                      question16Controller.text.isEmpty) {
                                     final snackBar = SnackBar(
                                       content: Container(
                                         margin: EdgeInsets.only(
@@ -3405,14 +3481,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                                     });
                                   }
-                                }else{
-                                questionIndex = questionIndex + 1;
+                                } else {
+                                  questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -3422,7 +3498,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3448,7 +3525,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
               ),
             ) :
-           
+
 
             questionIndex == 25 ?
 
@@ -3566,12 +3643,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex7 != "-1"){
+                              if (selectIndex7 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(left: 20,
+                                        right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -3581,7 +3659,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3699,7 +3778,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       children: [
                         Expanded(child: InkWell(
                           onTap: () {
-
                             questionIndex = questionIndex - 1;
                             setState(() {
 
@@ -3724,17 +3802,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex8 != "-1"){
-                                if (selectIndex8 == "Yes"){
+                              if (selectIndex8 != "-1") {
+                                if (selectIndex8 == "Yes") {
                                   questionIndex = questionIndex + 2;
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -3744,7 +3822,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3769,7 +3848,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// if select no then show next question if yes +2 index
+            ) : // if select no then show next question if yes +2 index
             questionIndex == 27 ?
 
             Container(
@@ -3862,7 +3941,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question29Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -3909,14 +3990,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex9 != "-1"){
-                                if (selectIndex9 == "Other"){
-                                  if (question29Controller.text != ""){
+                              if (selectIndex9 != "-1") {
+                                if (selectIndex9 == "Other") {
+                                  if (question29Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -3926,16 +4008,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -3945,7 +4028,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -3970,7 +4054,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// other text
+            ) : // other text
 
             questionIndex == 28 ?
 
@@ -4086,12 +4170,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex10 != "-1"){
+                              if (selectIndex10 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4101,7 +4186,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -4126,7 +4212,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) ://---Yes
+            ) : //---Yes
 
             questionIndex == 29 ?
             Container(
@@ -4245,12 +4331,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex11 != "-1"){
+                              if (selectIndex11 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4260,7 +4347,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -4404,12 +4492,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex12 != "-1"){
+                              if (selectIndex12 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4419,7 +4508,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -4559,12 +4649,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex13 != "-1"){
+                              if (selectIndex13 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4574,7 +4665,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -4717,17 +4809,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex14 != "-1"){
-                                if(selectIndex14 == "No"){
+                              if (selectIndex14 != "-1") {
+                                if (selectIndex14 == "No") {
                                   questionIndex = questionIndex + 2;
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4737,7 +4829,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -4853,7 +4946,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question51ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(RegExp(
+                                          r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -4876,8 +4971,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       children: [
                         Expanded(child: InkWell(
                           onTap: () {
-
-                              questionIndex = questionIndex - 1;
+                            questionIndex = questionIndex - 1;
 
 
                             setState(() {
@@ -4903,14 +4997,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex15 != "-1"){
-                                if (selectIndex15 == "Other"){
-                                  if (question51ControllerNew.text != ""){
+                              if (selectIndex15 != "-1") {
+                                if (selectIndex15 == "Other") {
+                                  if (question51ControllerNew.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -4920,15 +5015,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -4938,7 +5035,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -5079,19 +5177,21 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex16 != "-1"){
-                                if (selectIndex16 == "Avanti Finance - QR/Loan Account"){
+                              if (selectIndex16 != "-1") {
+                                if (selectIndex16 ==
+                                    "Avanti Finance - QR/Loan Account") {
                                   questionIndex = questionIndex + 2;
-                                }else if (selectIndex16 == "Partial (Cash & Online) - To Avanti"){
+                                } else if (selectIndex16 ==
+                                    "Partial (Cash & Online) - To Avanti") {
                                   questionIndex = questionIndex + 2;
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -5101,7 +5201,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -5244,12 +5345,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex17 != "-1"){
+                              if (selectIndex17 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -5259,7 +5361,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -5284,7 +5387,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// new text pending=================
+            ) : // new text pending=================
 
             questionIndex == 36 ?
             Container(
@@ -5369,7 +5472,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndexNew3 == "Yes"?
+                          selectIndexNew3 == "Yes" ?
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -5388,20 +5491,25 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 40,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 0),
+                                                padding: EdgeInsets.only(
+                                                    left: 0),
                                                 child: Text(
                                                     _startDateNew == null
                                                         ? 'Select Date'
-                                                        : _startDateNew.toString().substring(0, 10),
+                                                        : _startDateNew
+                                                        .toString().substring(
+                                                        0, 10),
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.calendar_month_outlined,
+                                              Icon(
+                                                  Icons.calendar_month_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -5423,7 +5531,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         controller: question50ControllerNew,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                          FilteringTextInputFormatter
+                                              .digitsOnly, // Allow only numbers
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
@@ -5439,7 +5548,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ), // TextField Container
                               SizedBox(height: 8.0),
                             ],
-                          ):Container(),
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -5473,14 +5582,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew3 != "-1"){
-                                if (selectIndexNew3 == "Yes"){
-                                  if (_startDateNew != null && question50ControllerNew.text.isNotEmpty){
+                              if (selectIndexNew3 != "-1") {
+                                if (selectIndexNew3 == "Yes") {
+                                  if (_startDateNew != null &&
+                                      question50ControllerNew.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please select date and amount.',
@@ -5490,16 +5601,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -5509,7 +5621,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -5534,8 +5647,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            )  :
-           
+            ) :
+
             // new added
             questionIndex == 37 ?
             Container(
@@ -5620,7 +5733,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex19 == "Yes"?
+                          selectIndex19 == "Yes" ?
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -5639,20 +5752,24 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 40,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 0),
+                                                padding: EdgeInsets.only(
+                                                    left: 0),
                                                 child: Text(
                                                     _startDate3 == null
                                                         ? 'Select Date'
-                                                        : _startDate3.toString().substring(0, 10),
+                                                        : _startDate3.toString()
+                                                        .substring(0, 10),
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.calendar_month_outlined,
+                                              Icon(
+                                                  Icons.calendar_month_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -5674,7 +5791,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         controller: question17Controller,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                          FilteringTextInputFormatter
+                                              .digitsOnly, // Allow only numbers
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
@@ -5690,7 +5808,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ), // TextField Container
                               SizedBox(height: 8.0),
                             ],
-                          ):Container(),
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -5724,14 +5842,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex19 != "-1"){
-                                if (selectIndex19 == "Yes"){
-                                  if (_startDate3 != null && question17Controller.text.isNotEmpty){
+                              if (selectIndex19 != "-1") {
+                                if (selectIndex19 == "Yes") {
+                                  if (_startDate3 != null &&
+                                      question17Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please select date and amount.',
@@ -5741,16 +5861,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -5760,7 +5881,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -5785,8 +5907,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// T-1 EMI DATE// if yes text field add as number
-
+            ) : // T-1 EMI DATE// if yes text field add as number
 
 
             questionIndex == 38 ?
@@ -5873,7 +5994,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex20 == "Yes"?
+                          selectIndex20 == "Yes" ?
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -5892,20 +6013,24 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 40,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 0),
+                                                padding: EdgeInsets.only(
+                                                    left: 0),
                                                 child: Text(
                                                     _startDate4 == null
                                                         ? 'Select Date'
-                                                        : _startDate4.toString().substring(0, 10),
+                                                        : _startDate4.toString()
+                                                        .substring(0, 10),
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.calendar_month_outlined,
+                                              Icon(
+                                                  Icons.calendar_month_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -5927,7 +6052,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         controller: question18Controller,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                          FilteringTextInputFormatter
+                                              .digitsOnly, // Allow only numbers
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
@@ -5940,10 +6066,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   ),
                                   SizedBox(height: 8.0),
                                 ],
-                              ),// TextField Container
+                              ), // TextField Container
                               SizedBox(height: 8.0),
                             ],
-                          ):Container(),
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -5977,14 +6103,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex20 != "-1"){
-                                if (selectIndex20 == "Yes"){
-                                  if (_startDate4 != null && question18Controller.text.isNotEmpty){
+                              if (selectIndex20 != "-1") {
+                                if (selectIndex20 == "Yes") {
+                                  if (_startDate4 != null &&
+                                      question18Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please select date and amount.',
@@ -5994,16 +6122,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -6013,7 +6142,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -6123,7 +6253,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex21 == "Yes"?
+                          selectIndex21 == "Yes" ?
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -6142,20 +6272,24 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 40,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 0),
+                                                padding: EdgeInsets.only(
+                                                    left: 0),
                                                 child: Text(
                                                     _startDate5 == null
                                                         ? 'Select Date'
-                                                        : _startDate5.toString().substring(0, 10),
+                                                        : _startDate5.toString()
+                                                        .substring(0, 10),
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.calendar_month_outlined,
+                                              Icon(
+                                                  Icons.calendar_month_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -6177,7 +6311,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         controller: question19Controller,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                          FilteringTextInputFormatter
+                                              .digitsOnly, // Allow only numbers
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
@@ -6190,10 +6325,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   ),
                                   SizedBox(height: 8.0),
                                 ],
-                              ),// TextField Container
+                              ), // TextField Container
                               SizedBox(height: 8.0),
                             ],
-                          ):Container(),
+                          ) : Container(),
                         ],
                       ),
                     ),
@@ -6227,14 +6362,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex21 != "-1"){
-                                if (selectIndex21 == "Yes"){
-                                  if (_startDate5 != null && question19Controller.text.isNotEmpty){
+                              if (selectIndex21 != "-1") {
+                                if (selectIndex21 == "Yes") {
+                                  if (_startDate5 != null &&
+                                      question19Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please select date and amount.',
@@ -6244,16 +6381,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -6263,7 +6401,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -6448,12 +6587,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex22 != "-1"){
+                              if (selectIndex22 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -6463,7 +6603,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -6608,17 +6749,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex23 != "-1"){
-                                if (selectIndex23 == "Yes"){
+                              if (selectIndex23 != "-1") {
+                                if (selectIndex23 == "Yes") {
                                   questionIndex = questionIndex + 1;
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 2;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -6628,7 +6769,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -6653,7 +6795,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// if select yes index +1 if select no index +2
+            ) : // if select yes index +1 if select no index +2
 
             questionIndex == 42 ?
             Container(
@@ -6745,7 +6887,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question20Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -6792,14 +6936,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew6 != "-1"){
-                                if (selectIndexNew6 == "Other"){
-                                  if (question20Controller.text != ""){
+                              if (selectIndexNew6 != "-1") {
+                                if (selectIndexNew6 == "Other") {
+                                  if (question20Controller.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -6809,16 +6954,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -6828,7 +6974,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -7009,12 +7156,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex24 != "-1"){
+                              if (selectIndex24 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -7024,7 +7172,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -7167,12 +7316,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex25 != "-1"){
+                              if (selectIndex25 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -7182,7 +7332,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -7301,7 +7452,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question56ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -7348,14 +7501,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex26 != "-1"){
-                                if (selectIndex26 == "No"){
-                                  if (question56ControllerNew.text != ""){
+                              if (selectIndex26 != "-1") {
+                                if (selectIndex26 == "No") {
+                                  if (question56ControllerNew.text != "") {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -7365,16 +7519,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -7384,7 +7539,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -7529,12 +7685,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex27 != "-1"){
+                              if (selectIndex27 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -7544,7 +7701,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -7569,7 +7727,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// done
+            ) : // done
 
 
             questionIndex == 47 ?
@@ -7627,7 +7785,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     children: [
                                       selectedIndices6.contains(index)
                                           ? InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             if (selectedIndices6.contains(
                                                 index)) {
                                               selectedIndices6.remove(index);
@@ -7637,7 +7795,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                                             });
                                           },
-                                          child:Image.asset('assets/check.png',
+                                          child: Image.asset('assets/check.png',
                                               width: 24, height: 24))
                                           : InkWell(
                                         child: Image.asset(
@@ -7662,15 +7820,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       ),
                                     ],
                                   ),
-                                  selectedIndices6.contains(index)?
+                                  selectedIndices6.contains(index) ?
                                   Container(
                                     margin: EdgeInsets.only(right: 12),
                                     child: TextFormField(
                                       //validator: checkPasswordValidator,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly,
-                                          LengthLimitingTextInputFormatter(10)// Allow only numbers
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(10)
+                                          // Allow only numbers
                                         ],
                                         controller: _controllerTab3[pos],
                                         decoration: InputDecoration(
@@ -7715,23 +7875,23 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               bool isValid = true;
-                              for (int i = 0; i < selectedIndicesInt6.length; i++) {
+                              for (int i = 0; i <
+                                  selectedIndicesInt6.length; i++) {
                                 int index = selectedIndicesInt6[i];
                                 if (_controllerTab3[index].text.length < 10) {
                                   isValid = false;
                                   break;
-
                                 }
                               }
-                              if (isValid == true && selectedIndicesInt6.isNotEmpty) {
+                              if (isValid == true &&
+                                  selectedIndicesInt6.isNotEmpty) {
                                 questionIndex = questionIndex + 1;
                                 isValid = false;
-
-
                               } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option and enter valid number',
@@ -7741,9 +7901,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -7767,7 +7927,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) ://done but option no textfield hide pending
+            ) : //done but option no textfield hide pending
             questionIndex == 48 ?
             Container(
               //height: 110,
@@ -7777,7 +7937,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   AppTheme.buttonColor.withOpacity(0.15),
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
               child: Container(
-                margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -7810,7 +7970,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10), // Allow only numbers
+                            LengthLimitingTextInputFormatter(10),
+                            // Allow only numbers
                           ],
                           controller: question21Controller,
                           decoration: InputDecoration(
@@ -7821,7 +7982,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               color: AppTheme.grayColor,
                             ),
                           )),
-                    ),// TextField Container
+                    ), // TextField Container
                     SizedBox(height: 20.0),
                     Row(
                       children: [
@@ -7834,7 +7995,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 0,right: 16,top: 8),
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.blueColor,
@@ -7851,7 +8012,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             if (question21Controller.text == "") {
-
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -7864,8 +8024,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            }else if(question21Controller.text.length < 10){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
+                            } else if (question21Controller.text.length < 10) {
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -7878,7 +8039,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
                             }
 
                             else {
@@ -7890,7 +8052,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           },
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 8,right: 16,top: 8),
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   color: AppTheme.buttonOrangeColor,
@@ -7909,7 +8071,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ):
+            ) :
 
             questionIndex == 49 ?
 
@@ -8029,12 +8191,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex28 != "-1"){
+                              if (selectIndex28 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8044,7 +8207,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -8187,12 +8351,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex29 != "-1"){
+                              if (selectIndex29 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8202,7 +8367,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -8343,12 +8509,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex30 != "-1"){
+                              if (selectIndex30 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8358,7 +8525,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -8383,7 +8551,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// done// new api
+            ) : // done// new api
             questionIndex == 52 ?
             Container(
               //height: 110,
@@ -8475,7 +8643,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question52ControllerNew,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -8522,14 +8691,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew4 != "-1"){
-                                if (selectIndexNew4 == "Other"){
-                                  if (question52ControllerNew.text.isNotEmpty){
+                              if (selectIndexNew4 != "-1") {
+                                if (selectIndexNew4 == "Other") {
+                                  if (question52ControllerNew.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -8539,15 +8709,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8557,7 +8729,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -8582,7 +8755,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) ://31
+            ) : //31
 
             questionIndex == 53 ?
             Container(
@@ -8675,7 +8848,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question34Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -8722,14 +8896,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex32 != "-1"){
-                                if (selectIndex32 == "Other"){
-                                  if (question34Controller.text.isNotEmpty){
+                              if (selectIndex32 != "-1") {
+                                if (selectIndex32 == "Other") {
+                                  if (question34Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -8739,16 +8914,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8758,7 +8934,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -8875,7 +9052,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question35Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -8922,14 +9100,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex33 != "-1"){
-                                if (selectIndex33 == "Other"){
-                                  if (question35Controller.text.isNotEmpty){
+                              if (selectIndex33 != "-1") {
+                                if (selectIndex33 == "Other") {
+                                  if (question35Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -8939,15 +9118,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -8957,7 +9138,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -9075,7 +9257,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question36Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -9122,14 +9305,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex34 != "-1"){
-                                if (selectIndex34 == "Other"){
-                                  if (question36Controller.text.isNotEmpty){
+                              if (selectIndex34 != "-1") {
+                                if (selectIndex34 == "Other") {
+                                  if (question36Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -9139,15 +9323,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -9157,7 +9343,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -9274,7 +9461,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question37Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -9321,14 +9509,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex35 != "-1"){
-                                if (selectIndex35 == "Other"){
-                                  if (question37Controller.text.isNotEmpty){
+                              if (selectIndex35 != "-1") {
+                                if (selectIndex35 == "Other") {
+                                  if (question37Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -9338,15 +9527,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -9356,7 +9547,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -9474,7 +9666,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question38Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -9521,14 +9714,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex36 != "-1"){
-                                if (selectIndex36 == "Other"){
-                                  if (question38Controller.text.isNotEmpty){
+                              if (selectIndex36 != "-1") {
+                                if (selectIndex36 == "Other") {
+                                  if (question38Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -9538,15 +9732,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -9556,7 +9752,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -9674,7 +9871,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question39Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -9721,14 +9919,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex37 != "-1"){
-                                if (selectIndex37 == "Other"){
-                                  if (question39Controller.text.isNotEmpty){
+                              if (selectIndex37 != "-1") {
+                                if (selectIndex37 == "Other") {
+                                  if (question39Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -9738,15 +9937,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -9756,7 +9957,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -9873,7 +10075,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question40Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -9920,14 +10123,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex38 != "-1"){
-                                if (selectIndex38 == "Other"){
-                                  if (question40Controller.text.isNotEmpty){
+                              if (selectIndex38 != "-1") {
+                                if (selectIndex38 == "Other") {
+                                  if (question40Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -9937,15 +10141,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -9955,7 +10161,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10101,13 +10308,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex39 != "-1"){
-                                  questionIndex = questionIndex + 1;
-
-                              }else{
+                              if (selectIndex39 != "-1") {
+                                questionIndex = questionIndex + 1;
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10117,7 +10324,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10261,12 +10469,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex40 != "-1"){
+                              if (selectIndex40 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10276,7 +10485,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10419,12 +10629,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex41 != "-1"){
+                              if (selectIndex41 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10434,7 +10645,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10577,12 +10789,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex42 != "-1"){
+                              if (selectIndex42 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10592,7 +10805,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10710,7 +10924,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question53ControllerNew,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -10757,14 +10972,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex43 != "-1"){
-                                if (selectIndex43 == "Other"){
-                                  if (question53ControllerNew.text.isNotEmpty){
+                              if (selectIndex43 != "-1") {
+                                if (selectIndex43 == "Other") {
+                                  if (question53ControllerNew.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -10774,15 +10990,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10792,7 +11010,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -10911,7 +11130,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question42Controller,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      // Allow only numbers
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -10958,14 +11178,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex44 != "-1"){
-                                if (selectIndex44 == "Other"){
-                                  if (question42Controller.text.isNotEmpty){
+                              if (selectIndex44 != "-1") {
+                                if (selectIndex44 == "Other") {
+                                  if (question42Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -10975,15 +11196,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -10993,7 +11216,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -11057,7 +11281,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     ),
                     SizedBox(height: 10.0),
                     Container(
-                      child:Column(
+                      child: Column(
                         children: [
                           ListView.builder(
                               padding: EdgeInsets.only(bottom: 10.0),
@@ -11068,11 +11292,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (BuildContext context, int pos) {
                                 _controllerTab4.add(TextEditingController());
-                                if(pos==questionList[questionIndex]['options']
-                                    .length-1){
-
-                                  _controllerTab4[pos].text=" ";
-
+                                if (pos ==
+                                    questionList[questionIndex]['options']
+                                        .length - 1) {
+                                  _controllerTab4[pos].text = " ";
                                 }
                                 final index = questionList[questionIndex]['options'][pos]['option'];
                                 return Padding(
@@ -11084,17 +11307,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                           children: [
                                             selectedIndices7.contains(index)
                                                 ? InkWell(
-                                                onTap: (){
+                                                onTap: () {
                                                   if (selectedIndices7.contains(
                                                       index)) {
-                                                    selectedIndices7.remove(index);
-                                                    selectedIndicesInt7.remove(pos);
+                                                    selectedIndices7.remove(
+                                                        index);
+                                                    selectedIndicesInt7.remove(
+                                                        pos);
                                                   }
                                                   setState(() {
 
                                                   });
                                                 },
-                                                child:Image.asset('assets/check.png',
+                                                child: Image.asset(
+                                                    'assets/check.png',
                                                     width: 24, height: 24))
                                                 : InkWell(
                                               child: Image.asset(
@@ -11114,19 +11340,26 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                   questionList[questionIndex]['options'][pos]['option'],
                                                   style: TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.normal,
+                                                      fontWeight: FontWeight
+                                                          .normal,
                                                       color: Colors.black)),
                                             ),
                                           ],
                                         ),
-                                        selectedIndices7.contains(index) && questionList[questionIndex]['options'][pos]['option'] != "No"?
+                                        selectedIndices7.contains(index) &&
+                                            questionList[questionIndex]['options'][pos]['option'] !=
+                                                "No" ?
                                         Container(
                                           margin: EdgeInsets.only(right: 12),
                                           child: TextFormField(
                                             //validator: checkPasswordValidator,
-                                              keyboardType: TextInputType.number,
-                                              inputFormatters: <TextInputFormatter>[
-                                                FilteringTextInputFormatter.digitsOnly, // Allow only numbers
+                                              keyboardType: TextInputType
+                                                  .number,
+                                              inputFormatters: <
+                                                  TextInputFormatter>[
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                                // Allow only numbers
                                               ],
                                               controller: _controllerTab4[pos],
                                               decoration: InputDecoration(
@@ -11153,7 +11386,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question46Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -11166,7 +11401,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               ),
                               SizedBox(height: 0.0),
                             ],
-                          ) :Container(),// T
+                          ) : Container(), // T
                         ],
                       ),
                     ),
@@ -11200,21 +11435,23 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             setState(() {
                               bool isValid = true;
-                              for (int i = 0; i < selectedIndicesInt7.length; i++) {
+                              for (int i = 0; i <
+                                  selectedIndicesInt7.length; i++) {
                                 int index = selectedIndicesInt7[i];
                                 print(_controllerTab4[index].text);
                                 if (_controllerTab4[index].text.isEmpty) {
                                   isValid = false;
                                   break;
-
                                 }
                               }
-                              if (isValid == true && selectedIndicesInt7.isNotEmpty) {
-                                if (selectedIndices7.contains("Other")){
-                                  if (question46Controller.text == ""){
+                              if (isValid == true &&
+                                  selectedIndicesInt7.isNotEmpty) {
+                                if (selectedIndices7.contains("Other")) {
+                                  if (question46Controller.text == "") {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Please enter text.',
@@ -11224,20 +11461,21 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
+                                  } else {
                                     questionIndex = questionIndex + 1;
                                     isValid = false;
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                   isValid = false;
                                 }
-
                               } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option and enter count.',
@@ -11247,9 +11485,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -11273,8 +11511,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            )://add count and text
-            
+            ) : //add count and text
+
 
             questionIndex == 67 ?
 
@@ -11392,12 +11630,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex45 != "-1"){
-                                  questionIndex = questionIndex + 1;
-                              }else{
+                              if (selectIndex45 != "-1") {
+                                questionIndex = questionIndex + 1;
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -11407,7 +11646,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
                             });
                           },
@@ -11551,12 +11791,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex46 != "-1"){
+                              if (selectIndex46 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -11566,9 +11807,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -11708,12 +11949,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex47 != "-1"){
+                              if (selectIndex47 != "-1") {
                                 questionIndex = questionIndex + 1;
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -11723,9 +11965,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -11749,7 +11991,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :// new done
+            ) : // new done
 
 
             questionIndex == 70 ?
@@ -11833,7 +12075,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   ),
                                 );
                               }),
-                          selectIndex48 == "Other" || selectIndex48 == "Agriculture" || selectIndex48 == "Loan Misutilization" ?
+                          selectIndex48 == "Other" ||
+                              selectIndex48 == "Agriculture" ||
+                              selectIndex48 == "Loan Misutilization" ?
                           Column(
                             children: [
 
@@ -11844,7 +12088,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question54ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -11855,14 +12101,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       ),
                                     )),
                               ),
-                             
+
                             ],
                           ) : Container(),
                         ],
                       ),
                     ),
                     // TextField Container
-                    
+
                     Row(
                       children: [
                         Expanded(child: InkWell(
@@ -11891,14 +12137,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex48 != "-1"){
-                                if (selectIndex48 == "Other" || selectIndex48 == "Agriculture" || selectIndex48 == "Loan Misutilization"){
-                                  if (question54ControllerNew.text.isNotEmpty){
+                              if (selectIndex48 != "-1") {
+                                if (selectIndex48 == "Other" ||
+                                    selectIndex48 == "Agriculture" ||
+                                    selectIndex48 == "Loan Misutilization") {
+                                  if (question54ControllerNew.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(left: 20,
+                                            right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -11908,15 +12157,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -11926,9 +12177,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -12048,7 +12299,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question55ControllerNew,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -12095,14 +12348,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndexNew5 != "-1"){
-                                if (selectIndexNew5 == "Yes"){
-                                  if (question55ControllerNew.text.isNotEmpty){
+                              if (selectIndexNew5 != "-1") {
+                                if (selectIndexNew5 == "Yes") {
+                                  if (question55ControllerNew.text.isNotEmpty) {
                                     questionIndex = questionIndex + 2;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter text.',
@@ -12112,15 +12366,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -12130,9 +12386,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -12251,7 +12507,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     controller: question44Controller,
                                     keyboardType: TextInputType.text,
                                     inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[a-zA-Z\s]')),
+                                      // Allow only alphabetic characters
                                     ],
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
@@ -12298,14 +12556,15 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (selectIndex49 != "-1"){
-                                if (selectIndex49 == "Other"){
-                                  if (question44Controller.text.isNotEmpty){
+                              if (selectIndex49 != "-1") {
+                                if (selectIndex49 == "Other") {
+                                  if (question44Controller.text.isNotEmpty) {
                                     questionIndex = questionIndex + 1;
-                                  }else{
+                                  } else {
                                     final snackBar = SnackBar(
                                       content: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
                                         // Adjust left and right margins
                                         child: Text(
                                           'Enter count.',
@@ -12315,15 +12574,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                       backgroundColor: Colors.red,
                                       duration: Duration(seconds: 3),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBar);
                                   }
-                                }else{
+                                } else {
                                   questionIndex = questionIndex + 1;
                                 }
-                              }else{
+                              } else {
                                 final snackBar = SnackBar(
                                   content: Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20),
                                     // Adjust left and right margins
                                     child: Text(
                                       'Please select the option.',
@@ -12333,9 +12594,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   backgroundColor: Colors.red,
                                   duration: Duration(seconds: 3),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBar);
                               }
-
                             });
                           },
                           child: Container(
@@ -12359,7 +12620,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) ://done
+            ) : //done
 
 
             questionIndex == 73 ?
@@ -12455,15 +12716,16 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                                       });
                                       _openImagePicker(context);
-
                                     },
                                     child: Container(
                                         margin:
-                                        const EdgeInsets.only(left: 0,right: 8,top: 8),
+                                        const EdgeInsets.only(
+                                            left: 0, right: 8, top: 8),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(5)),
+                                            borderRadius: BorderRadius.circular(
+                                                5)),
                                         height: 45,
                                         child: const Center(
                                           child: Text('Browse',
@@ -12479,14 +12741,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                               SizedBox(height: 10),
 
-                              imageList.length==0?Container(): Container(
+                              imageList.length == 0 ? Container() : Container(
                                 height: 60,
                                 child: ListView.builder(
                                     itemCount: imageList.length,
                                     scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,int pos)
-
-                                    {
+                                    itemBuilder: (BuildContext context,
+                                        int pos) {
                                       return Row(
                                         children: [
 
@@ -12496,11 +12757,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                 width: 65,
                                                 height: 65,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(5),
+                                                    borderRadius: BorderRadius
+                                                        .circular(5),
                                                     image: DecorationImage(
                                                         fit: BoxFit.fill,
                                                         image: FileImage(
-                                                            File(imageList[pos].path)
+                                                            File(imageList[pos]
+                                                                .path)
                                                         )
                                                     )
 
@@ -12514,113 +12777,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                 child: Align(
                                                   alignment: Alignment.topRight,
                                                   child: GestureDetector(
-                                                    onTap:(){
-
-                                                      imageList.removeAt(pos);
-                                                      setState(() {
-
-                                                      });
-                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                                padding: EdgeInsets.only(bottom: 10),
-
-                                              )
-
-
-
-                                            ],
-                                          ),
-
-
-                                          SizedBox(width: 10),
-
-                                        ],
-                                      );
-                                    }
-
-
-                                ),
-                              )
-
-                            ],
-                          ):
-                          selectIndex50 == "Misutilization - LUC Captured" ?
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(child: InkWell(
-                                    onTap: () async {
-
-                                      setState(() {
-
-                                      });
-                                      _openImagePicker(context);
-
-                                    },
-                                    child: Container(
-                                        margin:
-                                        const EdgeInsets.only(left: 0,right: 8,top: 8),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(5)),
-                                        height: 45,
-                                        child: const Center(
-                                          child: Text('Browse',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white)),
-                                        )),
-                                  )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-
-                              SizedBox(height: 10),
-
-                              imageList.length==0?Container(): Container(
-                                height: 60,
-                                child: ListView.builder(
-                                    itemCount: imageList.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,int pos)
-
-                                    {
-                                      return Row(
-                                        children: [
-
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: FileImage(
-                                                            File(imageList[pos].path)
-                                                        )
-                                                    )
-
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: GestureDetector(
-                                                    onTap:(){
-
+                                                    onTap: () {
                                                       imageList.removeAt(pos);
                                                       setState(() {
 
@@ -12632,7 +12789,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                padding: EdgeInsets.only(bottom: 10),
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10),
 
                                               )
 
@@ -12652,7 +12810,112 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )
 
                             ],
-                          ):
+                          ) :
+                          selectIndex50 == "Misutilization - LUC Captured" ?
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(child: InkWell(
+                                    onTap: () async {
+                                      setState(() {
+
+                                      });
+                                      _openImagePicker(context);
+                                    },
+                                    child: Container(
+                                        margin:
+                                        const EdgeInsets.only(
+                                            left: 0, right: 8, top: 8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.buttonOrangeColor,
+                                            borderRadius: BorderRadius.circular(
+                                                5)),
+                                        height: 45,
+                                        child: const Center(
+                                          child: Text('Browse',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white)),
+                                        )),
+                                  )),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+
+                              SizedBox(height: 10),
+
+                              imageList.length == 0 ? Container() : Container(
+                                height: 60,
+                                child: ListView.builder(
+                                    itemCount: imageList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (BuildContext context,
+                                        int pos) {
+                                      return Row(
+                                        children: [
+
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius
+                                                        .circular(5),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: FileImage(
+                                                            File(imageList[pos]
+                                                                .path)
+                                                        )
+                                                    )
+
+                                                ),
+                                              ),
+
+                                              Container(
+                                                width: 65,
+                                                height: 65,
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      imageList.removeAt(pos);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10),
+
+                                              )
+
+
+                                            ],
+                                          ),
+
+
+                                          SizedBox(width: 10),
+
+                                        ],
+                                      );
+                                    }
+
+
+                                ),
+                              )
+
+                            ],
+                          ) :
                           selectIndex50 == "No" ?
                           Column(
                             children: [
@@ -12674,15 +12937,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 50,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(4),
+                                              borderRadius: BorderRadius
+                                                  .circular(4),
                                               color: const Color(0xFfF6F6F6),
                                               border: Border.all(
-                                                  width: 0.6, color: const Color(0XFFB9B9B9))),
+                                                  width: 0.6,
+                                                  color: const Color(
+                                                      0XFFB9B9B9))),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 8),
+                                                padding: EdgeInsets.only(
+                                                    left: 8),
                                                 child: Text(
                                                     flagStatus == "12"
                                                         ? "Select option"
@@ -12692,7 +12960,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.keyboard_arrow_down_outlined,
+                                              Icon(Icons
+                                                  .keyboard_arrow_down_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -12720,15 +12989,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         child: Container(
                                           height: 50,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(4),
+                                              borderRadius: BorderRadius
+                                                  .circular(4),
                                               color: const Color(0xFfF6F6F6),
                                               border: Border.all(
-                                                  width: 0.6, color: const Color(0XFFB9B9B9))),
+                                                  width: 0.6,
+                                                  color: const Color(
+                                                      0XFFB9B9B9))),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.only(left: 8),
+                                                padding: EdgeInsets.only(
+                                                    left: 8),
                                                 child: Text(
                                                     flagStatus2 == "13"
                                                         ? "Select option"
@@ -12738,7 +13012,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                       color: Colors.black,
                                                     )),
                                               ),
-                                              Icon(Icons.keyboard_arrow_down_outlined,
+                                              Icon(Icons
+                                                  .keyboard_arrow_down_outlined,
                                                   color: Colors.black),
                                             ],
                                           ),
@@ -12750,7 +13025,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 ),
                               ),
                             ],
-                          ): Container(),
+                          ) : Container(),
 
                         ],
                       ),
@@ -12783,18 +13058,17 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )),
                         ),),
                         Expanded(child: InkWell(
-                          onTap: () async{
-                            if (selectIndex50 != "-1"){
-                              if (selectIndex50 == "No"){
-
-                                if(flagStatus != "12" || flagStatus2 != "13"){
+                          onTap: () async {
+                            if (selectIndex50 != "-1") {
+                              if (selectIndex50 == "No") {
+                                if (flagStatus != "12" || flagStatus2 != "13") {
                                   questionIndex = questionIndex + 1;
-                                  setState(() {
-                                  });
-                                }else{
+                                  setState(() {});
+                                } else {
                                   final snackBar = SnackBar(
                                     content: Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 20),
                                       // Adjust left and right margins
                                       child: Text(
                                         'Please select the option.',
@@ -12804,50 +13078,64 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     backgroundColor: Colors.red,
                                     duration: Duration(seconds: 3),
                                   );
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBar);
                                 }
-
-                              }else {
-                                if (imageList.isNotEmpty){
-
-                                  final connectivityResult3 = await (Connectivity().checkConnectivity());
-                                  if(connectivityResult3 == ConnectivityResult.none)
-                                  {
+                              } else {
+                                if (imageList.isNotEmpty) {
+                                  final connectivityResult3 = await (Connectivity()
+                                      .checkConnectivity());
+                                  if (connectivityResult3 ==
+                                      ConnectivityResult.none) {
                                     print("No intermnet");
-                                    List<String> imagePaths=[];
-                                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                                    List<String>? lucList=await prefs.getStringList("LUC")??[];
-                                    for(int i=0;i<imageList.length;i++)
-                                    {
-                                      imagePaths.add(imageList[i].path.toString());
-                                      lucList.add(imageList[i].path.toString());
+                                    List<String> imagePaths = [];
+                                    SharedPreferences prefs = await SharedPreferences
+                                        .getInstance();
+
+                                    String? lucData = await prefs.getString(
+                                        "LUC") ?? "";
+                                    print(lucData);
+                                    List<dynamic>? lucListDynamic = [];
+                                    if (lucData != "") {
+                                      lucListDynamic = jsonDecode(lucData);
+                                      print(lucListDynamic.toString());
                                     }
 
 
+                                    for (int i = 0; i < imageList.length; i++) {
+                                      imagePaths.add(
+                                          imageList[i].path.toString());
+                                    }
+
+                                    lucListDynamic!.add({
+                                      "loan_number": question1Controller.text
+                                          .toString(),
+                                      "partner_name": question2Controller.text
+                                          .toString(),
+                                      "branch_name": question3Controller.text
+                                          .toString(),
+                                      "files": imagePaths
+                                    });
 
 
-
-                                    prefs.setStringList('LUC',lucList);
+                                    prefs.setString(
+                                        'LUC', jsonEncode(lucListDynamic));
 
                                     questionIndex = questionIndex + 1;
-                                    setState(() {
-                                    });
+                                    setState(() {});
                                   }
-                                  else
-                                  {
+                                  else {
                                     print("No intermnet12222");
                                     getImageData(0);
                                   }
 
 
-
-
-
                                   // questionIndex = questionIndex + 1;
-                                }else{
+                                } else {
                                   final snackBar = SnackBar(
                                     content: Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 20),
                                       // Adjust left and right margins
                                       child: Text(
                                         'Please select the image.',
@@ -12857,13 +13145,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     backgroundColor: Colors.red,
                                     duration: Duration(seconds: 3),
                                   );
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBar);
                                 }
-
                               }
-
-                            }else{
-                             // questionIndex = questionIndex + 1;
+                            } else {
+                              // questionIndex = questionIndex + 1;
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -12876,9 +13163,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
                             }
-
                           },
                           child: Container(
                               margin:
@@ -12994,20 +13281,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 children: [
                                   Expanded(child: InkWell(
                                     onTap: () async {
-
                                       setState(() {
 
                                       });
                                       _openImagePicker1(context);
-
                                     },
                                     child: Container(
                                         margin:
-                                        const EdgeInsets.only(left: 0,right: 8,top: 8),
+                                        const EdgeInsets.only(
+                                            left: 0, right: 8, top: 8),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(5)),
+                                            borderRadius: BorderRadius.circular(
+                                                5)),
                                         height: 45,
                                         child: const Center(
                                           child: Text('Browse',
@@ -13023,14 +13310,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
                               SizedBox(height: 10),
 
-                              imageList1.length==0?Container(): Container(
+                              imageList1.length == 0 ? Container() : Container(
                                 height: 60,
                                 child: ListView.builder(
                                     itemCount: imageList1.length,
                                     scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,int pos)
-
-                                    {
+                                    itemBuilder: (BuildContext context,
+                                        int pos) {
                                       return Row(
                                         children: [
 
@@ -13040,11 +13326,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                 width: 65,
                                                 height: 65,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(5),
+                                                    borderRadius: BorderRadius
+                                                        .circular(5),
                                                     image: DecorationImage(
                                                         fit: BoxFit.fill,
                                                         image: FileImage(
-                                                            File(imageList1[pos].path)
+                                                            File(imageList1[pos]
+                                                                .path)
                                                         )
                                                     )
 
@@ -13058,8 +13346,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                 child: Align(
                                                   alignment: Alignment.topRight,
                                                   child: GestureDetector(
-                                                    onTap:(){
-
+                                                    onTap: () {
                                                       imageList1.removeAt(pos);
                                                       setState(() {
 
@@ -13071,10 +13358,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                padding: EdgeInsets.only(bottom: 10),
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10),
 
                                               )
-
 
 
                                             ],
@@ -13092,7 +13379,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               )
 
                             ],
-                          ): Container(),
+                          ) : Container(),
 
                         ],
                       ),
@@ -13126,40 +13413,55 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ),),
                         Expanded(child: InkWell(
                           onTap: () async {
-
-                            if (selectIndex51 != "-1"){
-                              if (selectIndex51 == "Yes"){
-                                if (imageList1.isNotEmpty){
-
-                                  final connectivityResult3 = await (Connectivity().checkConnectivity());
-                                  if(connectivityResult3 == ConnectivityResult.none)
-                                  {
-                                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                                    List<String> imagePaths=[];
-                                    List<String> otherList=await prefs.getStringList("Others")??[];
-                                    for(int i=0;i<imageList1.length;i++)
-                                    {
-                                      imagePaths.add(imageList1[i].path.toString());
-                                      otherList.add(imageList1[i].path.toString());
+                            if (selectIndex51 != "-1") {
+                              if (selectIndex51 == "Yes") {
+                                if (imageList1.isNotEmpty) {
+                                  final connectivityResult3 = await (Connectivity()
+                                      .checkConnectivity());
+                                  if (connectivityResult3 ==
+                                      ConnectivityResult.none) {
+                                    SharedPreferences prefs = await SharedPreferences
+                                        .getInstance();
+                                    List<String> imagePaths = [];
+                                    String? lucData = await prefs.getString(
+                                        "Others") ?? "";
+                                    List<dynamic>? lucListDynamic = [];
+                                    if (lucData != "") {
+                                      lucListDynamic =
+                                          jsonDecode(lucData.toString());
                                     }
 
+                                    for (int i = 0; i <
+                                        imageList1.length; i++) {
+                                      imagePaths.add(
+                                          imageList1[i].path.toString());
+                                    }
+
+                                    lucListDynamic!.add({
+                                      "loan_number": question1Controller.text
+                                          .toString(),
+                                      "partner_name": question2Controller.text
+                                          .toString(),
+                                      "branch_name": question3Controller.text
+                                          .toString(),
+                                      "files": imagePaths
+                                    });
 
 
-
-                                    prefs.setStringList('Others',otherList);
+                                    prefs.setString(
+                                        'Others', jsonEncode(lucListDynamic));
 
                                     questionIndex = questionIndex + 1;
-                                    setState(() {
-                                    });
+                                    setState(() {});
                                   }
-                                  else
-                                  {
+                                  else {
                                     getImageData(1);
                                   }
-                                }else{
+                                } else {
                                   final snackBar = SnackBar(
                                     content: Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 20),
                                       // Adjust left and right margins
                                       child: Text(
                                         'Please select the image.',
@@ -13169,13 +13471,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                     backgroundColor: Colors.red,
                                     duration: Duration(seconds: 3),
                                   );
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBar);
                                 }
-                              }else{
+                              } else {
                                 questionIndex = questionIndex + 1;
                               }
-
-                            }else{
+                            } else {
                               final snackBar = SnackBar(
                                 content: Container(
                                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -13188,7 +13490,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 3),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
                             }
                             setState(() {
 
@@ -13216,134 +13519,135 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            )  :
+            ) :
 
             Container(
-            //height: 110,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-        decoration: BoxDecoration(
-            color:
-            AppTheme.buttonColor.withOpacity(0.15),
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
-        child: Container(
-          margin: EdgeInsets.only(left: 15,top: 15, bottom: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    questionList[questionIndex]['question'],
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: AppTheme.blackColor,
-                        fontWeight: FontWeight.bold
+              //height: 110,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0),
-              Text(questionList[questionIndex]['que_message'],
-                style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.blackColor,
-                    fontWeight: FontWeight.normal
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      margin: EdgeInsets.only(right: 12),
+                      child: TextFormField(
+                        //validator: textValidation,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z\s]')),
+                            // Allow only alphabetic characters
+                          ],
+                          controller: question24Controller,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            labelText: 'Enter here',
+                            labelStyle: const TextStyle(
+                              fontSize: 15.0,
+                              color: AppTheme.grayColor,
+                            ),
+                          )),
+                    ), // TextField Container
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 2;
+                            setState(() {
+
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            if (question24Controller.text == "") {
+                              final snackBar = SnackBar(
+                                content: Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  // Adjust left and right margins
+                                  child: Text(
+                                    'Field is required',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
+                            }
+
+                            else {
+                              submitAnswers();
+                              // setState(() {
+                              //
+                              // });
+                            }
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Submit',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 10.0),
-              Container(
-                margin: EdgeInsets.only(right: 12),
-                child: TextFormField(
-                  //validator: textValidation,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
-                    ],
-                    controller: question24Controller,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      labelText: 'Enter here',
-                      labelStyle: const TextStyle(
-                        fontSize: 15.0,
-                        color: AppTheme.grayColor,
-                      ),
-                    )),
-              ),// TextField Container
-              SizedBox(height: 20.0),
-              Row(
-                children: [
-                  Expanded(child: InkWell(
-                    onTap: () {
-                      questionIndex = questionIndex - 2;
-                      setState(() {
-
-                      });
-                    },
-                    child: Container(
-                        margin:
-                        const EdgeInsets.only(left: 0,right: 16,top: 8),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppTheme.blueColor,
-                            borderRadius: BorderRadius.circular(5)),
-                        height: 45,
-                        child: const Center(
-                          child: Text('Previous',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white)),
-                        )),
-                  ),),
-                  Expanded(child: InkWell(
-                    onTap: () {
-                      if (question24Controller.text == "") {
-                        final snackBar = SnackBar(
-                          content: Container(
-                            margin: EdgeInsets.only(left: 20, right: 20),
-                            // Adjust left and right margins
-                            child: Text(
-                              'Field is required',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 3),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-
-                      else {
-                        submitAnswers();
-                        // setState(() {
-                        //
-                        // });
-                      }
-                    },
-                    child: Container(
-                        margin:
-                        const EdgeInsets.only(left: 8,right: 16,top: 8),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppTheme.buttonOrangeColor,
-                            borderRadius: BorderRadius.circular(5)),
-                        height: 45,
-                        child: const Center(
-                          child: Text('Submit',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white)),
-                        )),
-                  )),
-                ],
-              ),
-            ],
-          ),
-        ),
-      )
-
-
+            )
 
 
         ),
@@ -13356,58 +13660,48 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     super.initState();
 
     checkInternet();
-
-
-
-
   }
 
 
-
-
-  checkInternet()async{
-    bool? loginStatusValue=await MyUtils.getSharedPreferencesBool("loginStatus");
+  checkInternet() async {
+    bool? loginStatusValue = await MyUtils.getSharedPreferencesBool(
+        "loginStatus");
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       print("Data Fetched Locally");
       fetchLocalData();
     }
-    else if(loginStatusValue == true){
+    else if (loginStatusValue == true) {
       fetchLocalData();
     }
 
-    else
-      {
-        questionList = widget.surveyDataList[0]['questions'];
-        print("Question List "+ questionList.length.toString());
+    else {
+      questionList = widget.surveyDataList[0]['questions'];
+      print("Question List " + questionList.length.toString());
 
-        Future.delayed(const Duration(seconds: 0), () {
-          print(widget.surveyDataList);
-        });
+      Future.delayed(const Duration(seconds: 0), () {
+        print(widget.surveyDataList);
+      });
 
-        setState(() {
+      setState(() {
 
-        });
-      }
-
+      });
+    }
   }
 
   fetchLocalData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var data=preferences.getString("question_list");
+    var data = preferences.getString("question_list");
     List<dynamic> list2 = jsonDecode(data!);
-    questionList=list2;
+    questionList = list2;
     setState(() {
 
     });
   }
 
 
-
-
-
   generateList(questionList) {
-    Map list={};
+    Map list = {};
     questionList.forEach((element) {
       list[element.id] = element.toMap();
     });
@@ -13422,166 +13716,232 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   }
 
 
-
   submitAnswers() async {
     //var answers = <List<Map<String, dynamic>>>[];
-    List<dynamic> answers=[];
-    List<dynamic> arrayofAnsArray=[];
+    List<dynamic> answers = [];
+    List<dynamic> arrayofAnsArray = [];
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     final connectivityResult = await (Connectivity().checkConnectivity());
 
-    String slectIndics2 = {selectedIndices2,filteredList,question47Controller.text}.toString();
-    String slectIndics4 = {selectedIndices4,filteredList1,question48Controller.text}.toString();
-    String slectIndics7 = {selectedIndices7,filteredList2,question46Controller.text}.toString();
-    String slectIndics5 = {selectedIndices5,question32Controller.text}.toString();
-    String selectIndexs = {selectIndex,question27Controller.text}.toString();
-    String selectIndexs1 = {selectIndex1,question31Controller.text}.toString();
-    String selectIndexs2 = {selectIndex2,question33Controller.text}.toString();
-    String selectIndexs4 = {selectIndex4,question28Controller.text}.toString();
-    String selectIndexs9 = {selectIndex9,question29Controller.text}.toString();
-    String selectIndexs32 = {selectIndex32,question34Controller.text}.toString();
-    String selectIndexsNew4 = {selectIndexNew4,question52ControllerNew.text}.toString();
-    String selectIndexs33 = {selectIndex33,question35Controller.text}.toString();
-    String selectIndexs34 = {selectIndex34,question36Controller.text}.toString();
-    String selectIndexs35 = {selectIndex35,question37Controller.text}.toString();
-    String selectIndexs36 = {selectIndex36,question38Controller.text}.toString();
-    String selectIndexs37 = {selectIndex37,question39Controller.text}.toString();
-    String selectIndexs38 = {selectIndex38,question40Controller.text}.toString();
-    String selectIndexs43 = {selectIndex43,question53ControllerNew.text}.toString();
-    String selectIndexsNew6 = {selectIndexNew6,question20Controller.text}.toString();
-    String selectIndexs44 = {selectIndex44,question42Controller.text}.toString();
-    String selectIndexs48 = {selectIndex48,question54ControllerNew.text}.toString();
-    String selectIndexs49 = {selectIndex49,question44Controller.text}.toString();
-    String selectIndexs26 = {selectIndex26,question56ControllerNew.text}.toString();
-    String selectIndexsNew5 = {selectIndexNew5,question55ControllerNew.text}.toString();
+    String slectIndics2 = {
+      selectedIndices2,
+      filteredList,
+      question47Controller.text
+    }.toString();
+    String slectIndics4 = {
+      selectedIndices4,
+      filteredList1,
+      question48Controller.text
+    }.toString();
+    String slectIndics7 = {
+      selectedIndices7,
+      filteredList2,
+      question46Controller.text
+    }.toString();
+    String slectIndics5 = {selectedIndices5, question32Controller.text}
+        .toString();
+    String selectIndexs = {selectIndex, question27Controller.text}.toString();
+    String selectIndexs1 = {selectIndex1, question31Controller.text}.toString();
+    String selectIndexs2 = {selectIndex2, question33Controller.text}.toString();
+    String selectIndexs4 = {selectIndex4, question28Controller.text}.toString();
+    String selectIndexs9 = {selectIndex9, question29Controller.text}.toString();
+    String selectIndexs32 = {selectIndex32, question34Controller.text}
+        .toString();
+    String selectIndexsNew4 = {selectIndexNew4, question52ControllerNew.text}
+        .toString();
+    String selectIndexs33 = {selectIndex33, question35Controller.text}
+        .toString();
+    String selectIndexs34 = {selectIndex34, question36Controller.text}
+        .toString();
+    String selectIndexs35 = {selectIndex35, question37Controller.text}
+        .toString();
+    String selectIndexs36 = {selectIndex36, question38Controller.text}
+        .toString();
+    String selectIndexs37 = {selectIndex37, question39Controller.text}
+        .toString();
+    String selectIndexs38 = {selectIndex38, question40Controller.text}
+        .toString();
+    String selectIndexs43 = {selectIndex43, question53ControllerNew.text}
+        .toString();
+    String selectIndexsNew6 = {selectIndexNew6, question20Controller.text}
+        .toString();
+    String selectIndexs44 = {selectIndex44, question42Controller.text}
+        .toString();
+    String selectIndexs48 = {selectIndex48, question54ControllerNew.text}
+        .toString();
+    String selectIndexs49 = {selectIndex49, question44Controller.text}
+        .toString();
+    String selectIndexs26 = {selectIndex26, question56ControllerNew.text}
+        .toString();
+    String selectIndexsNew5 = {selectIndexNew5, question55ControllerNew.text}
+        .toString();
     //String selectIndexs16 = {selectIndex16,question30Controller.text}.toString();
-    String selectIndexs23 = {selectIndexNew2,question16Controller.text,question45Controller.text}.toString();
-    String selectIndexs19 = {selectIndex19,_startDateWithoutTime3.toString(),question17Controller.text}.toString();
-    String selectIndexsNew3 = {selectIndexNew3,_startDateWithoutTimeNew.toString(),question50ControllerNew.text}.toString();
-    String selectIndexs20 = {selectIndex20,_startDateWithoutTime4.toString(),question18Controller.text}.toString();
-    String selectIndexs21 = {selectIndex21,_startDateWithoutTime5.toString(),question19Controller.text}.toString();
-    String slectIndics6  = {selectedIndices6,filteredList3}.toString();
-    String selectIndexs17 = {selectIndexNew1,question49ControllerNew.text}.toString();
+    String selectIndexs23 = {
+      selectIndexNew2,
+      question16Controller.text,
+      question45Controller.text
+    }.toString();
+    String selectIndexs19 = {
+      selectIndex19,
+      _startDateWithoutTime3.toString(),
+      question17Controller.text
+    }.toString();
+    String selectIndexsNew3 = {
+      selectIndexNew3,
+      _startDateWithoutTimeNew.toString(),
+      question50ControllerNew.text
+    }.toString();
+    String selectIndexs20 = {
+      selectIndex20,
+      _startDateWithoutTime4.toString(),
+      question18Controller.text
+    }.toString();
+    String selectIndexs21 = {
+      selectIndex21,
+      _startDateWithoutTime5.toString(),
+      question19Controller.text
+    }.toString();
+    String slectIndics6 = {selectedIndices6, filteredList3}.toString();
+    String selectIndexs17 = {selectIndexNew1, question49ControllerNew.text}
+        .toString();
     String selectIndexs50 = '';
     String selectIndexs51 = '';
-    if (selectIndex50 == "LUC Captured" || selectIndex50 == "Misutilization - LUC Captured"){
-     // selectIndexs50 = {selectIndex50,imageList}.toString();
+    if (selectIndex50 == "LUC Captured" ||
+        selectIndex50 == "Misutilization - LUC Captured") {
+      // selectIndexs50 = {selectIndex50,imageList}.toString();
       selectIndexs50 = selectIndex50;
-    }else if (selectIndex50 == "No"){
-      selectIndexs50 = {selectIndex50,flagStatus,flagStatus2}.toString();
+    } else if (selectIndex50 == "No") {
+      selectIndexs50 = {selectIndex50, flagStatus, flagStatus2}.toString();
     }
-    if (selectIndex51 == "Yes"){
+    if (selectIndex51 == "Yes") {
       //selectIndexs51 = {selectIndex51,imageList1}.toString();
       selectIndexs51 = selectIndex51;
-    } else if (selectIndex51 == "No"){
+    } else if (selectIndex51 == "No") {
       selectIndexs51 = {selectIndex51}.toString();
     }
 
 
-    String? empId=await MyUtils.getSharedPreferences("empId");
-    String? name=await MyUtils.getSharedPreferences("name");
+    String? empId = await MyUtils.getSharedPreferences("empId");
+    String? name = await MyUtils.getSharedPreferences("name");
 
     var requestModel = {
       "name": name,
       "id": empId,
-      "answer" : arrayofAnsArray
+      "answer": arrayofAnsArray
     };
     arrayofAnsArray.add(answers);
-    answers.add({'_id':questionList[0]['_id'],'answer':question1Controller.text});
-    answers.add({'_id':questionList[1]['_id'],'answer':question2Controller.text});
-    answers.add({'_id':questionList[2]['_id'],'answer':question3Controller.text});
-    answers.add({'_id':questionList[3]['_id'],'answer':question4Controller.text});
-    answers.add({'_id':questionList[4]['_id'],'answer':_startDateWithoutTime.toString()});
-    answers.add({'_id':questionList[5]['_id'],'answer':question5Controller.text});
+    answers.add(
+        {'_id': questionList[0]['_id'], 'answer': question1Controller.text});
+    answers.add(
+        {'_id': questionList[1]['_id'], 'answer': question2Controller.text});
+    answers.add(
+        {'_id': questionList[2]['_id'], 'answer': question3Controller.text});
+    answers.add(
+        {'_id': questionList[3]['_id'], 'answer': question4Controller.text});
+    answers.add({
+      '_id': questionList[4]['_id'],
+      'answer': _startDateWithoutTime.toString()
+    });
+    answers.add(
+        {'_id': questionList[5]['_id'], 'answer': question5Controller.text});
     //answers.add({'_id':questionList[6]['_id'],'answer':selectedIndices.toString()});
-    answers.add({'_id':questionList[6]['_id'],'answer': slectIndics2});
+    answers.add({'_id': questionList[6]['_id'], 'answer': slectIndics2});
     //answers.add({'_id':questionList[8]['_id'],'answer':selectedIndices3.toString()});
-    answers.add({'_id':questionList[7]['_id'],'answer': slectIndics4});
-    answers.add({'_id':questionList[8]['_id'],'answer':question6Controller.text});
-    answers.add({'_id':questionList[9]['_id'],'answer':question7Controller.text});
-    answers.add({'_id':questionList[10]['_id'],'answer':question8Controller.text});
-    answers.add({'_id':questionList[11]['_id'],'answer':question9Controller.text});
-    answers.add({'_id':questionList[12]['_id'],'answer':question10Controller.text});
-    answers.add({'_id':questionList[13]['_id'],'answer':selectIndexs});
-    answers.add({'_id':questionList[14]['_id'],'answer':selectIndexs1});
-    answers.add({'_id':questionList[15]['_id'],'answer':slectIndics5});
+    answers.add({'_id': questionList[7]['_id'], 'answer': slectIndics4});
+    answers.add(
+        {'_id': questionList[8]['_id'], 'answer': question6Controller.text});
+    answers.add(
+        {'_id': questionList[9]['_id'], 'answer': question7Controller.text});
+    answers.add(
+        {'_id': questionList[10]['_id'], 'answer': question8Controller.text});
+    answers.add(
+        {'_id': questionList[11]['_id'], 'answer': question9Controller.text});
+    answers.add(
+        {'_id': questionList[12]['_id'], 'answer': question10Controller.text});
+    answers.add({'_id': questionList[13]['_id'], 'answer': selectIndexs});
+    answers.add({'_id': questionList[14]['_id'], 'answer': selectIndexs1});
+    answers.add({'_id': questionList[15]['_id'], 'answer': slectIndics5});
     // answers.add({'_id':questionList[16]['_id'],'answer':question11Controller.text});
     // answers.add({'_id':questionList[17]['_id'],'answer':question12Controller.text});
     // answers.add({'_id':questionList[18]['_id'],'answer':question13Controller.text});
     // answers.add({'_id':questionList[19]['_id'],'answer':selectedIndices5.toString()});
-    answers.add({'_id':questionList[16]['_id'],'answer':question14Controller.text});
-    answers.add({'_id':questionList[17]['_id'],'answer':selectIndexs17});
-    answers.add({'_id':questionList[18]['_id'],'answer': formattedDate});
-    answers.add({'_id':questionList[19]['_id'],'answer':selectIndexs2});
-    answers.add({'_id':questionList[20]['_id'],'answer':selectIndexs4});
-    answers.add({'_id':questionList[21]['_id'],'answer':selectIndex5});
-    answers.add({'_id':questionList[22]['_id'],'answer':question15Controller.text});
-    answers.add({'_id':questionList[23]['_id'],'answer':selectIndex6});
-    answers.add({'_id':questionList[24]['_id'],'answer':selectIndexs23});
-    answers.add({'_id':questionList[25]['_id'],'answer':selectIndex7});
-    answers.add({'_id':questionList[26]['_id'],'answer':selectIndex8});
-    answers.add({'_id':questionList[27]['_id'],'answer':selectIndexs9});
-    answers.add({'_id':questionList[28]['_id'],'answer':selectIndex10});
-    answers.add({'_id':questionList[29]['_id'],'answer':selectIndex11});
-    answers.add({'_id':questionList[30]['_id'],'answer':selectIndex12});
-    answers.add({'_id':questionList[31]['_id'],'answer':selectIndex13});
-    answers.add({'_id':questionList[32]['_id'],'answer':selectIndex14});
-    answers.add({'_id':questionList[33]['_id'],'answer':selectIndex15});
-    answers.add({'_id':questionList[34]['_id'],'answer':selectIndex16});
-    answers.add({'_id':questionList[35]['_id'],'answer':selectIndex17});
-    answers.add({'_id':questionList[36]['_id'],'answer':selectIndexsNew3});
-    answers.add({'_id':questionList[37]['_id'],'answer':selectIndexs19});
+    answers.add(
+        {'_id': questionList[16]['_id'], 'answer': question14Controller.text});
+    answers.add({'_id': questionList[17]['_id'], 'answer': selectIndexs17});
+    answers.add({'_id': questionList[18]['_id'], 'answer': formattedDate});
+    answers.add({'_id': questionList[19]['_id'], 'answer': selectIndexs2});
+    answers.add({'_id': questionList[20]['_id'], 'answer': selectIndexs4});
+    answers.add({'_id': questionList[21]['_id'], 'answer': selectIndex5});
+    answers.add(
+        {'_id': questionList[22]['_id'], 'answer': question15Controller.text});
+    answers.add({'_id': questionList[23]['_id'], 'answer': selectIndex6});
+    answers.add({'_id': questionList[24]['_id'], 'answer': selectIndexs23});
+    answers.add({'_id': questionList[25]['_id'], 'answer': selectIndex7});
+    answers.add({'_id': questionList[26]['_id'], 'answer': selectIndex8});
+    answers.add({'_id': questionList[27]['_id'], 'answer': selectIndexs9});
+    answers.add({'_id': questionList[28]['_id'], 'answer': selectIndex10});
+    answers.add({'_id': questionList[29]['_id'], 'answer': selectIndex11});
+    answers.add({'_id': questionList[30]['_id'], 'answer': selectIndex12});
+    answers.add({'_id': questionList[31]['_id'], 'answer': selectIndex13});
+    answers.add({'_id': questionList[32]['_id'], 'answer': selectIndex14});
+    answers.add({'_id': questionList[33]['_id'], 'answer': selectIndex15});
+    answers.add({'_id': questionList[34]['_id'], 'answer': selectIndex16});
+    answers.add({'_id': questionList[35]['_id'], 'answer': selectIndex17});
+    answers.add({'_id': questionList[36]['_id'], 'answer': selectIndexsNew3});
+    answers.add({'_id': questionList[37]['_id'], 'answer': selectIndexs19});
     //answers.add({'_id':questionList[41]['_id'],'answer':question17Controller.text});
-    answers.add({'_id':questionList[38]['_id'],'answer':selectIndexs20});
+    answers.add({'_id': questionList[38]['_id'], 'answer': selectIndexs20});
     //answers.add({'_id':questionList[43]['_id'],'answer':question18Controller.text});
-    answers.add({'_id':questionList[39]['_id'],'answer':selectIndexs21});
+    answers.add({'_id': questionList[39]['_id'], 'answer': selectIndexs21});
     //answers.add({'_id':questionList[45]['_id'],'answer':question19Controller.text});
-    answers.add({'_id':questionList[40]['_id'],'answer':selectIndex22});
-    answers.add({'_id':questionList[41]['_id'],'answer':selectIndex23});
-    answers.add({'_id':questionList[42]['_id'],'answer':selectIndexsNew6});
-    answers.add({'_id':questionList[43]['_id'],'answer':selectIndex24});
-    answers.add({'_id':questionList[44]['_id'],'answer':selectIndex25});
-    answers.add({'_id':questionList[45]['_id'],'answer':selectIndexs26});
-    answers.add({'_id':questionList[46]['_id'],'answer':selectIndex27});
+    answers.add({'_id': questionList[40]['_id'], 'answer': selectIndex22});
+    answers.add({'_id': questionList[41]['_id'], 'answer': selectIndex23});
+    answers.add({'_id': questionList[42]['_id'], 'answer': selectIndexsNew6});
+    answers.add({'_id': questionList[43]['_id'], 'answer': selectIndex24});
+    answers.add({'_id': questionList[44]['_id'], 'answer': selectIndex25});
+    answers.add({'_id': questionList[45]['_id'], 'answer': selectIndexs26});
+    answers.add({'_id': questionList[46]['_id'], 'answer': selectIndex27});
 
-    answers.add({'_id':questionList[47]['_id'],'answer':slectIndics6});
-    answers.add({'_id':questionList[48]['_id'],'answer':question21Controller.text});
-    answers.add({'_id':questionList[49]['_id'],'answer':selectIndex28});
-    answers.add({'_id':questionList[50]['_id'],'answer':selectIndex29});
+    answers.add({'_id': questionList[47]['_id'], 'answer': slectIndics6});
+    answers.add(
+        {'_id': questionList[48]['_id'], 'answer': question21Controller.text});
+    answers.add({'_id': questionList[49]['_id'], 'answer': selectIndex28});
+    answers.add({'_id': questionList[50]['_id'], 'answer': selectIndex29});
 
-    answers.add({'_id':questionList[51]['_id'],'answer':selectIndex30});
-    answers.add({'_id':questionList[52]['_id'],'answer':selectIndexsNew4});
-    answers.add({'_id':questionList[53]['_id'],'answer':selectIndexs32});
-    answers.add({'_id':questionList[54]['_id'],'answer':selectIndexs33});
-    answers.add({'_id':questionList[55]['_id'],'answer':selectIndexs34});
+    answers.add({'_id': questionList[51]['_id'], 'answer': selectIndex30});
+    answers.add({'_id': questionList[52]['_id'], 'answer': selectIndexsNew4});
+    answers.add({'_id': questionList[53]['_id'], 'answer': selectIndexs32});
+    answers.add({'_id': questionList[54]['_id'], 'answer': selectIndexs33});
+    answers.add({'_id': questionList[55]['_id'], 'answer': selectIndexs34});
 
-    answers.add({'_id':questionList[56]['_id'],'answer':selectIndexs35});
-    answers.add({'_id':questionList[57]['_id'],'answer':selectIndexs36});
-    answers.add({'_id':questionList[58]['_id'],'answer':selectIndexs37});
-    answers.add({'_id':questionList[59]['_id'],'answer':selectIndexs38});
-    answers.add({'_id':questionList[60]['_id'],'answer':selectIndex39});
+    answers.add({'_id': questionList[56]['_id'], 'answer': selectIndexs35});
+    answers.add({'_id': questionList[57]['_id'], 'answer': selectIndexs36});
+    answers.add({'_id': questionList[58]['_id'], 'answer': selectIndexs37});
+    answers.add({'_id': questionList[59]['_id'], 'answer': selectIndexs38});
+    answers.add({'_id': questionList[60]['_id'], 'answer': selectIndex39});
 
-    answers.add({'_id':questionList[61]['_id'],'answer':selectIndex40});
-    answers.add({'_id':questionList[62]['_id'],'answer':selectIndex41});
-    answers.add({'_id':questionList[63]['_id'],'answer':selectIndex42});
-    answers.add({'_id':questionList[64]['_id'],'answer':selectIndexs43});
+    answers.add({'_id': questionList[61]['_id'], 'answer': selectIndex40});
+    answers.add({'_id': questionList[62]['_id'], 'answer': selectIndex41});
+    answers.add({'_id': questionList[63]['_id'], 'answer': selectIndex42});
+    answers.add({'_id': questionList[64]['_id'], 'answer': selectIndexs43});
 
-    answers.add({'_id':questionList[65]['_id'],'answer':selectIndexs44});
-   // answers.add({'_id':questionList[66]['_id'],'answer':selectIndexs45});
-    answers.add({'_id':questionList[66]['_id'],'answer':slectIndics7});
-    answers.add({'_id':questionList[67]['_id'],'answer':selectIndex45});
-    answers.add({'_id':questionList[68]['_id'],'answer':selectIndex46});
-    answers.add({'_id':questionList[69]['_id'],'answer':selectIndex47});
-    answers.add({'_id':questionList[70]['_id'],'answer':selectIndexs48});
+    answers.add({'_id': questionList[65]['_id'], 'answer': selectIndexs44});
+    // answers.add({'_id':questionList[66]['_id'],'answer':selectIndexs45});
+    answers.add({'_id': questionList[66]['_id'], 'answer': slectIndics7});
+    answers.add({'_id': questionList[67]['_id'], 'answer': selectIndex45});
+    answers.add({'_id': questionList[68]['_id'], 'answer': selectIndex46});
+    answers.add({'_id': questionList[69]['_id'], 'answer': selectIndex47});
+    answers.add({'_id': questionList[70]['_id'], 'answer': selectIndexs48});
 
-    answers.add({'_id':questionList[71]['_id'],'answer':selectIndexsNew5});
-    answers.add({'_id':questionList[72]['_id'],'answer':selectIndexs49});
+    answers.add({'_id': questionList[71]['_id'], 'answer': selectIndexsNew5});
+    answers.add({'_id': questionList[72]['_id'], 'answer': selectIndexs49});
 
-    answers.add({'_id':questionList[73]['_id'],'answer':selectIndexs50});
-    answers.add({'_id':questionList[74]['_id'],'answer':selectIndexs51});
-    answers.add({'_id':questionList[75]['_id'],'answer':question24Controller.text});
-   // answers.add({'_id':questionList[75]['_id'],'answer':question24Controller.text});
+    answers.add({'_id': questionList[73]['_id'], 'answer': selectIndexs50});
+    answers.add({'_id': questionList[74]['_id'], 'answer': selectIndexs51});
+    answers.add(
+        {'_id': questionList[75]['_id'], 'answer': question24Controller.text});
+    // answers.add({'_id':questionList[75]['_id'],'answer':question24Controller.text});
     // answers.add({'_id':questionList[76]['_id'],'answer':question24Controller.text});
     // Do for all answers according to type of widget
 
@@ -13589,43 +13949,40 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     log('Log answer data: $arrayofAnsArray');
     print(arrayofAnsArray);
 
-    if(connectivityResult == ConnectivityResult.none)
-      {
-        Navigator.pop(context);
-        storeAnswerDataLocally(arrayofAnsArray);
-        log('Log answer data: $arrayofAnsArray');
-      }
-    else
-      {
-        ApiBaseHelper helper = ApiBaseHelper();
-        var response =
-        await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
-        Navigator.pop(context);
-        var responseJSON = json.decode(response.body);
-        //print(responseJSON);
-        log('Log answer data: $answers');
-        if (responseJSON['code'] == 200) {
-          Toast.show("success !!",
-              duration: Toast.lengthLong,
-              gravity: Toast.bottom,
-              backgroundColor: Colors.green);
+    if (connectivityResult == ConnectivityResult.none) {
+      Navigator.pop(context);
+      storeAnswerDataLocally(arrayofAnsArray);
+      log('Log answer data: $arrayofAnsArray');
+    }
+    else {
+      ApiBaseHelper helper = ApiBaseHelper();
+      var response =
+      await helper.postAPINew('Avanti/SubmitAppSurvey', requestModel, context);
+      Navigator.pop(context);
+      var responseJSON = json.decode(response.body);
+      //print(responseJSON);
+      log('Log answer data: $answers');
+      if (responseJSON['code'] == 200) {
+        Toast.show("success !!",
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.green);
 
-          Navigator.pop(context,'Hello');
-        } else {
-          Toast.show(responseJSON['message'],
-              duration: Toast.lengthLong,
-              gravity: Toast.bottom,
-              backgroundColor: Colors.red);
-        }
+        Navigator.pop(context, 'Hello');
+      } else {
+        Toast.show(responseJSON['message'],
+            duration: Toast.lengthLong,
+            gravity: Toast.bottom,
+            backgroundColor: Colors.red);
       }
-
+    }
   }
 
 
   storeAnswerDataLocally(List<dynamic> answerList) async {
     APIDialog.showAlertDialog(context, 'Please wait...');
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    List<String>? allList=preferences.getStringList("feedback_list")??[];
+    List<String>? allList = preferences.getStringList("feedback_list") ?? [];
     String json = jsonEncode(answerList);
     allList.add(json);
 
@@ -13637,7 +13994,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         gravity: Toast.bottom,
         backgroundColor: Colors.green);
     Navigator.pop(context);
-
   }
 
 
@@ -13645,27 +14001,35 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
-    FormData? formData= FormData.fromMap({
+    FormData? formData = FormData.fromMap({
       "Id": question1Controller.text,
       "artifactType": "LUC",
     });
 
-    for (int i = 0; i <imageList.length; i++) {
+    for (int i = 0; i < imageList.length; i++) {
       String fileName = '';
-      String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
-      String? branchName=await MyUtils.getSharedPreferences("branch_name");
-      String? partnerName=await MyUtils.getSharedPreferences("partner_name");
-      if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+"LUC"+"-"+i.toString()+"."+imageList[i].path.split('.').last;
-      }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+"LUC"+"-"+i.toString()+"."+imageList[i].path.split('.').last;
-
+      String? loanNumber = await MyUtils.getSharedPreferences("loan_number");
+      String? branchName = await MyUtils.getSharedPreferences("branch_name");
+      String? partnerName = await MyUtils.getSharedPreferences("partner_name");
+      if (loanData.length != 0) {
+        fileName = loanData[0]["loan_number"].toString() + "-" +
+            loanData[0]["branch"].toString() + "-" +
+            loanData[0]["partner"].toString() + "-" + "LUC" + "-" +
+            i.toString() + "." + imageList[i].path
+            .split('.')
+            .last;
+      } else {
+        fileName = loanNumber.toString() + "-" + branchName.toString() + "-" +
+            partnerName.toString() + "-" + "LUC" + "-" + i.toString() + "." +
+            imageList[i].path
+                .split('.')
+                .last;
       }
-     //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
+      //  String fileName = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       // String fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+DateTime.now().toString()+"-"+i.toString()+"."+imageList[i].path.split('.').last;
 
-       print("File Name is "+fileName);
-       var path = imageList[i].path.toString();
+      print("File Name is " + fileName);
+      var path = imageList[i].path.toString();
       formData.files.addAll([
         MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
       ]);
@@ -13686,7 +14050,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
       questionIndex = questionIndex + 1;
-
     } else {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
@@ -13694,29 +14057,38 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           backgroundColor: Colors.red);
     }
   }
+
   _uploadFiles1(List<dynamic> loanData) async {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Uploading Images...');
     // String fileName = xFile.path.split('/').last;
-    FormData? formData= FormData.fromMap({
+    FormData? formData = FormData.fromMap({
       "Id": question1Controller.text,
       "artifactType": "Other",
     });
 
-    for (int i = 0; i <imageList1.length; i++) {
+    for (int i = 0; i < imageList1.length; i++) {
       String fileName = '';
-      String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
-      String? branchName=await MyUtils.getSharedPreferences("branch_name");
-      String? partnerName=await MyUtils.getSharedPreferences("partner_name");
-      if (loanData.length!=0){
-        fileName = loanData[0]["loan_number"].toString()+"-"+loanData[0]["branch"].toString()+"-"+loanData[0]["partner"].toString()+"-"+i.toString()+"."+imageList1[i].path.split('.').last;
-      }else{
-        fileName = loanNumber.toString()+"-"+branchName.toString()+"-"+partnerName.toString()+"-"+i.toString()+"."+imageList1[i].path.split('.').last;
-
+      String? loanNumber = await MyUtils.getSharedPreferences("loan_number");
+      String? branchName = await MyUtils.getSharedPreferences("branch_name");
+      String? partnerName = await MyUtils.getSharedPreferences("partner_name");
+      if (loanData.length != 0) {
+        fileName = loanData[0]["loan_number"].toString() + "-" +
+            loanData[0]["branch"].toString() + "-" +
+            loanData[0]["partner"].toString() + "-" + i.toString() + "." +
+            imageList1[i].path
+                .split('.')
+                .last;
+      } else {
+        fileName = loanNumber.toString() + "-" + branchName.toString() + "-" +
+            partnerName.toString() + "-" + i.toString() + "." +
+            imageList1[i].path
+                .split('.')
+                .last;
       }
-      print("File Name is 1 "+fileName);
+      print("File Name is 1 " + fileName);
       var path = imageList1[i].path.toString();
-     // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
+      // var name = ${loanvalue.loan_number}-${(loanvalue.branch).split(' ').join('_')}-${(loanvalue.partner).split(' ').join('_')}-${Date.now() + '-' + i}.jpeg
       formData.files.addAll([
         MapEntry("file", await MultipartFile.fromFile(path, filename: fileName))
       ]);
@@ -13738,7 +14110,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           backgroundColor: Colors.green);
 
       questionIndex = questionIndex + 1;
-
     } else {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
@@ -13746,6 +14117,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
           backgroundColor: Colors.red);
     }
   }
+
   void _openImagePicker(BuildContext context) {
     showDialog(
       context: context,
@@ -13758,16 +14130,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+                    XFile? pickedImage = await ImagePicker().pickImage(
+                        source: ImageSource.camera);
                     if (pickedImage != null) {
                       setState(() {
-                        imageList.add(pickedImage); // Add picked image to the list
+                        imageList.add(
+                            pickedImage); // Add picked image to the list
                       });
                     }
-                    final connectivityResult2 = await (Connectivity().checkConnectivity());
-                    if(connectivityResult2 != ConnectivityResult.none)
-                    {
-                    //  _uploadFiles();
+                    final connectivityResult2 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult2 != ConnectivityResult.none) {
+                      //  _uploadFiles();
                     }
 
                     // Close the dialog
@@ -13781,7 +14155,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     pickedImage = await picker.pickMultiImage();
-                    imageList=imageList+pickedImage;
+                    imageList = imageList + pickedImage;
                     setState(() {
 
                     });
@@ -13803,10 +14177,9 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   getImageData(int type) async {
-
     APIDialog.showAlertDialog(context, "Please wait...");
 
-    String? loanNumber=await MyUtils.getSharedPreferences("loan_number");
+    String? loanNumber = await MyUtils.getSharedPreferences("loan_number");
 
     var requestModel = {
       "loan_number": question1Controller.text.toString()
@@ -13818,39 +14191,27 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     var responseJSON = json.decode(response.body);
     Navigator.pop(context);
     print(responseJSON);
-    if(responseJSON["data"].length!=0)
-      {
-        if(type==0)
-          {
-            _uploadFiles(responseJSON["data"]);
-          }
-        else
-          {
-            _uploadFiles1(responseJSON["data"]);
-          }
-
+    if (responseJSON["data"].length != 0) {
+      if (type == 0) {
+        _uploadFiles(responseJSON["data"]);
       }
-    else
-      {
-        if(type==0)
-        {
-          _uploadFiles(responseJSON["data"]);
-        }
-        else
-        {
-          _uploadFiles1(responseJSON["data"]);
-        }
-        // Toast.show("Invalid loan number",
-        //     duration: Toast.lengthLong,
-        //     gravity: Toast.bottom,
-        //     backgroundColor: Colors.red);
+      else {
+        _uploadFiles1(responseJSON["data"]);
       }
-
-
+    }
+    else {
+      if (type == 0) {
+        _uploadFiles(responseJSON["data"]);
+      }
+      else {
+        _uploadFiles1(responseJSON["data"]);
+      }
+      // Toast.show("Invalid loan number",
+      //     duration: Toast.lengthLong,
+      //     gravity: Toast.bottom,
+      //     backgroundColor: Colors.red);
+    }
   }
-
-
-
 
 
   void _openImagePicker1(BuildContext context) {
@@ -13865,16 +14226,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+                    final XFile? pickedFile = await ImagePicker().pickImage(
+                        source: ImageSource.camera);
                     if (pickedFile != null) {
                       setState(() {
-                        imageList1!.add(pickedFile); // Add picked image to the list
+                        imageList1!.add(
+                            pickedFile); // Add picked image to the list
                       });
                     }
-                    final connectivityResult4 = await (Connectivity().checkConnectivity());
-                    if(connectivityResult4 != ConnectivityResult.none)
-                    {
-                    //  _uploadFiles1();
+                    final connectivityResult4 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult4 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
                     }
 
 
@@ -13889,14 +14252,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final List<XFile> images = await picker.pickMultiImage();
-                    imageList1= imageList1+images;
+                    imageList1 = imageList1 + images;
                     setState(() {
 
                     });
-                    final connectivityResult5 = await (Connectivity().checkConnectivity());
-                    if(connectivityResult5 != ConnectivityResult.none)
-                    {
-                    //  _uploadFiles1();
+                    final connectivityResult5 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult5 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
                     }
                     // Close the dialog
                   },
@@ -13912,6 +14275,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       },
     );
   }
+
   void sendFlagStatus(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -13922,8 +14286,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         ),
       ),
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context,bottomSheetState)
-        {
+        return StatefulBuilder(builder: (context, bottomSheetState) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -13940,8 +14303,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 100,    // Set the desired width
-                      height: 2,     // Set the desired height
+                      width: 100, // Set the desired width
+                      height: 2, // Set the desired height
                       color: Colors.grey,
                     )
                   ],
@@ -13962,8 +14325,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
                 SizedBox(height: 16),
                 Container(
-                  width: double.infinity,  // Set the desired width
-                  height: 1,     // Set the desired height
+                  width: double.infinity, // Set the desired width
+                  height: 1, // Set the desired height
                   color: Colors.grey,
                 ),
                 ListView.builder(
@@ -13973,7 +14336,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int pos) {
                       return GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           flagStatus = notCapturedList[pos]["name"];
 
                           selectIndexCap = pos;
@@ -13991,16 +14354,20 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          color: selectIndexCap == pos ? _currentColor : Colors.white,
+                          color: selectIndexCap == pos ? _currentColor : Colors
+                              .white,
                           child: Column(
                             children: [
                               SizedBox(height: 16.0), // Add vertical spacing
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 12.0), // Set left padding
-                                    child: Text(notCapturedList[pos]["name"].toString(),
+                                    padding: EdgeInsets.only(left: 12.0),
+                                    // Set left padding
+                                    child: Text(
+                                      notCapturedList[pos]["name"].toString(),
                                       style: TextStyle(
                                         fontSize: 13.0,
                                         color: AppTheme.blackColor,
@@ -14025,6 +14392,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       },
     );
   }
+
   void sendFlagStatus1(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -14035,8 +14403,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         ),
       ),
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context,bottomSheetState)
-        {
+        return StatefulBuilder(builder: (context, bottomSheetState) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -14053,8 +14420,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 100,    // Set the desired width
-                      height: 2,     // Set the desired height
+                      width: 100, // Set the desired width
+                      height: 2, // Set the desired height
                       color: Colors.grey,
                     )
                   ],
@@ -14075,19 +14442,23 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 ),
                 SizedBox(height: 16),
                 Container(
-                  width: double.infinity,  // Set the desired width
-                  height: 1,     // Set the desired height
+                  width: double.infinity, // Set the desired width
+                  height: 1, // Set the desired height
                   color: Colors.grey,
                 ),
                 ListView.builder(
                     padding: EdgeInsets.only(top: 4),
-                    itemCount: selectIndexCap == 1? notCaptured2List.length:notCaptured3List.length,
+                    itemCount: selectIndexCap == 1
+                        ? notCaptured2List.length
+                        : notCaptured3List.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int pos) {
                       return GestureDetector(
-                        onTap: (){
-                          flagStatus2 = selectIndexCap == 1? notCaptured2List[pos]["name"] :notCaptured3List[pos]["name"];
+                        onTap: () {
+                          flagStatus2 = selectIndexCap == 1
+                              ? notCaptured2List[pos]["name"]
+                              : notCaptured3List[pos]["name"];
 
                           selectIndexCap2 = pos;
                           _currentColor = Colors.grey;
@@ -14104,16 +14475,23 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          color: selectIndexCap2 == pos ? _currentColor : Colors.white,
+                          color: selectIndexCap2 == pos ? _currentColor : Colors
+                              .white,
                           child: Column(
                             children: [
                               SizedBox(height: 8.0), // Add vertical spacing
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 12.0), // Set left padding
-                                    child: Text(selectIndexCap == 1? notCaptured2List[pos]["name"].toString():notCaptured3List[pos]["name"].toString(),
+                                    padding: EdgeInsets.only(left: 12.0),
+                                    // Set left padding
+                                    child: Text(selectIndexCap == 1
+                                        ? notCaptured2List[pos]["name"]
+                                        .toString()
+                                        : notCaptured3List[pos]["name"]
+                                        .toString(),
                                       style: TextStyle(
                                         fontSize: 13.0,
                                         color: AppTheme.blackColor,
