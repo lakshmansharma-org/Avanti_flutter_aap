@@ -648,7 +648,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 else {
                   MyUtils.saveSharedPreferences(
                       "branch_name", question3Controller.text.toString());
-                  questionIndex = questionIndex + 65;
+                  questionIndex = questionIndex + 1;
                   setState(() {
 
                   });
@@ -730,7 +730,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                 }
 
                 else {
-                  questionIndex = questionIndex + 63;
+                  questionIndex = questionIndex + 1;
                   setState(() {
 
                   });
