@@ -530,7 +530,7 @@ class DashboardState extends State<DashboardScreen> {
 
         for (int j = 0; j <lucList[i]["files"].length; j++) {
           String fileNameNew = '';
-          fileNameNew = lucList[i]["loan_number"].toString()+"-"+lucList[i]["branch_name"].toString()+"-"+lucList[i]["partner_name"].toString()+"-"+"LUC"+"-"+i.toString()+"."+lucList[i]["files"][j].split('.').last;
+          fileNameNew = lucList[i]["loan_number"].toString()+"-"+lucList[i]["branch_name"].toString()+"-"+lucList[i]["partner_name"].toString()+"-"+"LUC"+"-"+j.toString()+"."+lucList[i]["files"][j].split('.').last;
           print("File Name is "+fileNameNew);
           var path = lucList[i]["files"][j].toString();
           formData.files.addAll([
@@ -590,7 +590,7 @@ class DashboardState extends State<DashboardScreen> {
 
       for (int j = 0; j <otherList[i]["files"].length; j++) {
         String fileNameNew = '';
-        fileNameNew = otherList[i]["loan_number"].toString()+"-"+otherList[i]["branch_name"].toString()+"-"+otherList[i]["partner_name"].toString()+"-"+"Other"+"-"+i.toString()+"."+otherList[i]["files"][j].split('.').last;
+        fileNameNew = otherList[i]["loan_number"].toString()+"-"+otherList[i]["branch_name"].toString()+"-"+otherList[i]["partner_name"].toString()+"-"+"Other"+"-"+j.toString()+"."+otherList[i]["files"][j].split('.').last;
         print("File Name is "+fileNameNew);
         var path = otherList[i]["files"][j].toString();
         formData.files.addAll([
