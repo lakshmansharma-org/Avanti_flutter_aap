@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qsurvey_flutter/view/feedback_form_screen.dart';
 import 'package:qsurvey_flutter/view/login_screen.dart';
+import 'package:qsurvey_flutter/view/upload_images_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -75,6 +76,53 @@ class DashboardState extends State<DashboardScreen> {
           body: SingleChildScrollView(
             child: Column(
               children: [
+
+                SizedBox(height: 15),
+
+
+
+                Row(
+                  children: [
+
+                    Spacer(),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen()));
+                      },
+                      child: Container(
+                        height: 48,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: AppTheme.buttonOrangeColor,
+                          borderRadius: BorderRadius.circular(5)
+                        ),
+
+
+                        child: Center(
+                          child:   Text('Upload Images',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500
+                            ),
+                          ),
+                        ),
+
+
+
+
+                      ),
+                    ),
+                    SizedBox(width: 15),
+
+                  ],
+                ),
+
+
+
+
+
                 GestureDetector(
                   onTap: () async {
                     final result = await Navigator.push(

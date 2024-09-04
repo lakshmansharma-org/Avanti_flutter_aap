@@ -158,3 +158,50 @@ class TextFieldStringWidget extends StatelessWidget
   }
 
 }
+
+
+class TextFieldProfileWidget extends StatelessWidget
+{
+  final String title,initialValue;
+  var controller;
+  final String? Function(String?)? validator;
+  TextFieldProfileWidget(this.title,this.initialValue,this.controller,this.validator);
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.only(left: 14),
+          child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 13,
+                height: 0.5,
+                color: Color(0xFF00407E),
+              )),
+        ),
+
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 14),
+          child: TextFormField(
+            controller: controller,
+            validator: validator,
+            keyboardType: TextInputType.number,
+            decoration:  InputDecoration(
+                hintText: initialValue,
+                hintStyle: TextStyle(
+                    fontSize: 14,
+                  color: Colors.grey
+                )
+            ),
+          ),
+        ),
+
+      ],
+    );
+  }
+
+}
