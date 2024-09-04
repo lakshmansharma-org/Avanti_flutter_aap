@@ -202,8 +202,6 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                   ),
 
 
-                  SizedBox(height: 15),
-
                 ],
               );
             }
