@@ -12703,219 +12703,219 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   ),
                                 );
                               }),
-                          selectIndex50 == "LUC Captured" ?
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(child: InkWell(
-                                    onTap: () async {
-                                      print("Click triggered");
-
-                                      setState(() {
-
-                                      });
-                                      _openImagePicker(context);
-                                    },
-                                    child: Container(
-                                        margin:
-                                        const EdgeInsets.only(
-                                            left: 0, right: 8, top: 8),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(
-                                                5)),
-                                        height: 45,
-                                        child: const Center(
-                                          child: Text('Browse',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white)),
-                                        )),
-                                  )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-
-                              SizedBox(height: 10),
-
-                              imageList.length == 0 ? Container() : Container(
-                                height: 60,
-                                child: ListView.builder(
-                                    itemCount: imageList.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,
-                                        int pos) {
-                                      return Row(
-                                        children: [
-
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius
-                                                        .circular(5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: FileImage(
-                                                            File(imageList[pos]
-                                                                .path)
-                                                        )
-                                                    )
-
-                                                ),
-                                              ),
-
-
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      imageList.removeAt(pos);
-                                                      setState(() {
-
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                                padding: EdgeInsets.only(
-                                                    bottom: 10),
-
-                                              )
-
-
-                                            ],
-                                          ),
-
-
-                                          SizedBox(width: 10),
-
-                                        ],
-                                      );
-                                    }
-
-
-                                ),
-                              )
-
-                            ],
-                          ) :
-                          selectIndex50 == "Misutilization - LUC Captured" ?
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(child: InkWell(
-                                    onTap: () async {
-                                      setState(() {
-
-                                      });
-                                      _openImagePicker(context);
-                                    },
-                                    child: Container(
-                                        margin:
-                                        const EdgeInsets.only(
-                                            left: 0, right: 8, top: 8),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(
-                                                5)),
-                                        height: 45,
-                                        child: const Center(
-                                          child: Text('Browse',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white)),
-                                        )),
-                                  )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-
-                              SizedBox(height: 10),
-
-                              imageList.length == 0 ? Container() : Container(
-                                height: 60,
-                                child: ListView.builder(
-                                    itemCount: imageList.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,
-                                        int pos) {
-                                      return Row(
-                                        children: [
-
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius
-                                                        .circular(5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: FileImage(
-                                                            File(imageList[pos]
-                                                                .path)
-                                                        )
-                                                    )
-
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      imageList.removeAt(pos);
-                                                      setState(() {
-
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                                padding: EdgeInsets.only(
-                                                    bottom: 10),
-
-                                              )
-
-
-                                            ],
-                                          ),
-
-
-                                          SizedBox(width: 10),
-
-                                        ],
-                                      );
-                                    }
-
-
-                                ),
-                              )
-
-                            ],
-                          ) :
+                          // selectIndex50 == "LUC Captured" ?
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         Expanded(child: InkWell(
+                          //           onTap: () async {
+                          //             print("Click triggered");
+                          //
+                          //             setState(() {
+                          //
+                          //             });
+                          //             _openImagePicker(context);
+                          //           },
+                          //           child: Container(
+                          //               margin:
+                          //               const EdgeInsets.only(
+                          //                   left: 0, right: 8, top: 8),
+                          //               width: double.infinity,
+                          //               decoration: BoxDecoration(
+                          //                   color: AppTheme.buttonOrangeColor,
+                          //                   borderRadius: BorderRadius.circular(
+                          //                       5)),
+                          //               height: 45,
+                          //               child: const Center(
+                          //                 child: Text('Browse',
+                          //                     style: TextStyle(
+                          //                         fontSize: 13,
+                          //                         fontWeight: FontWeight.w600,
+                          //                         color: Colors.white)),
+                          //               )),
+                          //         )),
+                          //         const SizedBox(width: 10),
+                          //       ],
+                          //     ),
+                          //
+                          //     SizedBox(height: 10),
+                          //
+                          //     imageList.length == 0 ? Container() : Container(
+                          //       height: 60,
+                          //       child: ListView.builder(
+                          //           itemCount: imageList.length,
+                          //           scrollDirection: Axis.horizontal,
+                          //           itemBuilder: (BuildContext context,
+                          //               int pos) {
+                          //             return Row(
+                          //               children: [
+                          //
+                          //                 Stack(
+                          //                   children: [
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       decoration: BoxDecoration(
+                          //                           borderRadius: BorderRadius
+                          //                               .circular(5),
+                          //                           image: DecorationImage(
+                          //                               fit: BoxFit.fill,
+                          //                               image: FileImage(
+                          //                                   File(imageList[pos]
+                          //                                       .path)
+                          //                               )
+                          //                           )
+                          //
+                          //                       ),
+                          //                     ),
+                          //
+                          //
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       child: Align(
+                          //                         alignment: Alignment.topRight,
+                          //                         child: GestureDetector(
+                          //                           onTap: () {
+                          //                             imageList.removeAt(pos);
+                          //                             setState(() {
+                          //
+                          //                             });
+                          //                           },
+                          //                           child: Icon(
+                          //                             Icons.delete,
+                          //                             color: Colors.red,
+                          //                           ),
+                          //                         ),
+                          //                       ),
+                          //                       padding: EdgeInsets.only(
+                          //                           bottom: 10),
+                          //
+                          //                     )
+                          //
+                          //
+                          //                   ],
+                          //                 ),
+                          //
+                          //
+                          //                 SizedBox(width: 10),
+                          //
+                          //               ],
+                          //             );
+                          //           }
+                          //
+                          //
+                          //       ),
+                          //     )
+                          //
+                          //   ],
+                          // ) :
+                          // selectIndex50 == "Misutilization - LUC Captured" ?
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         Expanded(child: InkWell(
+                          //           onTap: () async {
+                          //             setState(() {
+                          //
+                          //             });
+                          //             _openImagePicker(context);
+                          //           },
+                          //           child: Container(
+                          //               margin:
+                          //               const EdgeInsets.only(
+                          //                   left: 0, right: 8, top: 8),
+                          //               width: double.infinity,
+                          //               decoration: BoxDecoration(
+                          //                   color: AppTheme.buttonOrangeColor,
+                          //                   borderRadius: BorderRadius.circular(
+                          //                       5)),
+                          //               height: 45,
+                          //               child: const Center(
+                          //                 child: Text('Browse',
+                          //                     style: TextStyle(
+                          //                         fontSize: 13,
+                          //                         fontWeight: FontWeight.w600,
+                          //                         color: Colors.white)),
+                          //               )),
+                          //         )),
+                          //         const SizedBox(width: 10),
+                          //       ],
+                          //     ),
+                          //
+                          //     SizedBox(height: 10),
+                          //
+                          //     imageList.length == 0 ? Container() : Container(
+                          //       height: 60,
+                          //       child: ListView.builder(
+                          //           itemCount: imageList.length,
+                          //           scrollDirection: Axis.horizontal,
+                          //           itemBuilder: (BuildContext context,
+                          //               int pos) {
+                          //             return Row(
+                          //               children: [
+                          //
+                          //                 Stack(
+                          //                   children: [
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       decoration: BoxDecoration(
+                          //                           borderRadius: BorderRadius
+                          //                               .circular(5),
+                          //                           image: DecorationImage(
+                          //                               fit: BoxFit.fill,
+                          //                               image: FileImage(
+                          //                                   File(imageList[pos]
+                          //                                       .path)
+                          //                               )
+                          //                           )
+                          //
+                          //                       ),
+                          //                     ),
+                          //
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       child: Align(
+                          //                         alignment: Alignment.topRight,
+                          //                         child: GestureDetector(
+                          //                           onTap: () {
+                          //                             imageList.removeAt(pos);
+                          //                             setState(() {
+                          //
+                          //                             });
+                          //                           },
+                          //                           child: Icon(
+                          //                             Icons.delete,
+                          //                             color: Colors.red,
+                          //                           ),
+                          //                         ),
+                          //                       ),
+                          //                       padding: EdgeInsets.only(
+                          //                           bottom: 10),
+                          //
+                          //                     )
+                          //
+                          //
+                          //                   ],
+                          //                 ),
+                          //
+                          //
+                          //                 SizedBox(width: 10),
+                          //
+                          //               ],
+                          //             );
+                          //           }
+                          //
+                          //
+                          //       ),
+                          //     )
+                          //
+                          //   ],
+                          // ) :
                           selectIndex50 == "No" ?
                           Column(
                             children: [
@@ -13061,7 +13061,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () async {
                             if (selectIndex50 != "-1") {
                               if (selectIndex50 == "No") {
-                                if (flagStatus != "12" || flagStatus2 != "13") {
+                                if (flagStatus != "12" && flagStatus2 != "13") {
                                   questionIndex = questionIndex + 1;
                                   setState(() {});
                                 } else {
@@ -13081,74 +13081,81 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       snackBar);
                                 }
-                              } else {
-                                if (imageList.isNotEmpty) {
-                                  final connectivityResult3 = await (Connectivity()
-                                      .checkConnectivity());
-                                  if (connectivityResult3 ==
-                                      ConnectivityResult.none) {
-                                    print("No intermnet");
-                                    List<String> imagePaths = [];
-                                    SharedPreferences prefs = await SharedPreferences
-                                        .getInstance();
-
-                                    String? lucData = await prefs.getString(
-                                        "LUC") ?? "";
-                                    print(lucData);
-                                    List<dynamic>? lucListDynamic = [];
-                                    if (lucData != "") {
-                                      lucListDynamic = jsonDecode(lucData);
-                                      print(lucListDynamic.toString());
-                                    }
-
-
-                                    for (int i = 0; i < imageList.length; i++) {
-                                      imagePaths.add(
-                                          imageList[i].path.toString());
-                                    }
-
-                                    lucListDynamic!.add({
-                                      "loan_number": question1Controller.text
-                                          .toString(),
-                                      "partner_name": question2Controller.text
-                                          .toString(),
-                                      "branch_name": question3Controller.text
-                                          .toString(),
-                                      "files": imagePaths
-                                    });
-
-
-                                    prefs.setString(
-                                        'LUC', jsonEncode(lucListDynamic));
-
-                                    questionIndex = questionIndex + 1;
-                                    setState(() {});
-                                  }
-                                  else {
-                                    print("No intermnet12222");
-                                    getImageData(0);
-                                  }
-
-
-                                  // questionIndex = questionIndex + 1;
-                                } else {
-                                  final snackBar = SnackBar(
-                                    content: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      // Adjust left and right margins
-                                      child: Text(
-                                        'Please select the image.',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 3),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar);
-                                }
+                              }else{
+                                setState(() {
+                                });
+                                questionIndex = questionIndex + 1;
                               }
+                              // else {
+                              //   if (imageList.isNotEmpty) {
+                              //     final connectivityResult3 = await (Connectivity()
+                              //         .checkConnectivity());
+                              //     if (connectivityResult3 ==
+                              //         ConnectivityResult.none) {
+                              //       print("No intermnet");
+                              //       List<String> imagePaths = [];
+                              //       SharedPreferences prefs = await SharedPreferences
+                              //           .getInstance();
+                              //
+                              //       String? lucData = await prefs.getString(
+                              //           "LUC") ?? "";
+                              //       print(lucData);
+                              //       List<dynamic>? lucListDynamic = [];
+                              //       if (lucData != "") {
+                              //         lucListDynamic = jsonDecode(lucData);
+                              //         print(lucListDynamic.toString());
+                              //       }
+                              //
+                              //
+                              //       for (int i = 0; i < imageList.length; i++) {
+                              //         imagePaths.add(
+                              //             imageList[i].path.toString());
+                              //       }
+                              //
+                              //       lucListDynamic!.add({
+                              //         "loan_number": question1Controller.text
+                              //             .toString(),
+                              //         "partner_name": question2Controller.text
+                              //             .toString(),
+                              //         "branch_name": question3Controller.text
+                              //             .toString(),
+                              //         "files": imagePaths
+                              //       });
+                              //
+                              //
+                              //       prefs.setString(
+                              //           'LUC', jsonEncode(lucListDynamic));
+                              //
+                              //       questionIndex = questionIndex + 1;
+                              //       setState(() {});
+                              //     }
+                              //     else {
+                              //       print("No intermnet12222");
+                              //       getImageData(0);
+                              //     }
+                              //
+                              //
+                              //     // questionIndex = questionIndex + 1;
+                              //   }
+                              //   else {
+                              //     final snackBar = SnackBar(
+                              //       content: Container(
+                              //         margin: EdgeInsets.only(
+                              //             left: 20, right: 20),
+                              //         // Adjust left and right margins
+                              //         child: Text(
+                              //           'Please select the image.',
+                              //           textAlign: TextAlign.center,
+                              //         ),
+                              //       ),
+                              //       backgroundColor: Colors.red,
+                              //       duration: Duration(seconds: 3),
+                              //     );
+                              //     ScaffoldMessenger.of(context).showSnackBar(
+                              //         snackBar);
+                              //   }
+                              // }
+
                             } else {
                               // questionIndex = questionIndex + 1;
                               final snackBar = SnackBar(
@@ -13274,112 +13281,112 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   );
                                 }),
                           ),
-                          selectIndex51 == "Yes" ?
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(child: InkWell(
-                                    onTap: () async {
-                                      setState(() {
-
-                                      });
-                                      _openImagePicker1(context);
-                                    },
-                                    child: Container(
-                                        margin:
-                                        const EdgeInsets.only(
-                                            left: 0, right: 8, top: 8),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.buttonOrangeColor,
-                                            borderRadius: BorderRadius.circular(
-                                                5)),
-                                        height: 45,
-                                        child: const Center(
-                                          child: Text('Browse',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white)),
-                                        )),
-                                  )),
-                                  const SizedBox(width: 10),
-                                ],
-                              ),
-
-                              SizedBox(height: 10),
-
-                              imageList1.length == 0 ? Container() : Container(
-                                height: 60,
-                                child: ListView.builder(
-                                    itemCount: imageList1.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context,
-                                        int pos) {
-                                      return Row(
-                                        children: [
-
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius
-                                                        .circular(5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: FileImage(
-                                                            File(imageList1[pos]
-                                                                .path)
-                                                        )
-                                                    )
-
-                                                ),
-                                              ),
-
-
-                                              Container(
-                                                width: 65,
-                                                height: 65,
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      imageList1.removeAt(pos);
-                                                      setState(() {
-
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                                padding: EdgeInsets.only(
-                                                    bottom: 10),
-
-                                              )
-
-
-                                            ],
-                                          ),
-
-
-                                          SizedBox(width: 10),
-
-                                        ],
-                                      );
-                                    }
-
-
-                                ),
-                              )
-
-                            ],
-                          ) : Container(),
+                          // selectIndex51 == "Yes" ?
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         Expanded(child: InkWell(
+                          //           onTap: () async {
+                          //             setState(() {
+                          //
+                          //             });
+                          //             _openImagePicker1(context);
+                          //           },
+                          //           child: Container(
+                          //               margin:
+                          //               const EdgeInsets.only(
+                          //                   left: 0, right: 8, top: 8),
+                          //               width: double.infinity,
+                          //               decoration: BoxDecoration(
+                          //                   color: AppTheme.buttonOrangeColor,
+                          //                   borderRadius: BorderRadius.circular(
+                          //                       5)),
+                          //               height: 45,
+                          //               child: const Center(
+                          //                 child: Text('Browse',
+                          //                     style: TextStyle(
+                          //                         fontSize: 13,
+                          //                         fontWeight: FontWeight.w600,
+                          //                         color: Colors.white)),
+                          //               )),
+                          //         )),
+                          //         const SizedBox(width: 10),
+                          //       ],
+                          //     ),
+                          //
+                          //     SizedBox(height: 10),
+                          //
+                          //     imageList1.length == 0 ? Container() : Container(
+                          //       height: 60,
+                          //       child: ListView.builder(
+                          //           itemCount: imageList1.length,
+                          //           scrollDirection: Axis.horizontal,
+                          //           itemBuilder: (BuildContext context,
+                          //               int pos) {
+                          //             return Row(
+                          //               children: [
+                          //
+                          //                 Stack(
+                          //                   children: [
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       decoration: BoxDecoration(
+                          //                           borderRadius: BorderRadius
+                          //                               .circular(5),
+                          //                           image: DecorationImage(
+                          //                               fit: BoxFit.fill,
+                          //                               image: FileImage(
+                          //                                   File(imageList1[pos]
+                          //                                       .path)
+                          //                               )
+                          //                           )
+                          //
+                          //                       ),
+                          //                     ),
+                          //
+                          //
+                          //                     Container(
+                          //                       width: 65,
+                          //                       height: 65,
+                          //                       child: Align(
+                          //                         alignment: Alignment.topRight,
+                          //                         child: GestureDetector(
+                          //                           onTap: () {
+                          //                             imageList1.removeAt(pos);
+                          //                             setState(() {
+                          //
+                          //                             });
+                          //                           },
+                          //                           child: Icon(
+                          //                             Icons.delete,
+                          //                             color: Colors.red,
+                          //                           ),
+                          //                         ),
+                          //                       ),
+                          //                       padding: EdgeInsets.only(
+                          //                           bottom: 10),
+                          //
+                          //                     )
+                          //
+                          //
+                          //                   ],
+                          //                 ),
+                          //
+                          //
+                          //                 SizedBox(width: 10),
+                          //
+                          //               ],
+                          //             );
+                          //           }
+                          //
+                          //
+                          //       ),
+                          //     )
+                          //
+                          //   ],
+                          // ) : Container(),
 
                         ],
                       ),
@@ -13414,69 +13421,70 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () async {
                             if (selectIndex51 != "-1") {
-                              if (selectIndex51 == "Yes") {
-                                if (imageList1.isNotEmpty) {
-                                  final connectivityResult3 = await (Connectivity()
-                                      .checkConnectivity());
-                                  if (connectivityResult3 ==
-                                      ConnectivityResult.none) {
-                                    SharedPreferences prefs = await SharedPreferences
-                                        .getInstance();
-                                    List<String> imagePaths = [];
-                                    String? lucData = await prefs.getString(
-                                        "Others") ?? "";
-                                    List<dynamic>? lucListDynamic = [];
-                                    if (lucData != "") {
-                                      lucListDynamic =
-                                          jsonDecode(lucData.toString());
-                                    }
-
-                                    for (int i = 0; i <
-                                        imageList1.length; i++) {
-                                      imagePaths.add(
-                                          imageList1[i].path.toString());
-                                    }
-
-                                    lucListDynamic!.add({
-                                      "loan_number": question1Controller.text
-                                          .toString(),
-                                      "partner_name": question2Controller.text
-                                          .toString(),
-                                      "branch_name": question3Controller.text
-                                          .toString(),
-                                      "files": imagePaths
-                                    });
-
-
-                                    prefs.setString(
-                                        'Others', jsonEncode(lucListDynamic));
-
-                                    questionIndex = questionIndex + 1;
-                                    setState(() {});
-                                  }
-                                  else {
-                                    getImageData(1);
-                                  }
-                                } else {
-                                  final snackBar = SnackBar(
-                                    content: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      // Adjust left and right margins
-                                      child: Text(
-                                        'Please select the image.',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 3),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBar);
-                                }
-                              } else {
-                                questionIndex = questionIndex + 1;
-                              }
+                              // if (selectIndex51 == "Yes") {
+                              //   if (imageList1.isNotEmpty) {
+                              //     final connectivityResult3 = await (Connectivity()
+                              //         .checkConnectivity());
+                              //     if (connectivityResult3 ==
+                              //         ConnectivityResult.none) {
+                              //       SharedPreferences prefs = await SharedPreferences
+                              //           .getInstance();
+                              //       List<String> imagePaths = [];
+                              //       String? lucData = await prefs.getString(
+                              //           "Others") ?? "";
+                              //       List<dynamic>? lucListDynamic = [];
+                              //       if (lucData != "") {
+                              //         lucListDynamic =
+                              //             jsonDecode(lucData.toString());
+                              //       }
+                              //
+                              //       for (int i = 0; i <
+                              //           imageList1.length; i++) {
+                              //         imagePaths.add(
+                              //             imageList1[i].path.toString());
+                              //       }
+                              //
+                              //       lucListDynamic!.add({
+                              //         "loan_number": question1Controller.text
+                              //             .toString(),
+                              //         "partner_name": question2Controller.text
+                              //             .toString(),
+                              //         "branch_name": question3Controller.text
+                              //             .toString(),
+                              //         "files": imagePaths
+                              //       });
+                              //
+                              //
+                              //       prefs.setString(
+                              //           'Others', jsonEncode(lucListDynamic));
+                              //
+                              //       questionIndex = questionIndex + 1;
+                              //       setState(() {});
+                              //     }
+                              //     else {
+                              //       getImageData(1);
+                              //     }
+                              //   } else {
+                              //     final snackBar = SnackBar(
+                              //       content: Container(
+                              //         margin: EdgeInsets.only(
+                              //             left: 20, right: 20),
+                              //         // Adjust left and right margins
+                              //         child: Text(
+                              //           'Please select the image.',
+                              //           textAlign: TextAlign.center,
+                              //         ),
+                              //       ),
+                              //       backgroundColor: Colors.red,
+                              //       duration: Duration(seconds: 3),
+                              //     );
+                              //     ScaffoldMessenger.of(context).showSnackBar(
+                              //         snackBar);
+                              //   }
+                              // } else {
+                              //   questionIndex = questionIndex + 1;
+                              // }
+                              questionIndex = questionIndex + 1;
                             } else {
                               final snackBar = SnackBar(
                                 content: Container(
@@ -13519,7 +13527,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                   ],
                 ),
               ),
-            ) :
+            ) ://Image upload option comment
 
             Container(
               //height: 110,

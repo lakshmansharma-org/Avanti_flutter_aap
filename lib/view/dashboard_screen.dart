@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qsurvey_flutter/view/feedback_form_screen.dart';
 import 'package:qsurvey_flutter/view/login_screen.dart';
+
 import 'package:qsurvey_flutter/view/upload_images_screen.dart';
+
+import 'package:qsurvey_flutter/view/today_count_details.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,6 +43,7 @@ class DashboardState extends State<DashboardScreen> {
   int totalCount = 0;
   String policyUrl = '';
   bool isLoading = false;
+  List<dynamic> basicDetails = [];
   Widget build(BuildContext context) {
     ToastContext().init(context);
     return Container(
@@ -193,7 +198,11 @@ class DashboardState extends State<DashboardScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print('hello');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TodayCountDetails(basicDetails)));
                   },
                   child: Row(
                     children: [
@@ -786,7 +795,8 @@ class DashboardState extends State<DashboardScreen> {
     todayCount = responseJSON["data"]["todayCount"];
     totalCount = responseJSON["data"]["totalCount"];
     policyUrl = responseJSON["policy"];
-    print(policyUrl);
+    basicDetails = responseJSON["data"]["basicDatails"];
+
     setState(() {});
 
   }
