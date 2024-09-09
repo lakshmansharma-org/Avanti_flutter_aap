@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qsurvey_flutter/view/feedback_form_screen.dart';
 import 'package:qsurvey_flutter/view/login_screen.dart';
+import 'package:qsurvey_flutter/view/total_count_details.dart';
 
 import 'package:qsurvey_flutter/view/upload_images_screen.dart';
 
@@ -44,6 +45,7 @@ class DashboardState extends State<DashboardScreen> {
   String policyUrl = '';
   bool isLoading = false;
   List<dynamic> basicDetails = [];
+  List<dynamic> totalBasicDetails = [];
   Widget build(BuildContext context) {
     ToastContext().init(context);
     return Container(
@@ -83,49 +85,6 @@ class DashboardState extends State<DashboardScreen> {
               children: [
 
                 SizedBox(height: 15),
-
-
-
-                Row(
-                  children: [
-
-                    Spacer(),
-
-                    InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen()));
-                      },
-                      child: Container(
-                        height: 48,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: AppTheme.buttonOrangeColor,
-                          borderRadius: BorderRadius.circular(5)
-                        ),
-
-
-                        child: Center(
-                          child:   Text('Upload Images',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ),
-
-
-
-
-                      ),
-                    ),
-                    SizedBox(width: 15),
-
-                  ],
-                ),
-
-
-
 
 
                 GestureDetector(
@@ -263,7 +222,11 @@ class DashboardState extends State<DashboardScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print('hello');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TotalCountDetails(totalBasicDetails)));
                   },
                   child: Row(
                     children: [
@@ -363,7 +326,34 @@ class DashboardState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40.0),
+
+                SizedBox(height: 15),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen()));
+                  },
+                  child: Container(
+                      margin:
+                      const EdgeInsets.symmetric(horizontal: 16),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: AppTheme.blueColor,
+                          borderRadius: BorderRadius.circular(6)),
+                      height: 50,
+                      child: const Center(
+                        child: Text('Upload Images',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white)),
+                      )),
+                ),
+
+
+
+
+                SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
                    checkAnswerStatus();
@@ -796,6 +786,7 @@ class DashboardState extends State<DashboardScreen> {
     totalCount = responseJSON["data"]["totalCount"];
     policyUrl = responseJSON["policy"];
     basicDetails = responseJSON["data"]["basicDatails"];
+    totalBasicDetails = responseJSON["data"]["totalDetails"];
 
     setState(() {});
 

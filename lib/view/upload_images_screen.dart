@@ -49,67 +49,194 @@ class DashboardState extends State<UploadImagesScreen> {
   List<String> searchBranchList=[];
   List<String> searchPartnerNameList=[];
   List<String> branchList = [
-    "MSM Microfinance",
-    "MSM Microfinance",
-    "Roots Reforms Initiative",
-    "Sahyog Development Services",
-     "MSM Microfinance",
-    "Samparna",
-    "Sub-K",
-    "MSM Microfinance",
-    "Hindusthan Microfinance Pvt Ltd",
-    "DCBS",
-    "Swabhimaan",
-    "Disha Micro Credit",
-    "Sahyog Development Services",
-    "Jagaran",
-    "SURE Pvt Ltd",
-    "Roots Reforms Initiative"
-    "Roots Reforms Initiative",
-    "SURE Pvt Ltd",
-   "Swabhimaan",
-    "Disha Micro Credit",
-    "MSM Microfinance",
-    "Swabhimaan",
-    "MSM Microfinance",
-    "Arriba",
-    "Disha Micro Credit",
-    "GUFSPL",
-    "Sub-K",
-    "NFPL",
-    "Sahyog Development Services",
-    "Jagaran",
-    "SURE Pvt Ltd",
-    "Hindusthan Microfinance Pvt Ltd"
-
+    "Abhayapuri",
+    "Agartala",
+    "Aizawl",
+    "Alanahalli",
+    "Alewa",
+    "Anand",
+    "Arwal",
+    "Ashthama",
+    "Baburhat",
+    "Badarpur",
+    "Bagalkot",
+    "Bah",
+    "Bahadrabad",
+    "Baihar",
+    "Banda",
+    "Bangarpete",
+    "Banmankhi",
+    "Barharwa",
+    "Barobisha",
+    "Bathnaha",
+    "Begun",
+    "Bennipatti",
+    "Bettiah ",
+    "Bharwara",
+    "Bijapur",
+    "Bilasipara",
+    "Chakiya",
+    "Chandia",
+    "Chandrakona",
+    "Chikkaballapura",
+    "Choti Sadri",
+    "Depalpur",
+    "Dhamdaha",
+    "Dhansura",
+    "Dharmanagar",
+    "Dhosa",
+    "Doiwala",
+    "Dumra",
+    "Ellenabad",
+    "Fakiragram",
+    "Farah",
+    "Fatehabad",
+    "Gadhpura",
+    "Gazipur",
+    "Gonda",
+    "Gossaigaon",
+    "Guda Gorji",
+    "Gundlupete",
+    "H D Kote",
+    "Hanuru",
+    "Harda",
+    "Hatta",
+    "Hinjilicut",
+    "Hiyatnagar",
+    "Hojai",
+    "Holenarasipura",
+    "Hunsur",
+    "Jagaluru",
+    "Jalalgarh",
+    "Jalaun",
+    "Jamakhandi",
+    "Jhabua",
+    "Jhansi",
+    "K R Nagar",
+    "K R Pet",
+    "Kakdwip",
+    "Kalaburagi",
+    "Kalyanpur",
+    "Kandi",
+    "Kandla",
+    "Kangeyam",
+    "Kannauj",
+    "Kareli",
+    "Karimganj",
+    "Karnailganj",
+    "Khalwa",
+    "Khedbrahma",
+    "Kiraoli",
+    "Kolasib",
+    "Kovilpatti",
+    "Kumarghat",
+    "Laksar ",
+    "Langting",
+    "Lingasur",
+    "Lohapur",
+    "Lucknow",
+    "Lunglei",
+    "Madhugiri",
+    "Maharajganj",
+    "Mahnar",
+    "Majhauli",
+    "Manamadurai",
+    "Manikpur",
+    "Mansa",
+    "Mauganj",
+    "Mauranipur",
+    "Mayna",
+    "Minapur",
+    "Modinagar",
+    "Muzaffarpur",
+    "Nagal",
+    "Nagerkoil",
+    "Nanpara",
+    "Natham",
+    "Nichlaul",
+    "Nuapada",
+    "Padampur",
+    "Padmapur",
+    "Pakribarawan",
+    "Palashi",
+    "Paliganj",
+    "Pandhana",
+    "Panumaria",
+    "Pasighat",
+    "Pehowa",
+    "Pharenda",
+    "Plassey",
+    "Polasara",
+    "Pollachi",
+    "Ponnamaravathy",
+    "Pudukkottai",
+    "Pundri",
+    "Pupari",
+    "Raipur",
+    "Rajgurunagar",
+    "Ramanathapuram",
+    "Rania",
+    "Rayagada",
+    "Rehra",
+    "Riga",
+    "Rishikesh",
+    "Rosera",
+    "Runni Saidpur",
+    "Sahibganj",
+    "Salar",
+    "Salem",
+    "Santhemaralli",
+    "Santirbazar",
+    "Saraiya",
+    "Sarsawa",
+    "Sathanur",
+    "Sedam",
+    "Shahapur",
+    "Shahzadpur",
+    "Sidhmukh",
+    "Sirmaur",
+    "Sohela",
+    "Srirangapattna",
+    "Thandla",
+    "Thiruvadanai",
+    "Thisayanvilai",
+    "Thuvarankurichi",
+    "Tumkur",
+    "Tusura",
+    "Udaipur",
+    "Udhwa",
+    "Umreth",
+    "Unnao",
+    "Vijay Nagar",
+    "Vijay Nagar",
+    "Virpur",
+    "Yelwala",
   ];
 
 
   List<String> partnerNemesList=[
 
-    "Virpur",
-    "Yelwala",
-    "Kalyanpur",
-    "Panumaria",
-    "Tusura",
-    "Kandi",
-    "Nagerkoil",
-    "Vijay Nagar",
-    "Palashi",
-    "Ellenabad",
-    "Laksar",
-    "Bennipatti",
-    "Dumra",
-    "Udhwa"
+    "Arriba",
+    "Avanti Lucknow Hub",
+    "Avanti Sandbox",
+    "Citta Plus Consultancy Private Limited",
+    "Cultivafin",
+    "DCBS",
+    "Disha Micro Credit",
+    "GUFSPL",
+    "Hindusthan Microfinance Pvt Ltd",
+    "Jagaran",
+    "Janakalyan",
+    "MSM Microfinance",
+    "NFPL",
+    "Roots Reforms Initiative",
+    "Sahyog Development Services",
+    "Samparna",
+    "Sub-K",
+    "SURE Pvt Ltd",
+    "Swabhimaan"
 
   ];
-
-
-
-
-
-
-
 
 
   String policyUrl = '';
@@ -143,12 +270,75 @@ class DashboardState extends State<UploadImagesScreen> {
               children: [
 
                 SizedBox(height: 25),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 13),
+                  child: Text("Partner Name*",
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF00407E)
+                      )),
+                ),
+                SizedBox(height: 5),
 
-                TextFieldProfileWidget(
-                    'Loan Number*',
-                    'Enter Loan Number',
-                    loanNumberController,
-                    null),
+
+
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 13),
+                  height: 36,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+
+
+                          searchPartnerNameList.length != 0 && partnerNameController.text.isNotEmpty?
+
+                          Text(
+                              selectedPartnerNameIndex == 9999
+                                  ? "Select Partner Name"
+                                  : searchPartnerNameList[selectedPartnerNameIndex],
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
+                              )):
+
+                          Text(
+                              selectedPartnerNameIndex == 9999
+                                  ? "Select Partner Name"
+                                  : partnerNemesList[selectedPartnerNameIndex],
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
+                              )),
+                          Spacer(),
+                          InkWell(
+                            onTap: () {
+                              selectPartnerNameBottomSheet(context);
+                            },
+                            child: Text("Select",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF00407E)
+                                )),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2),
+                        child: Divider(
+                          color: Color(0xFF8C8C8C),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
 
 
                 SizedBox(height: 17),
@@ -225,75 +415,12 @@ class DashboardState extends State<UploadImagesScreen> {
 
 
                 SizedBox(height: 17),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  child: Text("Partner Name*",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF00407E)
-                      )),
-                ),
-                SizedBox(height: 5),
 
-
-
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  height: 36,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-
-
-                          searchPartnerNameList.length != 0 && partnerNameController.text.isNotEmpty?
-
-                          Text(
-                              selectedPartnerNameIndex == 9999
-                                  ? "Select Partner Name"
-                                  : searchPartnerNameList[selectedPartnerNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
-                              )):
-
-                          Text(
-                              selectedPartnerNameIndex == 9999
-                                  ? "Select Partner Name"
-                                  : partnerNemesList[selectedPartnerNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
-                              )),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              selectPartnerNameBottomSheet(context);
-                            },
-                            child: Text("Select",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF00407E)
-                                )),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2),
-                        child: Divider(
-                          color: Color(0xFF8C8C8C),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
+                TextFieldProfileWidget(
+                    'Loan Number*',
+                    'Enter Loan Number',
+                    loanNumberController,
+                    null),
 
                 SizedBox(height: 15),
 
@@ -302,7 +429,7 @@ class DashboardState extends State<UploadImagesScreen> {
                   children: [
 
                     SizedBox(width: 15),
-                    Text("Upload Other Images*",
+                    Text("Upload LUC Images",
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -313,8 +440,9 @@ class DashboardState extends State<UploadImagesScreen> {
 
                     GestureDetector(
                         onTap: () async {
-                          final List<XFile> images = await picker.pickMultiImage();
-                          imageList = imageList + images;
+                          _openOtherPicker(context);
+                          // final List<XFile> images = await picker.pickMultiImage();
+                          // imageList = imageList + images;
                           setState(() {
 
                           });
@@ -406,7 +534,7 @@ class DashboardState extends State<UploadImagesScreen> {
                   children: [
 
                     SizedBox(width: 15),
-                    Text("Upload LUC Images*",
+                    Text("Upload Other Images",
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -417,8 +545,9 @@ class DashboardState extends State<UploadImagesScreen> {
 
                     GestureDetector(
                         onTap: () async {
-                          final List<XFile> images = await picker.pickMultiImage();
-                          lucImageList = lucImageList + images;
+                          _openLucPicker(context);
+                          // final List<XFile> images = await picker.pickMultiImage();
+                          // lucImageList = lucImageList + images;
                           setState(() {
 
                           });
@@ -472,7 +601,7 @@ class DashboardState extends State<UploadImagesScreen> {
                                     alignment: Alignment.topRight,
                                     child: GestureDetector(
                                       onTap: () {
-                                        imageList.removeAt(pos);
+                                        lucImageList.removeAt(pos);
                                         setState(() {
 
                                         });
@@ -529,9 +658,6 @@ class DashboardState extends State<UploadImagesScreen> {
                 ),
 
 
-
-
-
               ],
             ),
           ),
@@ -557,7 +683,25 @@ class DashboardState extends State<UploadImagesScreen> {
 
   validateValues(){
 
-    if (loanNumberController.text == "") {
+    if(selectedPartnerNameIndex==9999)
+    {
+      Toast.show("Please select a valid Partner Name !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+    else if (selectedBranchNameIndex==9999){
+
+      Toast.show("Please select a valid Branch Name !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+
+
+
+    }
+
+    else if (loanNumberController.text == "") {
       final snackBar = SnackBar(
         content: Container(
           margin: EdgeInsets.only(left: 20, right: 20),
@@ -590,40 +734,25 @@ class DashboardState extends State<UploadImagesScreen> {
           snackBar);
     }
 
-    else if (selectedBranchNameIndex==9999){
-
-      Toast.show("Please select a valid Branch Name !!",
-          duration: Toast.lengthLong,
-          gravity: Toast.bottom,
-          backgroundColor: Colors.red);
-
-
-
-    }
-    else if(selectedPartnerNameIndex==9999)
-    {
-      Toast.show("Please select a valid Partner Name !!",
+    else if (imageList.length==0 && lucImageList.length==0){
+      Toast.show("Please select a one image LUC or Other !!",
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.red);
     }
-    else if(imageList.length==0)
-      {
-        Toast.show("Please upload at least one image for others  !!",
-            duration: Toast.lengthLong,
-            gravity: Toast.bottom,
-            backgroundColor: Colors.red);
-      }
-    else if(lucImageList.length==0)
-      {
-        Toast.show("Please upload at least one image for LUC  !!",
-            duration: Toast.lengthLong,
-            gravity: Toast.bottom,
-            backgroundColor: Colors.red);
-      }
     else
       {
-        _uploadLUCImages();
+        if (imageList.length!=0 && lucImageList.length!=0){
+          _uploadOtherImages();
+
+        }else{
+          if(imageList.length!=0){
+            _uploadLUCImages();
+          }else{
+            _uploadOtherImages();
+          }
+        }
+
       }
 
 
@@ -656,8 +785,8 @@ class DashboardState extends State<UploadImagesScreen> {
 
 
     for (int i = 0; i < imageList.length; i++) {
-      String fileName = loanNumberController.text.toString() + "-" + branchName + "-" +
-          partnerName + "-" + "LUC" + "-" + i.toString() + "." +
+      String fileName = partnerName + "-" + branchName + "-" +
+          loanNumberController.text.toString() + "-" + "LUC" + "-" + i.toString() + "." +
           imageList[i].path
               .split('.')
               .last;
@@ -683,8 +812,7 @@ class DashboardState extends State<UploadImagesScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
-      _uploadOtherImages();
-
+      Navigator.pop(context);
     } else {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
@@ -719,8 +847,8 @@ class DashboardState extends State<UploadImagesScreen> {
     }
 
     for (int i = 0; i < lucImageList.length; i++) {
-      String fileName = loanNumberController.text.toString() + "-" + branchName+ "-" +
-          partnerName + "-" + "Other" + "-" + i.toString() + "." +
+      String fileName = partnerName + "-" + branchName+ "-" +
+          loanNumberController.text.toString() + "-" + "Other" + "-" + i.toString() + "." +
           lucImageList[i].path
               .split('.')
               .last;
@@ -746,8 +874,12 @@ class DashboardState extends State<UploadImagesScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
+      if (imageList.length !=0 && lucImageList !=0){
+        _uploadLUCImages();
+      }else{
+        Navigator.pop(context);
+      }
 
-      Navigator.pop(context);
 
 
     } else {
@@ -760,7 +892,128 @@ class DashboardState extends State<UploadImagesScreen> {
 
 
 
+  void _openOtherPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Image Source'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final XFile? pickedFile = await ImagePicker().pickImage(
+                        source: ImageSource.camera);
+                    if (pickedFile != null) {
+                      setState(() {
+                        imageList!.add(
+                            pickedFile); // Add picked image to the list
+                      });
+                    }
+                    final connectivityResult4 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult4 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
+                    }
 
+
+                    // Close the dialog
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Open Camera'),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final List<XFile> images = await picker.pickMultiImage();
+                    imageList = imageList + images;
+                    setState(() {
+
+                    });
+                    final connectivityResult5 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult5 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
+                    }
+                    // Close the dialog
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Open Gallery'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+  void _openLucPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Image Source'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final XFile? pickedFile = await ImagePicker().pickImage(
+                        source: ImageSource.camera);
+                    if (pickedFile != null) {
+                      setState(() {
+                        lucImageList!.add(
+                            pickedFile); // Add picked image to the list
+                      });
+                    }
+                    final connectivityResult4 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult4 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
+                    }
+
+
+                    // Close the dialog
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Open Camera'),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final List<XFile> images = await picker.pickMultiImage();
+                    lucImageList = lucImageList + images;
+                    setState(() {
+
+                    });
+                    final connectivityResult5 = await (Connectivity()
+                        .checkConnectivity());
+                    if (connectivityResult5 != ConnectivityResult.none) {
+                      //  _uploadFiles1();
+                    }
+                    // Close the dialog
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Open Gallery'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void selectScenarioBottomSheet(BuildContext context) {
     showModalBottomSheet(
