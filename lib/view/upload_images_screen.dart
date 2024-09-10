@@ -353,8 +353,6 @@ class DashboardState extends State<UploadImagesScreen> {
                 ),
                 SizedBox(height: 5),
 
-
-
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 13),
                   height: 36,
@@ -363,9 +361,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     children: [
                       Row(
                         children: [
-
-
-
                           searchBranchList.length != 0 && branchController.text.isNotEmpty?
 
                           Text(
@@ -377,7 +372,6 @@ class DashboardState extends State<UploadImagesScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: selectedBranchNameIndex == 9999?Colors.grey:Colors.black,
                               )):
-
                           Text(
                               selectedBranchNameIndex == 9999
                                   ? "Select Branch Name"
@@ -411,9 +405,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     ],
                   ),
                 ),
-
-
-
                 SizedBox(height: 17),
 
                 TextFieldProfileWidget(
@@ -423,7 +414,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     null),
 
                 SizedBox(height: 15),
-
 
                 Row(
                   children: [
@@ -451,8 +441,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     child: Icon(Icons.add_circle,color: Colors.blue,size: 30)),
 
                     SizedBox(width: 15)
-
-
                   ],
                 ),
 
@@ -488,7 +476,6 @@ class DashboardState extends State<UploadImagesScreen> {
                                   ),
                                 ),
 
-
                                 Container(
                                   width: 75,
                                   height: 75,
@@ -512,7 +499,6 @@ class DashboardState extends State<UploadImagesScreen> {
 
                                 )
 
-
                               ],
                             ),
 
@@ -529,10 +515,8 @@ class DashboardState extends State<UploadImagesScreen> {
 
                 SizedBox(height: 20),
 
-
                 Row(
                   children: [
-
                     SizedBox(width: 15),
                     Text("Upload Other Images",
                         style: TextStyle(
@@ -617,24 +601,17 @@ class DashboardState extends State<UploadImagesScreen> {
 
                                 )
 
-
                               ],
                             ),
-
-
                             SizedBox(width: 10),
 
                           ],
                         );
                       }
-
-
                   ),
                 ),
 
                 SizedBox(height: 32),
-
-
                 GestureDetector(
                   onTap: () {
 
@@ -657,7 +634,6 @@ class DashboardState extends State<UploadImagesScreen> {
                       )),
                 ),
 
-
               ],
             ),
           ),
@@ -678,9 +654,6 @@ class DashboardState extends State<UploadImagesScreen> {
     super.initState();
 
   }
-
-
-
   validateValues(){
 
     if(selectedPartnerNameIndex==9999)
@@ -696,8 +669,6 @@ class DashboardState extends State<UploadImagesScreen> {
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.red);
-
-
 
     }
 
@@ -766,7 +737,6 @@ class DashboardState extends State<UploadImagesScreen> {
       "Id": loanNumberController.text.toString(),
       "artifactType": "LUC",
     });
-
 
     String branchName="";
     String partnerName="";
@@ -1072,9 +1042,6 @@ class DashboardState extends State<UploadImagesScreen> {
                   ],
                 ),
 
-
-
-
                 Container(
                   margin: EdgeInsets.only(left: 10,right: 10,top: 10),
                   child: TextFormField(
@@ -1089,11 +1056,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     ),
                   ),
                 ),
-
-
-
-
-
 
                 Container(
                   height: 300,
@@ -1322,10 +1284,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     SizedBox(width: 4),
                   ],
                 ),
-
-
-
-
                 Container(
                   margin: EdgeInsets.only(left: 10,right: 10,top: 10),
                   child: TextFormField(
@@ -1340,12 +1298,6 @@ class DashboardState extends State<UploadImagesScreen> {
                     ),
                   ),
                 ),
-
-
-
-
-
-
                 Container(
                   height: 300,
                   child:

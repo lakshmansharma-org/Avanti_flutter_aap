@@ -384,12 +384,14 @@ class DashboardState extends State<DashboardScreen> {
   }
   void openUrl() async {
     String url = policyUrl;
-    if (await canLaunch(url)) {
-      await launch(url);
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
   }
+
   void initState() {
     // TODO: implement initState
     super.initState();
