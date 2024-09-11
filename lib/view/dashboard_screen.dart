@@ -350,9 +350,6 @@ class DashboardState extends State<DashboardScreen> {
                       )),
                 ),
 
-
-
-
                 SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
@@ -443,13 +440,9 @@ class DashboardState extends State<DashboardScreen> {
       {
         Navigator.of(context).pop();
 
-
         submitAnswers(data,lucList,otherList);
 
-
-
       }
-
 
       else
         {
@@ -546,9 +539,6 @@ class DashboardState extends State<DashboardScreen> {
        // getImageData(1,lucList,otherList);
       }
 
-
-
-
      // MyUtils.saveSharedPreferences("answer_list", "");
 
     } else {
@@ -557,9 +547,6 @@ class DashboardState extends State<DashboardScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.red);
     }
-
-
-
 
   }
   _uploadFiles(List<dynamic> lucList) async {
@@ -612,9 +599,6 @@ class DashboardState extends State<DashboardScreen> {
               backgroundColor: Colors.red);
         }
       }
-
-
-
 
   }
 
@@ -672,9 +656,6 @@ class DashboardState extends State<DashboardScreen> {
             backgroundColor: Colors.red);
       }
     }
-
-
-
 
   }
 
