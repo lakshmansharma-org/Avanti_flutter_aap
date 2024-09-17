@@ -327,30 +327,30 @@ class DashboardState extends State<DashboardScreen> {
                   ),
                 ),
 
-                SizedBox(height: 15),
+                // SizedBox(height: 15),
+                //
+                // GestureDetector(
+                //   onTap: () {
+                //     //Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen()));
+                //   },
+                //   child: Container(
+                //       margin:
+                //       const EdgeInsets.symmetric(horizontal: 16),
+                //       width: double.infinity,
+                //       decoration: BoxDecoration(
+                //           color: AppTheme.blueColor,
+                //           borderRadius: BorderRadius.circular(6)),
+                //       height: 50,
+                //       child: const Center(
+                //         child: Text('Upload Images',
+                //             style: TextStyle(
+                //                 fontSize: 14,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Colors.white)),
+                //       )),
+                // ),
 
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen()));
-                  },
-                  child: Container(
-                      margin:
-                      const EdgeInsets.symmetric(horizontal: 16),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: AppTheme.blueColor,
-                          borderRadius: BorderRadius.circular(6)),
-                      height: 50,
-                      child: const Center(
-                        child: Text('Upload Images',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white)),
-                      )),
-                ),
-
-                SizedBox(height: 20.0),
+                SizedBox(height: 40.0),
                 GestureDetector(
                   onTap: () {
                    checkAnswerStatus();
@@ -762,7 +762,6 @@ class DashboardState extends State<DashboardScreen> {
     await helper.get('avanti/getDetails'+'?id='+widget.id,context);
     var responseJSON = json.decode(response.body);
     if (responseJSON["code"] == 200){
-
       Navigator.of(context).pop();
     }
     todayCount = responseJSON["data"]["todayCount"];

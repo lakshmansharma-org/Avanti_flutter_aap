@@ -197,6 +197,7 @@ class TextFieldProfileWidget extends StatelessWidget
                   color: Colors.grey
                 )
             ),
+            enabled: false,
           ),
         ),
 

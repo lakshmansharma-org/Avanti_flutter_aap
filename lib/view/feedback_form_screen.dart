@@ -46,6 +46,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   List<XFile> imageList = [];
   List<XFile> pickedImage = [];
   List<XFile> imageList1 = [];
+  int selectedBranchNameIndex = 9999;
+  int selectedPartnerNameIndex = 9999;
+  StateSetter? branchSheet;
+  StateSetter? partnerNameSheet;
+  List<String> searchBranchList=[];
+  List<String> searchPartnerNameList=[];
+  var branchController = TextEditingController();
+  var partnerNameController = TextEditingController();
   var question1Controller = TextEditingController();
   var question2Controller = TextEditingController();
   var question3Controller = TextEditingController();
@@ -225,7 +233,195 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     {'name': 'Money Not Used'},
     {'name': 'LUC Not available within the area of coverage - 2km'},
   ];
+  List<String> branchList = [
+    "Abhayapuri",
+    "Agartala",
+    "Aizawl",
+    "Alanahalli",
+    "Alewa",
+    "Anand",
+    "Arwal",
+    "Ashthama",
+    "Baburhat",
+    "Badarpur",
+    "Bagalkot",
+    "Bah",
+    "Bahadrabad",
+    "Baihar",
+    "Banda",
+    "Bangarpete",
+    "Banmankhi",
+    "Barharwa",
+    "Barobisha",
+    "Bathnaha",
+    "Begun",
+    "Bennipatti",
+    "Bettiah ",
+    "Bharwara",
+    "Bijapur",
+    "Bilasipara",
+    "Chakiya",
+    "Chandia",
+    "Chandrakona",
+    "Chikkaballapura",
+    "Choti Sadri",
+    "Depalpur",
+    "Dhamdaha",
+    "Dhansura",
+    "Dharmanagar",
+    "Dhosa",
+    "Doiwala",
+    "Dumra",
+    "Ellenabad",
+    "Fakiragram",
+    "Farah",
+    "Fatehabad",
+    "Gadhpura",
+    "Gazipur",
+    "Gonda",
+    "Gossaigaon",
+    "Guda Gorji",
+    "Gundlupete",
+    "H D Kote",
+    "Hanuru",
+    "Harda",
+    "Hatta",
+    "Hinjilicut",
+    "Hiyatnagar",
+    "Hojai",
+    "Holenarasipura",
+    "Hunsur",
+    "Jagaluru",
+    "Jalalgarh",
+    "Jalaun",
+    "Jamakhandi",
+    "Jhabua",
+    "Jhansi",
+    "K R Nagar",
+    "K R Pet",
+    "Kakdwip",
+    "Kalaburagi",
+    "Kalyanpur",
+    "Kandi",
+    "Kandla",
+    "Kangeyam",
+    "Kannauj",
+    "Kareli",
+    "Karimganj",
+    "Karnailganj",
+    "Khalwa",
+    "Khedbrahma",
+    "Kiraoli",
+    "Kolasib",
+    "Kovilpatti",
+    "Kumarghat",
+    "Laksar ",
+    "Langting",
+    "Lingasur",
+    "Lohapur",
+    "Lucknow",
+    "Lunglei",
+    "Madhugiri",
+    "Maharajganj",
+    "Mahnar",
+    "Majhauli",
+    "Manamadurai",
+    "Manikpur",
+    "Mansa",
+    "Mauganj",
+    "Mauranipur",
+    "Mayna",
+    "Minapur",
+    "Modinagar",
+    "Muzaffarpur",
+    "Nagal",
+    "Nagerkoil",
+    "Nanpara",
+    "Natham",
+    "Nichlaul",
+    "Nuapada",
+    "Padampur",
+    "Padmapur",
+    "Pakribarawan",
+    "Palashi",
+    "Paliganj",
+    "Pandhana",
+    "Panumaria",
+    "Pasighat",
+    "Pehowa",
+    "Pharenda",
+    "Plassey",
+    "Polasara",
+    "Pollachi",
+    "Ponnamaravathy",
+    "Pudukkottai",
+    "Pundri",
+    "Pupari",
+    "Raipur",
+    "Rajgurunagar",
+    "Ramanathapuram",
+    "Rania",
+    "Rayagada",
+    "Rehra",
+    "Riga",
+    "Rishikesh",
+    "Rosera",
+    "Runni Saidpur",
+    "Sahibganj",
+    "Salar",
+    "Salem",
+    "Santhemaralli",
+    "Santirbazar",
+    "Saraiya",
+    "Sarsawa",
+    "Sathanur",
+    "Sedam",
+    "Shahapur",
+    "Shahzadpur",
+    "Sidhmukh",
+    "Sirmaur",
+    "Sohela",
+    "Srirangapattna",
+    "Thandla",
+    "Thiruvadanai",
+    "Thisayanvilai",
+    "Thuvarankurichi",
+    "Tumkur",
+    "Tusura",
+    "Udaipur",
+    "Udhwa",
+    "Umreth",
+    "Unnao",
+    "Vijay Nagar",
+    "Vijay Nagar",
+    "Virpur",
+    "Yelwala",
+  ];
 
+
+  List<String> partnerNemesList=[
+
+    "Arriba",
+    "Avanti Lucknow Hub",
+    "Avanti Sandbox",
+    "Citta Plus Consultancy Private Limited",
+    "Cultivafin",
+    "DCBS",
+    "Disha Micro Credit",
+    "GUFSPL",
+    "Hindusthan Microfinance Pvt Ltd",
+    "Jagaran",
+    "Janakalyan",
+    "MSM Microfinance",
+    "NFPL",
+    "Roots Reforms Initiative",
+    "Sahyog Development Services",
+    "Samparna",
+    "Sub-K",
+    "SURE Pvt Ltd",
+    "Swabhimaan"
+
+  ];
   List<String> originalList = [];
   List<int?> filteredList = [];
 
@@ -364,6 +560,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   Widget build(BuildContext context) {
+
     originalList =
         _controllerTab1.map((controller) => controller.text).toList();
     filteredList = originalList
@@ -570,102 +767,423 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               ),
             ) :
             questionIndex == 1 ?
-            TextFieldStringWidget(
-              controller: question2Controller,
-              onNextTap: () async {
-                if (question2Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Please enter a valid name',
-                        textAlign: TextAlign.center,
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
                       ),
                     ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
+                    SizedBox(height: 10.0),
+                    Container(
+                      margin: EdgeInsets.only(right: 16),
+                      height: 36,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
 
-                else {
-                  String? id = await MyUtils.getSharedPreferences("empId");
-                  print('id');
-                  if (id == 'QD2281') {
-                    FocusScope.of(context).unfocus();
-                    APIDialog.showAlertDialog(context, 'Please wait...');
-                    Future.delayed(Duration(seconds: 1), () {
-                      Navigator.of(context).pop();
-                      Toast.show("sucessfully !!",
-                          duration: Toast.lengthLong,
-                          gravity: Toast.bottom,
-                          backgroundColor: Colors.green);
-                    });
-                    Navigator.pop(context);
-                  } else {
-                    MyUtils.saveSharedPreferences(
-                        "partner_name", question2Controller.text.toString());
-                    questionIndex = questionIndex + 1;
-                  }
-                  setState(() {
 
-                  });
-                }
-              },
+                              searchPartnerNameList.length != 0 && partnerNameController.text.isNotEmpty?
 
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
+                              Text(
+                                  selectedPartnerNameIndex == 9999
+                                      ? "Select Partner Name"
+                                      : searchPartnerNameList[selectedPartnerNameIndex],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
+                                  )):
 
-                });
-              },
+                              Text(
+                                  selectedPartnerNameIndex == 9999
+                                      ? "Select Partner Name"
+                                      : partnerNemesList[selectedPartnerNameIndex],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
+                                  )),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  selectPartnerNameBottomSheet(context);
+                                },
+                                child: Text("Select",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF00407E)
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 2),
+                            child: Divider(
+                              color: Color(0xFF8C8C8C),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ), // TextField Container
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
 
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            if (selectedPartnerNameIndex == 9999) {
+                              final snackBar = SnackBar(
+                                content: Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  // Adjust left and right margins
+                                  child: Text(
+                                    'Please enter partner name',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
+                            }else {
+                              questionIndex = questionIndex + 1;
 
+                              setState(() {
+
+                              });
+                            }
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ) :
+            // TextFieldStringWidget(
+            //   controller: question2Controller,
+            //   onNextTap: () async {
+            //     if (question2Controller.text == "") {
+            //       final snackBar = SnackBar(
+            //         content: Container(
+            //           margin: EdgeInsets.only(left: 20, right: 20),
+            //           // Adjust left and right margins
+            //           child: Text(
+            //             'Please enter a valid name',
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //         backgroundColor: Colors.red,
+            //         duration: Duration(seconds: 3),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //     }
+            //
+            //     else {
+            //       String? id = await MyUtils.getSharedPreferences("empId");
+            //       print('id');
+            //       if (id == 'QD2281') {
+            //         FocusScope.of(context).unfocus();
+            //         APIDialog.showAlertDialog(context, 'Please wait...');
+            //         Future.delayed(Duration(seconds: 1), () {
+            //           Navigator.of(context).pop();
+            //           Toast.show("sucessfully !!",
+            //               duration: Toast.lengthLong,
+            //               gravity: Toast.bottom,
+            //               backgroundColor: Colors.green);
+            //         });
+            //         Navigator.pop(context);
+            //       } else {
+            //         MyUtils.saveSharedPreferences(
+            //             "partner_name", question2Controller.text.toString());
+            //         questionIndex = questionIndex + 1;
+            //       }
+            //       setState(() {
+            //
+            //       });
+            //     }
+            //   },
+            //
+            //   onPreviousTap: () {
+            //     questionIndex = questionIndex - 1;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //
+            //   questionMessage: questionList[questionIndex]['que_message'],
+            //   questionName: questionList[questionIndex]['question'],
+            //
+            // ) :
             questionIndex == 2 ?
-            TextFieldStringWidget(
-              controller: question3Controller,
-              onNextTap: () {
-                if (question3Controller.text == "") {
-                  final snackBar = SnackBar(
-                    content: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      // Adjust left and right margins
-                      child: Text(
-                        'Field is required',
-                        textAlign: TextAlign.center,
+            Container(
+              //height: 110,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+              decoration: BoxDecoration(
+                  color:
+                  AppTheme.buttonColor.withOpacity(0.15),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Container(
+                margin: EdgeInsets.only(left: 15, top: 15, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          questionList[questionIndex]['question'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: AppTheme.blackColor,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(questionList[questionIndex]['que_message'],
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.blackColor,
+                          fontWeight: FontWeight.normal
                       ),
                     ),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
+                    SizedBox(height: 10.0),
+                    Container(
+                      margin: EdgeInsets.only(right: 16),
+                      height: 36,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              searchBranchList.length != 0 && branchController.text.isNotEmpty?
 
-                else {
-                  MyUtils.saveSharedPreferences(
-                      "branch_name", question3Controller.text.toString());
-                  questionIndex = questionIndex + 1;
-                  setState(() {
+                              Text(
+                                  selectedBranchNameIndex == 9999
+                                      ? "Select Branch Name"
+                                      : searchBranchList[selectedBranchNameIndex],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: selectedBranchNameIndex == 9999?Colors.grey:Colors.black,
+                                  )):
+                              Text(
+                                  selectedBranchNameIndex == 9999
+                                      ? "Select Branch Name"
+                                      : branchList[selectedBranchNameIndex],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: selectedBranchNameIndex == 9999?Colors.grey:Colors.black,
+                                  )),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  selectScenarioBottomSheet(context);
+                                },
+                                child: Text("Select",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF00407E)
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 2),
+                            child: Divider(
+                              color: Color(0xFF8C8C8C),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ), // TextField Container
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            questionIndex = questionIndex - 1;
+                            setState(() {
 
-                  });
-                }
-              },
+                            });
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 0, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blueColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Previous',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        ),),
+                        Expanded(child: InkWell(
+                          onTap: () {
+                            if (selectedBranchNameIndex == 9999) {
+                              final snackBar = SnackBar(
+                                content: Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  // Adjust left and right margins
+                                  child: Text(
+                                    'Please enter branch name',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 3),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBar);
+                            }else {
+                              questionIndex = questionIndex + 1;
 
-              onPreviousTap: () {
-                questionIndex = questionIndex - 1;
-                setState(() {
+                              setState(() {
 
-                });
-              },
-
-              questionMessage: questionList[questionIndex]['que_message'],
-              questionName: questionList[questionIndex]['question'],
-
+                              });
+                            }
+                          },
+                          child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 8, right: 16, top: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonOrangeColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              height: 45,
+                              child: const Center(
+                                child: Text('Next',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white)),
+                              )),
+                        )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ) :
+            // TextFieldStringWidget(
+            //   controller: question3Controller,
+            //   onNextTap: () {
+            //     if (question3Controller.text == "") {
+            //       final snackBar = SnackBar(
+            //         content: Container(
+            //           margin: EdgeInsets.only(left: 20, right: 20),
+            //           // Adjust left and right margins
+            //           child: Text(
+            //             'Field is required',
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //         backgroundColor: Colors.red,
+            //         duration: Duration(seconds: 3),
+            //       );
+            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //     }
+            //
+            //     else {
+            //       MyUtils.saveSharedPreferences(
+            //           "branch_name", question3Controller.text.toString());
+            //       questionIndex = questionIndex + 1;
+            //       setState(() {
+            //
+            //       });
+            //     }
+            //   },
+            //
+            //   onPreviousTap: () {
+            //     questionIndex = questionIndex - 1;
+            //     setState(() {
+            //
+            //     });
+            //   },
+            //
+            //   questionMessage: questionList[questionIndex]['que_message'],
+            //   questionName: questionList[questionIndex]['question'],
+            //
+            // ) :
             questionIndex == 3 ?
 
             TextFieldStringWidget(
@@ -13666,11 +14184,14 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    storedData();
     checkInternet();
   }
 
-
+ storedData() async {
+   String? reviwerName = await MyUtils.getSharedPreferences("name");
+   question4Controller.text = reviwerName!;
+ }
   checkInternet() async {
     bool? loginStatusValue = await MyUtils.getSharedPreferencesBool(
         "loginStatus");
@@ -14521,6 +15042,458 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         }
 
         );
+      },
+    );
+  }
+  void selectScenarioBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, bottomSheetState) {
+          branchSheet=bottomSheetState;
+          return Container(
+            padding: EdgeInsets.all(10),
+            // height: 600,
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+              // Set the corner radius here
+              color: Colors.white, // Example color for the container
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 5),
+                Center(
+                  child: Container(
+                    height: 6,
+                    width: 62,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.10),
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    SizedBox(width: 10),
+                    Text("Select Branch Name",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        )),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child:
+
+                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
+
+                      /*Image.asset("assets/cross_ic.png",
+                            width: 38, height: 38)*/),
+                    SizedBox(width: 4),
+                  ],
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    controller: branchController,
+                    onChanged: (value) {
+                      _runFilter(value);
+                    },
+                    decoration: const InputDecoration(
+                      hintText: "Search",
+
+                    ),
+                  ),
+                ),
+
+                Container(
+                  height: 300,
+                  child:
+
+                  searchBranchList.length != 0 ||
+                      branchController.text.isNotEmpty?
+
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: searchBranchList.length,
+                      itemBuilder: (BuildContext context, int pos) {
+                        return InkWell(
+                          onTap: () {
+                            bottomSheetState(() {
+                              selectedBranchNameIndex = pos;
+                            });
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 57,
+                            color: selectedBranchNameIndex == pos
+                                ? Color(0xFFFF7C00).withOpacity(0.10)
+                                : Colors.white,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(searchBranchList[pos],
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }):
+
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: branchList.length,
+                      itemBuilder: (BuildContext context, int pos) {
+                        return InkWell(
+                          onTap: () {
+                            bottomSheetState(() {
+                              selectedBranchNameIndex = pos;
+                            });
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 57,
+                            color: selectedBranchNameIndex == pos
+                                ? Color(0xFFFF7C00).withOpacity(0.10)
+                                : Colors.white,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(branchList[pos],
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                SizedBox(height: 15),
+                Card(
+                  elevation: 4,
+                  shadowColor: Colors.grey,
+                  margin: EdgeInsets.symmetric(horizontal: 13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Container(
+                    height: 53,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white), // background
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppTheme.buttonOrangeColor), // fore
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ))),
+                      onPressed: () {
+                        if (selectedBranchNameIndex != 9999) {
+                          if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
+                          {
+                            question3Controller.text =searchBranchList[selectedBranchNameIndex].toString();
+                          }
+                          else
+                          {
+                            question3Controller.text=branchList[selectedBranchNameIndex].toString();
+                          }
+                          Navigator.pop(context);
+                          setState(() {});
+                        }
+                      },
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+          );
+        });
+      },
+    );
+  }
+  void _runFilter(String enteredKeyword) {
+    List<String> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = branchList;
+    } else {
+
+      results = branchList
+          .where((audit) => audit
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    // Refresh the UI
+    setState(() {
+      searchBranchList = results;
+    });
+    branchSheet!(() {
+    });
+  }
+
+
+  void _runFilter2(String enteredKeyword) {
+    List<String> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = partnerNemesList;
+    } else {
+
+      results = partnerNemesList
+          .where((audit) => audit
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    // Refresh the UI
+    setState(() {
+      searchPartnerNameList = results;
+    });
+
+
+    partnerNameSheet!(() {
+
+    });
+  }
+  void selectPartnerNameBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, bottomSheetState) {
+          partnerNameSheet=bottomSheetState;
+          return Container(
+            padding: EdgeInsets.all(10),
+            // height: 600,
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+              // Set the corner radius here
+              color: Colors.white, // Example color for the container
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 5),
+                Center(
+                  child: Container(
+                    height: 6,
+                    width: 62,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.10),
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    SizedBox(width: 10),
+                    Text("Select Partner Name",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        )),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child:
+
+                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
+
+                      /*Image.asset("assets/cross_ic.png",
+                            width: 38, height: 38)*/),
+                    SizedBox(width: 4),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    controller: partnerNameController,
+                    onChanged: (value) {
+                      _runFilter2(value);
+                    },
+                    decoration: const InputDecoration(
+                      hintText: "Search",
+
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 300,
+                  child:
+
+                  searchPartnerNameList.length != 0 ||
+                      partnerNameController.text.isNotEmpty?
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: searchPartnerNameList.length,
+                      itemBuilder: (BuildContext context, int pos) {
+                        return InkWell(
+                          onTap: () {
+                            bottomSheetState(() {
+                              selectedPartnerNameIndex = pos;
+                            });
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 57,
+                            color: selectedPartnerNameIndex == pos
+                                ? Color(0xFFFF7C00).withOpacity(0.10)
+                                : Colors.white,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(searchPartnerNameList[pos],
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }):
+
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: partnerNemesList.length,
+                      itemBuilder: (BuildContext context, int pos) {
+                        return InkWell(
+                          onTap: () {
+                            bottomSheetState(() {
+                              selectedPartnerNameIndex = pos;
+                            });
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 57,
+                            color: selectedPartnerNameIndex == pos
+                                ? Color(0xFFFF7C00).withOpacity(0.10)
+                                : Colors.white,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(partnerNemesList[pos],
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                SizedBox(height: 15),
+                Card(
+                  elevation: 4,
+                  shadowColor: Colors.grey,
+                  margin: EdgeInsets.symmetric(horizontal: 13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Container(
+                    height: 53,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white), // background
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppTheme.buttonOrangeColor), // fore
+                          shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ))),
+                      onPressed: () {
+                        if (selectedPartnerNameIndex != 9999) {
+                          if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
+                          {
+                            question2Controller.text =searchPartnerNameList[selectedPartnerNameIndex].toString();
+                          }
+                          else
+                          {
+                            question2Controller.text=partnerNemesList[selectedPartnerNameIndex].toString();
+                          }
+                          Navigator.pop(context);
+                          setState(() {});
+                        }
+                      },
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+          );
+        });
       },
     );
   }

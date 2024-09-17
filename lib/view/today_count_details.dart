@@ -5,6 +5,7 @@ import 'package:qsurvey_flutter/utils/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:qsurvey_flutter/view/upload_images_screen.dart';
 
 
 
@@ -164,11 +165,12 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
 
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 10),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+
 
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,13 +188,31 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                       color: Colors.grey,
                                     )),
 
-
                                   ],
+                                ),
+
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child:GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen(widget.basicDetails[pos]["Enter Partner Name"].toString(),widget.basicDetails[pos]["Location Name"].toString(),widget.basicDetails[pos]["Please enter loan number"].toString())));
+                                    },
+                                    child: Container(
+                                        width: 45,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.blueColor,
+                                            borderRadius: BorderRadius.circular(22.5)),
+                                        height: 45,
+                                        child: Image.asset(
+                                          'assets/image_up.png',
+                                          width: 15,
+                                          height: 15,
+                                        ),),
+                                  ),
                                 ),
 
                               ],
                             ),
-
 
                           ],
                         ),

@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -27,6 +28,11 @@ import '../widgets/textfield_string_widget.dart';
 
 class UploadImagesScreen extends StatefulWidget{
   @override
+  String partnerNameController;
+  String branchController;
+  String loanNumberController;
+  UploadImagesScreen(this.partnerNameController, this.branchController, this.loanNumberController);
+
   DashboardState createState()=> DashboardState();
 }
 
@@ -42,207 +48,14 @@ class DashboardState extends State<UploadImagesScreen> {
   int totalCount = 0;
   final ImagePicker picker = ImagePicker();
 
-  int selectedBranchNameIndex = 9999;
-  int selectedPartnerNameIndex = 9999;
-  StateSetter? branchSheet;
-  StateSetter? partnerNameSheet;
-  List<String> searchBranchList=[];
-  List<String> searchPartnerNameList=[];
-  List<String> branchList = [
-    "Abhayapuri",
-    "Agartala",
-    "Aizawl",
-    "Alanahalli",
-    "Alewa",
-    "Anand",
-    "Arwal",
-    "Ashthama",
-    "Baburhat",
-    "Badarpur",
-    "Bagalkot",
-    "Bah",
-    "Bahadrabad",
-    "Baihar",
-    "Banda",
-    "Bangarpete",
-    "Banmankhi",
-    "Barharwa",
-    "Barobisha",
-    "Bathnaha",
-    "Begun",
-    "Bennipatti",
-    "Bettiah ",
-    "Bharwara",
-    "Bijapur",
-    "Bilasipara",
-    "Chakiya",
-    "Chandia",
-    "Chandrakona",
-    "Chikkaballapura",
-    "Choti Sadri",
-    "Depalpur",
-    "Dhamdaha",
-    "Dhansura",
-    "Dharmanagar",
-    "Dhosa",
-    "Doiwala",
-    "Dumra",
-    "Ellenabad",
-    "Fakiragram",
-    "Farah",
-    "Fatehabad",
-    "Gadhpura",
-    "Gazipur",
-    "Gonda",
-    "Gossaigaon",
-    "Guda Gorji",
-    "Gundlupete",
-    "H D Kote",
-    "Hanuru",
-    "Harda",
-    "Hatta",
-    "Hinjilicut",
-    "Hiyatnagar",
-    "Hojai",
-    "Holenarasipura",
-    "Hunsur",
-    "Jagaluru",
-    "Jalalgarh",
-    "Jalaun",
-    "Jamakhandi",
-    "Jhabua",
-    "Jhansi",
-    "K R Nagar",
-    "K R Pet",
-    "Kakdwip",
-    "Kalaburagi",
-    "Kalyanpur",
-    "Kandi",
-    "Kandla",
-    "Kangeyam",
-    "Kannauj",
-    "Kareli",
-    "Karimganj",
-    "Karnailganj",
-    "Khalwa",
-    "Khedbrahma",
-    "Kiraoli",
-    "Kolasib",
-    "Kovilpatti",
-    "Kumarghat",
-    "Laksar ",
-    "Langting",
-    "Lingasur",
-    "Lohapur",
-    "Lucknow",
-    "Lunglei",
-    "Madhugiri",
-    "Maharajganj",
-    "Mahnar",
-    "Majhauli",
-    "Manamadurai",
-    "Manikpur",
-    "Mansa",
-    "Mauganj",
-    "Mauranipur",
-    "Mayna",
-    "Minapur",
-    "Modinagar",
-    "Muzaffarpur",
-    "Nagal",
-    "Nagerkoil",
-    "Nanpara",
-    "Natham",
-    "Nichlaul",
-    "Nuapada",
-    "Padampur",
-    "Padmapur",
-    "Pakribarawan",
-    "Palashi",
-    "Paliganj",
-    "Pandhana",
-    "Panumaria",
-    "Pasighat",
-    "Pehowa",
-    "Pharenda",
-    "Plassey",
-    "Polasara",
-    "Pollachi",
-    "Ponnamaravathy",
-    "Pudukkottai",
-    "Pundri",
-    "Pupari",
-    "Raipur",
-    "Rajgurunagar",
-    "Ramanathapuram",
-    "Rania",
-    "Rayagada",
-    "Rehra",
-    "Riga",
-    "Rishikesh",
-    "Rosera",
-    "Runni Saidpur",
-    "Sahibganj",
-    "Salar",
-    "Salem",
-    "Santhemaralli",
-    "Santirbazar",
-    "Saraiya",
-    "Sarsawa",
-    "Sathanur",
-    "Sedam",
-    "Shahapur",
-    "Shahzadpur",
-    "Sidhmukh",
-    "Sirmaur",
-    "Sohela",
-    "Srirangapattna",
-    "Thandla",
-    "Thiruvadanai",
-    "Thisayanvilai",
-    "Thuvarankurichi",
-    "Tumkur",
-    "Tusura",
-    "Udaipur",
-    "Udhwa",
-    "Umreth",
-    "Unnao",
-    "Vijay Nagar",
-    "Vijay Nagar",
-    "Virpur",
-    "Yelwala",
-  ];
-
-
-  List<String> partnerNemesList=[
-
-    "Arriba",
-    "Avanti Lucknow Hub",
-    "Avanti Sandbox",
-    "Citta Plus Consultancy Private Limited",
-    "Cultivafin",
-    "DCBS",
-    "Disha Micro Credit",
-    "GUFSPL",
-    "Hindusthan Microfinance Pvt Ltd",
-    "Jagaran",
-    "Janakalyan",
-    "MSM Microfinance",
-    "NFPL",
-    "Roots Reforms Initiative",
-    "Sahyog Development Services",
-    "Samparna",
-    "Sub-K",
-    "SURE Pvt Ltd",
-    "Swabhimaan"
-
-  ];
-
 
   String policyUrl = '';
   bool isLoading = false;
   Widget build(BuildContext context) {
     ToastContext().init(context);
+    loanNumberController.text = widget.loanNumberController;
+    partnerNameController.text = widget.partnerNameController;
+    branchController.text = widget.branchController;
     return Container(
       color: AppTheme.blueColor,
       child: SafeArea(
@@ -270,145 +83,21 @@ class DashboardState extends State<UploadImagesScreen> {
               children: [
 
                 SizedBox(height: 25),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  child: Text("Partner Name*",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF00407E)
-                      )),
-                ),
-                SizedBox(height: 5),
-
-
-
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  height: 36,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-
-
-                          searchPartnerNameList.length != 0 && partnerNameController.text.isNotEmpty?
-
-                          Text(
-                              selectedPartnerNameIndex == 9999
-                                  ? "Select Partner Name"
-                                  : searchPartnerNameList[selectedPartnerNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
-                              )):
-
-                          Text(
-                              selectedPartnerNameIndex == 9999
-                                  ? "Select Partner Name"
-                                  : partnerNemesList[selectedPartnerNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedPartnerNameIndex == 9999?Colors.grey:Colors.black,
-                              )),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              selectPartnerNameBottomSheet(context);
-                            },
-                            child: Text("Select",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF00407E)
-                                )),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2),
-                        child: Divider(
-                          color: Color(0xFF8C8C8C),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-
-
-                SizedBox(height: 17),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  child: Text("Branch Name*",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF00407E)
-                      )),
-                ),
-                SizedBox(height: 5),
-
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  height: 36,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          searchBranchList.length != 0 && branchController.text.isNotEmpty?
-
-                          Text(
-                              selectedBranchNameIndex == 9999
-                                  ? "Select Branch Name"
-                                  : searchBranchList[selectedBranchNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedBranchNameIndex == 9999?Colors.grey:Colors.black,
-                              )):
-                          Text(
-                              selectedBranchNameIndex == 9999
-                                  ? "Select Branch Name"
-                                  : branchList[selectedBranchNameIndex],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectedBranchNameIndex == 9999?Colors.grey:Colors.black,
-                              )),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              selectScenarioBottomSheet(context);
-                            },
-                            child: Text("Select",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF00407E)
-                                )),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2),
-                        child: Divider(
-                          color: Color(0xFF8C8C8C),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 17),
 
                 TextFieldProfileWidget(
-                    'Loan Number*',
+                    'Partner name',
+                    'Enter partner name',
+                    partnerNameController,
+                    null),
+                SizedBox(height: 25),
+                TextFieldProfileWidget(
+                    'Branch Name',
+                    'Enter branch name',
+                    branchController,
+                    null),
+                SizedBox(height: 25),
+                TextFieldProfileWidget(
+                    'Loan Number',
                     'Enter Loan Number',
                     loanNumberController,
                     null),
@@ -502,7 +191,6 @@ class DashboardState extends State<UploadImagesScreen> {
                               ],
                             ),
 
-
                             SizedBox(width: 10),
 
                           ],
@@ -540,7 +228,6 @@ class DashboardState extends State<UploadImagesScreen> {
                         child: Icon(Icons.add_circle,color: Colors.blue,size: 30)),
 
                     SizedBox(width: 15)
-
 
                   ],
                 ),
@@ -656,14 +343,14 @@ class DashboardState extends State<UploadImagesScreen> {
   }
   validateValues(){
 
-    if(selectedPartnerNameIndex==9999)
+    if(partnerNameController.text=="")
     {
       Toast.show("Please select a valid Partner Name !!",
           duration: Toast.lengthLong,
           gravity: Toast.bottom,
           backgroundColor: Colors.red);
     }
-    else if (selectedBranchNameIndex==9999){
+    else if (branchController.text==""){
 
       Toast.show("Please select a valid Branch Name !!",
           duration: Toast.lengthLong,
@@ -671,38 +358,11 @@ class DashboardState extends State<UploadImagesScreen> {
           backgroundColor: Colors.red);
 
     }
-
     else if (loanNumberController.text == "") {
-      final snackBar = SnackBar(
-        content: Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
-          // Adjust left and right margins
-          child: Text(
-            'Please enter loan number',
-            textAlign: TextAlign.center,
-          ),
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-          snackBar);
-    } else if (loanNumberController.text.length < 12 ||
-        loanNumberController.text.length > 14) {
-      final snackBar = SnackBar(
-        content: Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
-          // Adjust left and right margins
-          child: Text(
-            'Please enter valid loan number',
-            textAlign: TextAlign.center,
-          ),
-        ),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-          snackBar);
+      Toast.show("Please select a valid loan number !!",
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
     }
 
     else if (imageList.length==0 && lucImageList.length==0){
@@ -725,8 +385,6 @@ class DashboardState extends State<UploadImagesScreen> {
         }
 
       }
-
-
   }
 
   _uploadLUCImages() async {
@@ -738,21 +396,8 @@ class DashboardState extends State<UploadImagesScreen> {
       "artifactType": "LUC",
     });
 
-    String branchName="";
-    String partnerName="";
-    if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
-      {
-        branchName=searchBranchList[selectedBranchNameIndex].toString();
-        partnerName=searchPartnerNameList[selectedPartnerNameIndex].toString();
-      }
-    else
-      {
-
-        branchName=branchList[selectedBranchNameIndex].toString();
-        partnerName=partnerNemesList[selectedPartnerNameIndex].toString();
-      }
-
-
+    String branchName= branchController.text;
+    String partnerName=partnerNameController.text;
 
     for (int i = 0; i < imageList.length; i++) {
       String fileName = partnerName + "-" + branchName + "-" +
@@ -802,19 +447,9 @@ class DashboardState extends State<UploadImagesScreen> {
     });
 
 
-    String branchName="";
-    String partnerName="";
-    if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
-    {
-      branchName=searchBranchList[selectedBranchNameIndex].toString();
-      partnerName=searchPartnerNameList[selectedPartnerNameIndex].toString();
-    }
-    else
-    {
+    String branchName=branchController.text;
+    String partnerName=partnerNameController.text;
 
-      branchName=branchList[selectedBranchNameIndex].toString();
-      partnerName=partnerNemesList[selectedPartnerNameIndex].toString();
-    }
 
     for (int i = 0; i < lucImageList.length; i++) {
       String fileName = partnerName + "-" + branchName+ "-" +
@@ -985,441 +620,4 @@ class DashboardState extends State<UploadImagesScreen> {
     );
   }
 
-  void selectScenarioBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, bottomSheetState) {
-          branchSheet=bottomSheetState;
-          return Container(
-            padding: EdgeInsets.all(10),
-            // height: 600,
-
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-              // Set the corner radius here
-              color: Colors.white, // Example color for the container
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 5),
-                Center(
-                  child: Container(
-                    height: 6,
-                    width: 62,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.10),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Text("Select Branch Name",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                        )),
-                    Spacer(),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child:
-
-                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
-
-                      /*Image.asset("assets/cross_ic.png",
-                            width: 38, height: 38)*/),
-                    SizedBox(width: 4),
-                  ],
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(left: 10,right: 10,top: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: branchController,
-                    onChanged: (value) {
-                      _runFilter(value);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Search",
-
-                    ),
-                  ),
-                ),
-
-                Container(
-                  height: 300,
-                  child:
-
-                  searchBranchList.length != 0 ||
-                      branchController.text.isNotEmpty?
-
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: searchBranchList.length,
-                      itemBuilder: (BuildContext context, int pos) {
-                        return InkWell(
-                          onTap: () {
-                            bottomSheetState(() {
-                              selectedBranchNameIndex = pos;
-                            });
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 57,
-                            color: selectedBranchNameIndex == pos
-                                ? Color(0xFFFF7C00).withOpacity(0.10)
-                                : Colors.white,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
-                                    child: Text(searchBranchList[pos],
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }):
-
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: branchList.length,
-                      itemBuilder: (BuildContext context, int pos) {
-                        return InkWell(
-                          onTap: () {
-                            bottomSheetState(() {
-                              selectedBranchNameIndex = pos;
-                            });
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 57,
-                            color: selectedBranchNameIndex == pos
-                                ? Color(0xFFFF7C00).withOpacity(0.10)
-                                : Colors.white,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
-                                    child: Text(branchList[pos],
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                SizedBox(height: 15),
-                Card(
-                  elevation: 4,
-                  shadowColor: Colors.grey,
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white), // background
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppTheme.buttonOrangeColor), // fore
-                          shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ))),
-                      onPressed: () {
-                        if (selectedBranchNameIndex != 9999) {
-                          Navigator.pop(context);
-                          setState(() {});
-                        }
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
-              ],
-            ),
-          );
-        });
-      },
-    );
-  }
-
-  void _runFilter(String enteredKeyword) {
-    List<String> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = branchList;
-    } else {
-
-      results = branchList
-          .where((audit) => audit
-          .toLowerCase()
-          .contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
-
-    // Refresh the UI
-    setState(() {
-      searchBranchList = results;
-    });
-    branchSheet!(() {
-    });
-  }
-
-
-  void _runFilter2(String enteredKeyword) {
-    List<String> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = partnerNemesList;
-    } else {
-
-      results = partnerNemesList
-          .where((audit) => audit
-          .toLowerCase()
-          .contains(enteredKeyword.toLowerCase()))
-          .toList();
-    }
-
-    // Refresh the UI
-    setState(() {
-      searchPartnerNameList = results;
-    });
-
-
-    partnerNameSheet!(() {
-
-    });
-  }
-  void selectPartnerNameBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, bottomSheetState) {
-          partnerNameSheet=bottomSheetState;
-          return Container(
-            padding: EdgeInsets.all(10),
-            // height: 600,
-
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-              // Set the corner radius here
-              color: Colors.white, // Example color for the container
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 5),
-                Center(
-                  child: Container(
-                    height: 6,
-                    width: 62,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.10),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Text("Select Partner Name",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                        )),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child:
-
-                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
-
-                      /*Image.asset("assets/cross_ic.png",
-                            width: 38, height: 38)*/),
-                    SizedBox(width: 4),
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10,right: 10,top: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: partnerNameController,
-                    onChanged: (value) {
-                      _runFilter2(value);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Search",
-
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 300,
-                  child:
-
-                  searchPartnerNameList.length != 0 ||
-                      partnerNameController.text.isNotEmpty?
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: searchPartnerNameList.length,
-                      itemBuilder: (BuildContext context, int pos) {
-                        return InkWell(
-                          onTap: () {
-                            bottomSheetState(() {
-                              selectedPartnerNameIndex = pos;
-                            });
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 57,
-                            color: selectedPartnerNameIndex == pos
-                                ? Color(0xFFFF7C00).withOpacity(0.10)
-                                : Colors.white,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
-                                    child: Text(searchPartnerNameList[pos],
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }):
-
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: partnerNemesList.length,
-                      itemBuilder: (BuildContext context, int pos) {
-                        return InkWell(
-                          onTap: () {
-                            bottomSheetState(() {
-                              selectedPartnerNameIndex = pos;
-                            });
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 57,
-                            color: selectedPartnerNameIndex == pos
-                                ? Color(0xFFFF7C00).withOpacity(0.10)
-                                : Colors.white,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
-                                    child: Text(partnerNemesList[pos],
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                SizedBox(height: 15),
-                Card(
-                  elevation: 4,
-                  shadowColor: Colors.grey,
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white), // background
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppTheme.buttonOrangeColor), // fore
-                          shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ))),
-                      onPressed: () {
-                        if (selectedPartnerNameIndex != 9999) {
-                          Navigator.pop(context);
-                          setState(() {});
-                        }
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
-              ],
-            ),
-          );
-        });
-      },
-    );
-  }
 }
