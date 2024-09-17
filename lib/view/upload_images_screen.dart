@@ -510,9 +510,15 @@ class DashboardState extends State<UploadImagesScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final XFile? pickedFile = await ImagePicker().pickImage(
+                        imageQuality: 50,
                         source: ImageSource.camera);
                     if (pickedFile != null) {
                       setState(() {
+
+                        print(pickedFile.length().toString());
+                        print("File length");
+
+
                         imageList!.add(
                             pickedFile); // Add picked image to the list
                       });
@@ -534,8 +540,12 @@ class DashboardState extends State<UploadImagesScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final List<XFile> images = await picker.pickMultiImage();
+                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 50);
                     imageList = imageList + images;
+
+                 /*   File file=File(imageList[0].path.toString());
+                    print(file.lengthSync().toString());
+                    print("Path is ");*/
                     setState(() {
 
                     });
@@ -571,6 +581,7 @@ class DashboardState extends State<UploadImagesScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final XFile? pickedFile = await ImagePicker().pickImage(
+                      imageQuality: 50,
                         source: ImageSource.camera);
                     if (pickedFile != null) {
                       setState(() {
@@ -595,7 +606,7 @@ class DashboardState extends State<UploadImagesScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final List<XFile> images = await picker.pickMultiImage();
+                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 50);
                     lucImageList = lucImageList + images;
                     setState(() {
 
