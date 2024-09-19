@@ -5,6 +5,7 @@ import 'package:qsurvey_flutter/utils/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:qsurvey_flutter/view/upload_images_screen.dart';
 
 
 
@@ -16,6 +17,7 @@ class TotalCountDetails extends StatefulWidget {
 
 class TotalCountDetailsState extends State<TotalCountDetails>{
 
+  String result = "";
   @override
   Widget build(BuildContext context) {
 
@@ -82,28 +84,24 @@ class TotalCountDetailsState extends State<TotalCountDetails>{
                           children: [
 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    Text('Loan Number:- ',style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF000000),
-                                    )),
-                                    SizedBox(height: 6),
-                                    Text(widget.totalBasicDetails[pos]["Please enter loan number"].toString(),style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                    )),
-
-
-                                  ],
+                                Text('Loan Number:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Text(widget.totalBasicDetails[pos]["Please enter loan number"].toString(),
+                                    style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
                                 ),
+                                  softWrap: true,
+                                ),
+
 
                               ],
                             ),
@@ -111,27 +109,26 @@ class TotalCountDetailsState extends State<TotalCountDetails>{
                             SizedBox(height: 20),
 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    Text('Partner Name:- ',style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF000000),
-                                    )),
-                                    SizedBox(height: 6),
-                                    Text(widget.totalBasicDetails[pos]["Enter Partner Name"].toString(),style: TextStyle(
+                                Text('Partner Name:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Expanded(
+                                  child: Text(
+                                    widget.totalBasicDetails[pos]["Enter Partner Name"].toString(),
+                                    style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.grey,
-                                    )),
-
-
-                                  ],
+                                    ),
+                                    softWrap: true,  // Ensures the text can wrap
+                                    overflow: TextOverflow.visible,  // Makes sure the text is not truncated
+                                  ),
                                 ),
 
                               ],
@@ -167,28 +164,50 @@ class TotalCountDetailsState extends State<TotalCountDetails>{
                             SizedBox(height: 20),
 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    Text('Location:- ',style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF000000),
-                                    )),
-                                    SizedBox(height: 6),
-                                    Text(widget.totalBasicDetails[pos]["Location Name"].toString(),style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                    )),
-
-
-                                  ],
+                                Text('Location:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Expanded(child: Text(widget.totalBasicDetails[pos]["Location Name"].toString(),style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
                                 ),
+                                  softWrap: true,  // Ensures the text can wrap
+                                  overflow: TextOverflow.visible,
+
+                                ),),
+
+                                widget.totalBasicDetails[pos]["isArtifactUploaded"] == false
+                                    ? Align(
+                                  alignment: Alignment.centerRight,
+                                  child:GestureDetector(
+                                    onTap: () async {
+                                      result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => UploadImagesScreen(widget.totalBasicDetails[pos]["Enter Partner Name"].toString(),widget.totalBasicDetails[pos]["Location Name"].toString(),widget.totalBasicDetails[pos]["Please enter loan number"].toString())),
+                                      );
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen(widget.totalBasicDetails[pos]["Enter Partner Name"].toString(),widget.totalBasicDetails[pos]["Location Name"].toString(),widget.totalBasicDetails[pos]["Please enter loan number"].toString())));
+                                    },
+                                    child: Container(
+                                      width: 45,
+                                      decoration: BoxDecoration(
+                                          color: AppTheme.blueColor,
+                                          borderRadius: BorderRadius.circular(22.5)),
+                                      height: 45,
+                                      child: Image.asset(
+                                        'assets/image_up.png',
+                                        width: 15,
+                                        height: 15,
+                                      ),),
+                                  ),
+                                ):Align(),
+
 
                               ],
                             ),
@@ -200,7 +219,6 @@ class TotalCountDetailsState extends State<TotalCountDetails>{
 
                     ),
                   ),
-
 
                 ],
               );

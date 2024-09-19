@@ -112,28 +112,26 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                             SizedBox(height: 20),
 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    Text('Partner Name:- ',style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF000000),
-                                    )),
-                                    SizedBox(height: 6),
-                                    Text(widget.basicDetails[pos]["Enter Partner Name"].toString(),style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                    )),
-
-
-                                  ],
+                                Text('Partner Name:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Expanded(child: Text(widget.basicDetails[pos]["Enter Partner Name"].toString(),style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
                                 ),
+                                  softWrap: true,  // Ensures the text can wrap
+                                  overflow: TextOverflow.visible,
+
+                                ),)
+
+
 
                               ],
                             ),
@@ -166,30 +164,27 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                               ],
                             ),
                             SizedBox(height: 10),
-
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    Text('Location:- ',style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF000000),
-                                    )),
-                                    SizedBox(height: 6),
-                                    Text(widget.basicDetails[pos]["Location Name"].toString(),style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                    )),
-
-                                  ],
+                                Text('Location:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Expanded(child: Text(widget.basicDetails[pos]["Location Name"].toString(),style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
                                 ),
+                                  softWrap: true,  // Ensures the text can wrap
+                                  overflow: TextOverflow.visible,
+                                ),
+
+                                ),
+                                widget.basicDetails[pos]["isArtifactUploaded"] == false?
 
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -198,21 +193,24 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen(widget.basicDetails[pos]["Enter Partner Name"].toString(),widget.basicDetails[pos]["Location Name"].toString(),widget.basicDetails[pos]["Please enter loan number"].toString())));
                                     },
                                     child: Container(
-                                        width: 45,
-                                        decoration: BoxDecoration(
-                                            color: AppTheme.blueColor,
-                                            borderRadius: BorderRadius.circular(22.5)),
-                                        height: 45,
-                                        child: Image.asset(
-                                          'assets/image_up.png',
-                                          width: 15,
-                                          height: 15,
-                                        ),),
+                                      width: 45,
+                                      decoration: BoxDecoration(
+                                          color: AppTheme.blueColor,
+                                          borderRadius: BorderRadius.circular(22.5)),
+                                      height: 45,
+                                      child: Image.asset(
+                                        'assets/image_up.png',
+                                        width: 15,
+                                        height: 15,
+                                      ),),
                                   ),
-                                ),
+                                ):Align(),
 
                               ],
                             ),
+
+
+
 
                           ],
                         ),

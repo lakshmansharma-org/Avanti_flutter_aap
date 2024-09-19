@@ -5303,6 +5303,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       children: [
                         Expanded(child: InkWell(
                           onTap: () {
+                            print(selectIndex14);
                             questionIndex = questionIndex - 1;
                             setState(() {
 
@@ -5326,6 +5327,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         ),),
                         Expanded(child: InkWell(
                           onTap: () {
+                            print(selectIndex14);
                             setState(() {
                               if (selectIndex14 != "-1") {
                                 if (selectIndex14 == "No") {
@@ -5490,8 +5492,6 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                         Expanded(child: InkWell(
                           onTap: () {
                             questionIndex = questionIndex - 1;
-
-
                             setState(() {
 
                             });
@@ -5537,6 +5537,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                         snackBar);
                                   }
                                 } else {
+                                  print(selectIndex15);
                                   questionIndex = questionIndex + 1;
                                 }
                               } else {
@@ -5671,7 +5672,13 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       children: [
                         Expanded(child: InkWell(
                           onTap: () {
-                            questionIndex = questionIndex - 1;
+                            if (selectIndex14 == "No"){
+                              questionIndex = questionIndex - 2;
+                            }else{
+                              questionIndex = questionIndex - 1;
+                            }
+                            print(selectIndex15);
+
                             setState(() {
 
                             });
@@ -14252,6 +14259,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     FocusScope.of(context).unfocus();
     APIDialog.showAlertDialog(context, 'Please wait...');
     final connectivityResult = await (Connectivity().checkConnectivity());
+    String selectNewData = "";
+    if (selectIndex14 == "No"){
+       selectNewData = " ";
+    }else{
+       selectNewData = selectIndex15;
+    }
 
     String slectIndics2 = {
       selectedIndices2,
@@ -14351,6 +14364,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     }
 
 
+
     String? empId = await MyUtils.getSharedPreferences("empId");
     String? name = await MyUtils.getSharedPreferences("name");
 
@@ -14414,7 +14428,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     answers.add({'_id': questionList[30]['_id'], 'answer': selectIndex12});
     answers.add({'_id': questionList[31]['_id'], 'answer': selectIndex13});
     answers.add({'_id': questionList[32]['_id'], 'answer': selectIndex14});
-    answers.add({'_id': questionList[33]['_id'], 'answer': selectIndex15});
+    answers.add({'_id': questionList[33]['_id'], 'answer': selectNewData});
     answers.add({'_id': questionList[34]['_id'], 'answer': selectIndex16});
     answers.add({'_id': questionList[35]['_id'], 'answer': selectIndex17});
     answers.add({'_id': questionList[36]['_id'], 'answer': selectIndexsNew3});
