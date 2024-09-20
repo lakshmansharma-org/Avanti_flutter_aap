@@ -1188,6 +1188,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
             TextFieldStringWidget(
               controller: question4Controller,
+              enabled: false,
               onNextTap: () {
                 if (question4Controller.text == "") {
                   final snackBar = SnackBar(
@@ -1271,6 +1272,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
             TextFieldStringWidget(
               controller: question5Controller,
+              enabled: true,
               onNextTap: () {
                 if (question5Controller.text == "") {
                   final snackBar = SnackBar(

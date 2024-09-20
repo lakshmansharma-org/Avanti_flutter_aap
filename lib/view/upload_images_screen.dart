@@ -446,7 +446,6 @@ class DashboardState extends State<UploadImagesScreen> {
       "artifactType": "Other",
     });
 
-
     String branchName=branchController.text;
     String partnerName=partnerNameController.text;
 

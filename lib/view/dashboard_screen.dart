@@ -354,6 +354,7 @@ class DashboardState extends State<DashboardScreen> {
                 GestureDetector(
                   onTap: () {
                    checkAnswerStatus();
+                   getData();
                   },
                   child: Container(
                       margin:
@@ -364,7 +365,7 @@ class DashboardState extends State<DashboardScreen> {
                           borderRadius: BorderRadius.circular(6)),
                       height: 50,
                       child: const Center(
-                        child: Text('Syn Now',
+                        child: Text('Sync Now',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

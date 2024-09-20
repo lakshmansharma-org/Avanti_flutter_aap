@@ -14,7 +14,8 @@ class TextFieldStringWidget extends StatelessWidget
   var controller;
   Function onNextTap;
   Function onPreviousTap;
-  TextFieldStringWidget({required this.questionName,this.controller,required this.questionMessage,required this.onNextTap,required this.onPreviousTap});
+  final bool enabled;
+  TextFieldStringWidget({required this.questionName,this.controller,required this.questionMessage,required this.onNextTap,required this.onPreviousTap,required this.enabled});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,6 +60,7 @@ class TextFieldStringWidget extends StatelessWidget
                     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')), // Allow only alphabetic characters
                   ],
                   controller: controller,
+                  enabled: enabled,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,
                     labelText: 'Enter here',
