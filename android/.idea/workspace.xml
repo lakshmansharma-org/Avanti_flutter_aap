@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b05452c-b436-4a06-83d6-45bce42b8e6f" name="Changes" comment="">
+    <list default="true" id="e90f9893-24cd-420c-8915-53bef3096df7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/app-release.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app-release.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/view/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/dashboard_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/view/feedback_form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/feedback_form_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/view/today_count_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/view/today_count_details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="2lK5oDboiHpGLM3bekfviZMinkn" />
+  <component name="ProjectId" id="2mTDZSxDJpV3I4o3HcVI2qviQEP" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -41,8 +40,6 @@
   "keyToString": {
     "BundleExportedModule": "android.app",
     "ExportBundle.BundlePathForandroid.app": "/Users/lakshmansharma/iOS Project/Avanti_flutter_aap/android/app",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
@@ -117,11 +114,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0b05452c-b436-4a06-83d6-45bce42b8e6f" name="Changes" comment="" />
-      <created>1724916100590</created>
+      <changelist id="e90f9893-24cd-420c-8915-53bef3096df7" name="Changes" comment="" />
+      <created>1727091732677</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1724916100590</updated>
+      <updated>1727091732677</updated>
     </task>
     <servers />
   </component>

@@ -15148,6 +15148,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             bottomSheetState(() {
                               selectedBranchNameIndex = pos;
+                              if (selectedBranchNameIndex != 9999) {
+                                if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
+                                {
+                                  question3Controller.text =searchBranchList[selectedBranchNameIndex].toString();
+                                }
+                                else
+                                {
+                                  question3Controller.text=branchList[selectedBranchNameIndex].toString();
+                                }
+                                Navigator.pop(context);
+                                setState(() {});
+                              }
                             });
                             setState(() {});
                           },
@@ -15183,6 +15195,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             bottomSheetState(() {
                               selectedBranchNameIndex = pos;
+                              if (selectedBranchNameIndex != 9999) {
+                                if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
+                                {
+                                  question3Controller.text =searchBranchList[selectedBranchNameIndex].toString();
+                                }
+                                else
+                                {
+                                  question3Controller.text=branchList[selectedBranchNameIndex].toString();
+                                }
+                                Navigator.pop(context);
+                                setState(() {});
+                              }
                             });
                             setState(() {});
                           },
@@ -15211,54 +15235,54 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       }),
                 ),
                 SizedBox(height: 15),
-                Card(
-                  elevation: 4,
-                  shadowColor: Colors.grey,
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white), // background
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppTheme.buttonOrangeColor), // fore
-                          shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ))),
-                      onPressed: () {
-                        if (selectedBranchNameIndex != 9999) {
-                          if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
-                          {
-                            question3Controller.text =searchBranchList[selectedBranchNameIndex].toString();
-                          }
-                          else
-                          {
-                            question3Controller.text=branchList[selectedBranchNameIndex].toString();
-                          }
-                          Navigator.pop(context);
-                          setState(() {});
-                        }
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
+                // Card(
+                //   elevation: 4,
+                //   shadowColor: Colors.grey,
+                //   margin: EdgeInsets.symmetric(horizontal: 13),
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   child: Container(
+                //     height: 53,
+                //     width: double.infinity,
+                //     child: ElevatedButton(
+                //       style: ButtonStyle(
+                //           foregroundColor: MaterialStateProperty.all<Color>(
+                //               Colors.white), // background
+                //           backgroundColor: MaterialStateProperty.all<Color>(
+                //               AppTheme.buttonOrangeColor), // fore
+                //           shape:
+                //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                //               RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(4.0),
+                //               ))),
+                //       onPressed: () {
+                //         if (selectedBranchNameIndex != 9999) {
+                //           if(searchBranchList.length != 0 ||branchController.text.isNotEmpty)
+                //           {
+                //             question3Controller.text =searchBranchList[selectedBranchNameIndex].toString();
+                //           }
+                //           else
+                //           {
+                //             question3Controller.text=branchList[selectedBranchNameIndex].toString();
+                //           }
+                //           Navigator.pop(context);
+                //           setState(() {});
+                //         }
+                //       },
+                //       child: const Text(
+                //         'Save',
+                //         style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w400,
+                //           color: Colors.white,
+                //         ),
+                //         textAlign: TextAlign.center,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 15),
               ],
             ),
           );
@@ -15395,6 +15419,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             bottomSheetState(() {
                               selectedPartnerNameIndex = pos;
+                              if (selectedPartnerNameIndex != 9999) {
+                                if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
+                                {
+                                  question2Controller.text =searchPartnerNameList[selectedPartnerNameIndex].toString();
+                                }
+                                else
+                                {
+                                  question2Controller.text=partnerNemesList[selectedPartnerNameIndex].toString();
+                                }
+                                Navigator.pop(context);
+                                setState(() {});
+                              }
                             });
                             setState(() {});
                           },
@@ -15430,6 +15466,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           onTap: () {
                             bottomSheetState(() {
                               selectedPartnerNameIndex = pos;
+                              if (selectedPartnerNameIndex != 9999) {
+                                if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
+                                {
+                                  question2Controller.text =searchPartnerNameList[selectedPartnerNameIndex].toString();
+                                }
+                                else
+                                {
+                                  question2Controller.text=partnerNemesList[selectedPartnerNameIndex].toString();
+                                }
+                                Navigator.pop(context);
+                                setState(() {});
+                              }
                             });
                             setState(() {});
                           },
@@ -15458,54 +15506,54 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                       }),
                 ),
                 SizedBox(height: 15),
-                Card(
-                  elevation: 4,
-                  shadowColor: Colors.grey,
-                  margin: EdgeInsets.symmetric(horizontal: 13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white), // background
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppTheme.buttonOrangeColor), // fore
-                          shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ))),
-                      onPressed: () {
-                        if (selectedPartnerNameIndex != 9999) {
-                          if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
-                          {
-                            question2Controller.text =searchPartnerNameList[selectedPartnerNameIndex].toString();
-                          }
-                          else
-                          {
-                            question2Controller.text=partnerNemesList[selectedPartnerNameIndex].toString();
-                          }
-                          Navigator.pop(context);
-                          setState(() {});
-                        }
-                      },
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
+                // Card(
+                //   elevation: 4,
+                //   shadowColor: Colors.grey,
+                //   margin: EdgeInsets.symmetric(horizontal: 13),
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   child: Container(
+                //     height: 53,
+                //     width: double.infinity,
+                //     child: ElevatedButton(
+                //       style: ButtonStyle(
+                //           foregroundColor: MaterialStateProperty.all<Color>(
+                //               Colors.white), // background
+                //           backgroundColor: MaterialStateProperty.all<Color>(
+                //               AppTheme.buttonOrangeColor), // fore
+                //           shape:
+                //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                //               RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(4.0),
+                //               ))),
+                //       onPressed: () {
+                //         if (selectedPartnerNameIndex != 9999) {
+                //           if(searchPartnerNameList.length != 0 ||partnerNameController.text.isNotEmpty)
+                //           {
+                //             question2Controller.text =searchPartnerNameList[selectedPartnerNameIndex].toString();
+                //           }
+                //           else
+                //           {
+                //             question2Controller.text=partnerNemesList[selectedPartnerNameIndex].toString();
+                //           }
+                //           Navigator.pop(context);
+                //           setState(() {});
+                //         }
+                //       },
+                //       child: const Text(
+                //         'Save',
+                //         style: TextStyle(
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w400,
+                //           color: Colors.white,
+                //         ),
+                //         textAlign: TextAlign.center,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 15),
               ],
             ),
           );
