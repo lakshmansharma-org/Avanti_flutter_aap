@@ -58,7 +58,7 @@ class DashboardState extends State<DashboardScreen> {
             title: Text(
               'Dashboard',
               style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.white
               ),
             ),

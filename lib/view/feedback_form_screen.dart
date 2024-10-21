@@ -29,6 +29,7 @@ class FeedbackFormScreen extends StatefulWidget {
   final bool showBack;
   List<dynamic> surveyDataList = [];
 
+
   FeedbackFormScreen(this.showBack, this.surveyDataList);
 
   @override
@@ -50,8 +51,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   int selectedPartnerNameIndex = 9999;
   StateSetter? branchSheet;
   StateSetter? partnerNameSheet;
-  List<String> searchBranchList=[];
-  List<String> searchPartnerNameList=[];
+  List<dynamic> searchBranchList=[];
+  List<dynamic> searchPartnerNameList=[];
   var branchController = TextEditingController();
   var partnerNameController = TextEditingController();
   var question1Controller = TextEditingController();
@@ -115,7 +116,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   var text = TextEditingController();
   List<dynamic> questionList = [];
   List<dynamic> option = [];
-
+  List<dynamic> partnerNemesList=[];
+  List<dynamic> branchList = [];
   //List<String> selectedIndices = [];
 
   Set<String> selectedIndices = {};
@@ -233,195 +235,10 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     {'name': 'Money Not Used'},
     {'name': 'LUC Not available within the area of coverage - 2km'},
   ];
-  List<String> branchList = [
-    "Abhayapuri",
-    "Agartala",
-    "Aizawl",
-    "Alanahalli",
-    "Alewa",
-    "Anand",
-    "Arwal",
-    "Ashthama",
-    "Baburhat",
-    "Badarpur",
-    "Bagalkot",
-    "Bah",
-    "Bahadrabad",
-    "Baihar",
-    "Banda",
-    "Bangarpete",
-    "Banmankhi",
-    "Barharwa",
-    "Barobisha",
-    "Bathnaha",
-    "Begun",
-    "Bennipatti",
-    "Bettiah ",
-    "Bharwara",
-    "Bijapur",
-    "Bilasipara",
-    "Chakiya",
-    "Chandia",
-    "Chandrakona",
-    "Chikkaballapura",
-    "Choti Sadri",
-    "Depalpur",
-    "Dhamdaha",
-    "Dhansura",
-    "Dharmanagar",
-    "Dhosa",
-    "Doiwala",
-    "Dumra",
-    "Ellenabad",
-    "Fakiragram",
-    "Farah",
-    "Fatehabad",
-    "Gadhpura",
-    "Gazipur",
-    "Gonda",
-    "Gossaigaon",
-    "Guda Gorji",
-    "Gundlupete",
-    "H D Kote",
-    "Hanuru",
-    "Harda",
-    "Hatta",
-    "Hinjilicut",
-    "Hiyatnagar",
-    "Hojai",
-    "Holenarasipura",
-    "Hunsur",
-    "Jagaluru",
-    "Jalalgarh",
-    "Jalaun",
-    "Jamakhandi",
-    "Jhabua",
-    "Jhansi",
-    "K R Nagar",
-    "K R Pet",
-    "Kakdwip",
-    "Kalaburagi",
-    "Kalyanpur",
-    "Kandi",
-    "Kandla",
-    "Kangeyam",
-    "Kannauj",
-    "Kareli",
-    "Karimganj",
-    "Karnailganj",
-    "Khalwa",
-    "Khedbrahma",
-    "Kiraoli",
-    "Kolasib",
-    "Kovilpatti",
-    "Kumarghat",
-    "Laksar ",
-    "Langting",
-    "Lingasur",
-    "Lohapur",
-    "Lucknow",
-    "Lunglei",
-    "Madhugiri",
-    "Maharajganj",
-    "Mahnar",
-    "Majhauli",
-    "Manamadurai",
-    "Manikpur",
-    "Mansa",
-    "Mauganj",
-    "Mauranipur",
-    "Mayna",
-    "Minapur",
-    "Modinagar",
-    "Muzaffarpur",
-    "Nagal",
-    "Nagerkoil",
-    "Nanpara",
-    "Natham",
-    "Nichlaul",
-    "Nuapada",
-    "Padampur",
-    "Padmapur",
-    "Pakribarawan",
-    "Palashi",
-    "Paliganj",
-    "Pandhana",
-    "Panumaria",
-    "Pasighat",
-    "Pehowa",
-    "Pharenda",
-    "Plassey",
-    "Polasara",
-    "Pollachi",
-    "Ponnamaravathy",
-    "Pudukkottai",
-    "Pundri",
-    "Pupari",
-    "Raipur",
-    "Rajgurunagar",
-    "Ramanathapuram",
-    "Rania",
-    "Rayagada",
-    "Rehra",
-    "Riga",
-    "Rishikesh",
-    "Rosera",
-    "Runni Saidpur",
-    "Sahibganj",
-    "Salar",
-    "Salem",
-    "Santhemaralli",
-    "Santirbazar",
-    "Saraiya",
-    "Sarsawa",
-    "Sathanur",
-    "Sedam",
-    "Shahapur",
-    "Shahzadpur",
-    "Sidhmukh",
-    "Sirmaur",
-    "Sohela",
-    "Srirangapattna",
-    "Thandla",
-    "Thiruvadanai",
-    "Thisayanvilai",
-    "Thuvarankurichi",
-    "Tumkur",
-    "Tusura",
-    "Udaipur",
-    "Udhwa",
-    "Umreth",
-    "Unnao",
-    "Vijay Nagar",
-    "Vijay Nagar",
-    "Virpur",
-    "Yelwala",
-  ];
 
 
-  List<String> partnerNemesList=[
 
-    "Arriba",
-    "Avanti Lucknow Hub",
-    "Avanti Sandbox",
-    "Citta Plus Consultancy Private Limited",
-    "Cultivafin",
-    "DCBS",
-    "Disha Micro Credit",
-    "GUFSPL",
-    "Hindusthan Microfinance Pvt Ltd",
-    "Jagaran",
-    "Janakalyan",
-    "MSM Microfinance",
-    "NFPL",
-    "Roots Reforms Initiative",
-    "Sahyog Development Services",
-    "Samparna",
-    "Sub-K",
-    "SURE Pvt Ltd",
-    "Swabhimaan"
 
-  ];
   List<String> originalList = [];
   List<int?> filteredList = [];
 
@@ -608,9 +425,12 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
               title: Text(
                 'Feedback Form',
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     color: Colors.white
                 ),
+              ),
+              iconTheme: IconThemeData(
+                color: Colors.white, // Change the color here
               ),
               centerTitle: true,
             )
@@ -739,6 +559,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                               MyUtils.saveSharedPreferences("loan_number",
                                   question1Controller.text.toString());
                               questionIndex = questionIndex + 1;
+                              getPartnerList();
                               setState(() {
 
                               });
@@ -901,7 +722,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                                   snackBar);
                             }else {
                               questionIndex = questionIndex + 1;
-
+                              getBranchList();
                               setState(() {
 
                               });
@@ -15103,18 +14924,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                         )),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child:
-
-                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
-
-                      /*Image.asset("assets/cross_ic.png",
-                            width: 38, height: 38)*/),
-                    SizedBox(width: 4),
+                    // Spacer(),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child:
+                    //
+                    //   Icon(Icons.close_rounded,color: Colors.black,size: 25),
+                    //
+                    //   /*Image.asset("assets/cross_ic.png",
+                    //         width: 38, height: 38)*/),
+                    // SizedBox(width: 4),
                   ],
                 ),
 
@@ -15291,7 +15112,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     );
   }
   void _runFilter(String enteredKeyword) {
-    List<String> results = [];
+    List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
       results = branchList;
     } else {
@@ -15313,7 +15134,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
 
 
   void _runFilter2(String enteredKeyword) {
-    List<String> results = [];
+    List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
       results = partnerNemesList;
     } else {
@@ -15377,18 +15198,18 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                         )),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child:
-
-                      Icon(Icons.close_rounded,color: Colors.black,size: 25),
-
-                      /*Image.asset("assets/cross_ic.png",
-                            width: 38, height: 38)*/),
-                    SizedBox(width: 4),
+                    // Spacer(),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child:
+                    //
+                    //   Icon(Icons.close_rounded,color: Colors.black,size: 25),
+                    //
+                    //   /*Image.asset("assets/cross_ic.png",
+                    //         width: 38, height: 38)*/),
+                    // SizedBox(width: 4),
                   ],
                 ),
                 Container(
@@ -15560,5 +15381,40 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
         });
       },
     );
+  }
+  getPartnerList() async {
+    FocusScope.of(context).unfocus();
+    APIDialog.showAlertDialog(context, 'Please wait...');
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+        await helper.get('avanti/getPartnerList',context);
+    var responseJSON = json.decode(response.body);
+    if (responseJSON["code"] == 200){
+      Navigator.of(context).pop();
+    }
+    partnerNemesList = responseJSON["data"];
+
+
+    setState(() {});
+
+  }
+  getBranchList() async {
+    FocusScope.of(context).unfocus();
+    APIDialog.showAlertDialog(context, "Please wait...");
+
+    var requestModel = {
+      "partnerName": question2Controller.text
+    };
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('avanti/getPartnerWiseLocation', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    if (responseJSON["code"] == 200){
+      Navigator.of(context).pop();
+    }
+    branchList = responseJSON["data"]["locations"];
+
+    setState(() {});
   }
 }
