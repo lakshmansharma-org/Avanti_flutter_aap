@@ -147,7 +147,7 @@ class LoginState extends State<LoginScreen> {
 
     ApiBaseHelper helper = ApiBaseHelper();
     var response =
-    await helper.postAPI('Avanti/SubmitSurvey', requestModel, context);
+    await helper.postAPINew('Avanti/SubmitSurvey', requestModel, context);
     isLoading = false;
     var responseJSON = json.decode(response.body);
     //print(responseJSON);
@@ -219,7 +219,7 @@ class LoginState extends State<LoginScreen> {
 
     ApiBaseHelper helper = ApiBaseHelper();
     var response =
-    await helper.postAPI('survey/getDynSurveyAttemp', requestModel, context);
+    await helper.postAPINew('survey/getDynSurveyAttemp', requestModel, context);
     isLoading = false;
     var responseJSON = json.decode(response.body);
     //print(responseJSON);

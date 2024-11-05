@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:intl/intl.dart';
@@ -6,20 +7,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qsurvey_flutter/view/upload_images_screen.dart';
+import 'package:toast/toast.dart';
+
+import '../network/Utils.dart';
+import '../network/api_helper.dart';
 
 
 
 class TodayCountDetails extends StatefulWidget {
   TodayCountDetailsState createState() => TodayCountDetailsState();
-  List<dynamic> basicDetails = [];
-  TodayCountDetails(this.basicDetails);
+
 }
 
 class TodayCountDetailsState extends State<TodayCountDetails>{
 
   @override
+  List<dynamic> basicDetails = [];
+  bool isLoading = false;
+  String currentDate = "";
   Widget build(BuildContext context) {
-
+    String getCurrentDate() {
+      final DateTime now = DateTime.now();
+      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+      return formatter.format(now);
+    }
+    currentDate = getCurrentDate();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -45,16 +57,16 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
       body: Container(
 
         child:
-        widget.basicDetails.length==0?
+        basicDetails.length==0?
         Center(
           child: Text("No record found!"),
         ):ListView.builder(
-            itemCount: widget.basicDetails.length,
+            itemCount: basicDetails.length,
             shrinkWrap: true,
             //physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context,int pos)
             {
-              String dateStr = widget.basicDetails[pos]["date"];
+              String dateStr = basicDetails[pos]["date"];
 
               DateTime dateTime = DateTime.parse(dateStr);
 
@@ -96,7 +108,7 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                       color: Color(0xFF000000),
                                     )),
                                     SizedBox(height: 6),
-                                    Text(widget.basicDetails[pos]["Please enter loan number"].toString(),style: TextStyle(
+                                    Text(basicDetails[pos]["Please enter loan number"].toString(),style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.grey,
@@ -121,7 +133,7 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                   color: Color(0xFF000000),
                                 )),
                                 SizedBox(height: 6),
-                                Expanded(child: Text(widget.basicDetails[pos]["Enter Partner Name"].toString(),style: TextStyle(
+                                Expanded(child: Text(basicDetails[pos]["Enter Partner Name"].toString(),style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
@@ -174,7 +186,7 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                   color: Color(0xFF000000),
                                 )),
                                 SizedBox(height: 6),
-                                Expanded(child: Text(widget.basicDetails[pos]["Location Name"].toString(),style: TextStyle(
+                                Expanded(child: Text(basicDetails[pos]["Location Name"].toString(),style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey,
@@ -184,13 +196,19 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                                 ),
 
                                 ),
-                                widget.basicDetails[pos]["isArtifactUploaded"] == false?
+                                basicDetails[pos]["isArtifactUploaded"] == false?
 
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child:GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen(widget.basicDetails[pos]["Enter Partner Name"].toString(),widget.basicDetails[pos]["Location Name"].toString(),widget.basicDetails[pos]["Please enter loan number"].toString())));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UploadImagesScreen(basicDetails[pos]["Enter Partner Name"].toString(),basicDetails[pos]["Location Name"].toString(),basicDetails[pos]["Please enter loan number"].toString()))
+                                      ).then((result) {
+                                        if (result == "true") {
+                                          // Call your API function here
+                                          getTotalCount(); // Replace fetchData with the function you use to call the API
+                                        }
+                                      });
                                     },
                                     child: Container(
                                       width: 45,
@@ -235,6 +253,40 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    getTotalCount();
+  }
+  getTotalCount() async {
+    setState(() {
+      isLoading=true;
+    });
+    String? empID = await MyUtils.getSharedPreferences("empId");
+    var requestModel = {
+      "id": empID,
+      "date": currentDate,
+      "pageSize": "",
+      "pageNumber": ""
+    };
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('Avanti/todayAndTotalData', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    isLoading=false;
+    print(responseJSON);
+    if (responseJSON['code'] == 200) {
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+      basicDetails = responseJSON['data']['totalDetails'];
+
+
+    } else {
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
+    setState(() {});
 
   }
 }

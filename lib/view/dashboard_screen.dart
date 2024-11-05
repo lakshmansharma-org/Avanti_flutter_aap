@@ -42,6 +42,7 @@ class DashboardState extends State<DashboardScreen> {
   bool isInternetConnected = true;
   int todayCount = 0;
   int totalCount = 0;
+  int last15DaysCount = 0;
   String policyUrl = '';
   bool isLoading = false;
   List<dynamic> basicDetails = [];
@@ -157,7 +158,7 @@ class DashboardState extends State<DashboardScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                TodayCountDetails(basicDetails)));
+                                TodayCountDetails()));
                   },
                   child: Row(
                     children: [
@@ -177,7 +178,7 @@ class DashboardState extends State<DashboardScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Todays Count',
+                                    Text("Today's Count",
                                       style: TextStyle(
                                           fontSize: 20,
                                           color: AppTheme.blackColor,
@@ -222,7 +223,7 @@ class DashboardState extends State<DashboardScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                TotalCountDetails(totalBasicDetails)));
+                                TotalCountDetails(last15DaysCount)));
                   },
                   child: Row(
                     children: [
@@ -756,16 +757,17 @@ class DashboardState extends State<DashboardScreen> {
     APIDialog.showAlertDialog(context, 'Please wait...');
     ApiBaseHelper helper = ApiBaseHelper();
     var response =
-    await helper.get('avanti/getDetails'+'?id='+widget.id,context);
+    await helper.get('Avanti/dashboardCount'+'?id='+widget.id,context);
     var responseJSON = json.decode(response.body);
     if (responseJSON["code"] == 200){
       Navigator.of(context).pop();
     }
     todayCount = responseJSON["data"]["todayCount"];
     totalCount = responseJSON["data"]["totalCount"];
+    last15DaysCount = responseJSON["data"]["last15DaysCount"];
     policyUrl = responseJSON["policy"];
-    basicDetails = responseJSON["data"]["basicDatails"];
-    totalBasicDetails = responseJSON["data"]["totalDetails"];
+    // basicDetails = responseJSON["data"]["basicDatails"];
+    // totalBasicDetails = responseJSON["data"]["totalDetails"];
 
     setState(() {});
 

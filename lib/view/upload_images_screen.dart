@@ -427,7 +427,7 @@ class DashboardState extends State<UploadImagesScreen> {
           gravity: Toast.bottom,
           backgroundColor: Colors.green);
 
-      Navigator.pop(context);
+      Navigator.pop(context,"true");
     } else {
       Toast.show(response.data['message'].toString(),
           duration: Toast.lengthLong,
@@ -481,7 +481,7 @@ class DashboardState extends State<UploadImagesScreen> {
       if (imageList.length !=0 && lucImageList !=0){
         _uploadLUCImages();
       }else{
-        Navigator.pop(context);
+        Navigator.pop(context, "true");
       }
 
 
@@ -516,7 +516,6 @@ class DashboardState extends State<UploadImagesScreen> {
 
                         print(pickedFile.length().toString());
                         print("File length");
-
 
                         imageList!.add(
                             pickedFile); // Add picked image to the list

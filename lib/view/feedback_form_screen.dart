@@ -14086,7 +14086,7 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
     if (selectIndex14 == "No"){
        selectNewData = " ";
     }else{
-       selectNewData = selectIndex15;
+       selectNewData = {selectIndex15, question51ControllerNew.text}.toString();
     }
 
     String slectIndics2 = {
