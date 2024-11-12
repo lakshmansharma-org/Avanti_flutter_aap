@@ -1,14 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
+import 'dart:ui';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart';
+
+
 import 'package:image_picker/image_picker.dart';
 
 import 'package:lottie/lottie.dart';
@@ -24,6 +30,8 @@ import '../network/api_helper.dart';
 import '../utils/app_modal.dart';
 import '../utils/app_theme.dart';
 import '../widgets/textfield_string_widget.dart';
+
+
 
 
 class UploadImagesScreen extends StatefulWidget{
@@ -509,8 +517,10 @@ class DashboardState extends State<UploadImagesScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final XFile? pickedFile = await ImagePicker().pickImage(
-                        imageQuality: 50,
+                        imageQuality: 90,
+                        maxWidth: 1280,
                         source: ImageSource.camera);
+
                     if (pickedFile != null) {
                       setState(() {
 
@@ -538,15 +548,26 @@ class DashboardState extends State<UploadImagesScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 50);
-                    imageList = imageList + images;
+                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 90,maxWidth: 1280);
+                    if (images.isNotEmpty) {
+                      imageList = imageList + images;
 
-                 /*   File file=File(imageList[0].path.toString());
-                    print(file.lengthSync().toString());
-                    print("Path is ");*/
-                    setState(() {
+                      for (XFile image in imageList) {
+                        File file = File(image.path);
 
-                    });
+                        if (await file.exists()) {
+                          // Get the file size in bytes and convert to KB
+                          int fileSizeInBytes = file.lengthSync();
+                          double fileSizeInKB = fileSizeInBytes / 1024;
+
+                          print("File size of ${image.path}: ${fileSizeInKB.toStringAsFixed(2)} KB");
+                        } else {
+                          print("File does not exist: ${image.path}");
+                        }
+                      }
+
+                      setState(() {}); // Update the UI if necessary
+                    }
                     final connectivityResult5 = await (Connectivity()
                         .checkConnectivity());
                     if (connectivityResult5 != ConnectivityResult.none) {
@@ -579,8 +600,10 @@ class DashboardState extends State<UploadImagesScreen> {
                   onTap: () async {
                     Navigator.pop(context);
                     final XFile? pickedFile = await ImagePicker().pickImage(
-                      imageQuality: 50,
+                      imageQuality: 90,
+                        maxWidth: 1280,
                         source: ImageSource.camera);
+
                     if (pickedFile != null) {
                       setState(() {
                         lucImageList!.add(
@@ -604,7 +627,9 @@ class DashboardState extends State<UploadImagesScreen> {
                 GestureDetector(
                   onTap: () async {
                     Navigator.pop(context);
-                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 50);
+                    final List<XFile> images = await picker.pickMultiImage(imageQuality: 90,maxWidth: 1280);
+
+
                     lucImageList = lucImageList + images;
                     setState(() {
 
