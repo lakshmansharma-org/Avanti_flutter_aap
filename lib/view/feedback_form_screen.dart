@@ -49,6 +49,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
   List<XFile> imageList1 = [];
   int selectedBranchNameIndex = 9999;
   int selectedPartnerNameIndex = 9999;
+  late bool status;
+  bool isLoading = false;
   StateSetter? branchSheet;
   StateSetter? partnerNameSheet;
   List<dynamic> searchBranchList=[];
@@ -558,8 +560,8 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
                             else {
                               MyUtils.saveSharedPreferences("loan_number",
                                   question1Controller.text.toString());
-                              questionIndex = questionIndex + 1;
-                              getPartnerList();
+                              checkLoanNumber();
+
                               setState(() {
 
                               });
@@ -15414,6 +15416,36 @@ class FeedbackFormState extends State<FeedbackFormScreen> {
       Navigator.of(context).pop();
     }
     branchList = responseJSON["data"]["locations"];
+
+    setState(() {});
+  }
+  checkLoanNumber() async {
+    setState(() {
+      isLoading=true;
+    });
+    var requestModel = {
+      "loanNumber": question1Controller.text
+    };
+
+    ApiBaseHelper helper = ApiBaseHelper();
+    var response =
+    await helper.postAPINew('avanti/checkSurveyAlreadyFill', requestModel, context);
+    var responseJSON = json.decode(response.body);
+    isLoading=false;
+    status = responseJSON["status"];
+    if (status == true){
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.green);
+      questionIndex = questionIndex + 1;
+      getPartnerList();
+    }else{
+      Toast.show(responseJSON['message'],
+          duration: Toast.lengthLong,
+          gravity: Toast.bottom,
+          backgroundColor: Colors.red);
+    }
 
     setState(() {});
   }

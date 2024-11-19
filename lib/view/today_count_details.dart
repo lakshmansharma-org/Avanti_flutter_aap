@@ -122,7 +122,29 @@ class TodayCountDetailsState extends State<TodayCountDetails>{
                             ),
 
                             SizedBox(height: 20),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
+                                Text('Borrower Name:- ',style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                )),
+                                SizedBox(height: 6),
+                                Text(basicDetails[pos]["Please enter Borrower name"].toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey,
+                                  ),
+                                  softWrap: true,
+                                ),
+
+                              ],
+                            ),
+
+                            SizedBox(height: 20),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
